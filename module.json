@@ -1,0 +1,13 @@
+{
+    "name": "CoreCRM",
+    "alias": "corecrm",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
