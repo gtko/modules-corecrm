@@ -48,8 +48,7 @@ class DeviController extends Controller
     {
         $this->authorize('update', $devi);
 
-        return view(
-            'app.devis.edit',
+        return view('corecrm::app.devis.edit',
             compact('devi',  "client", "dossier")
         );
     }
