@@ -5,10 +5,9 @@ namespace Modules\CoreCRM\Contracts\Repositories;
 
 
 
-use Modules\BaseCore\Contracts\Repositories\RelationsRepositoryContract;
 use Modules\CoreCRM\Models\Event;
 
-interface EventRepositoryContract extends RelationsRepositoryContract
+interface EventRepositoryContract
 {
     public function createEvent(string $key):Event;
 }
