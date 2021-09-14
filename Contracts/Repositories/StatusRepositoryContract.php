@@ -4,11 +4,12 @@
 namespace Modules\CoreCRM\Contracts\Repositories;
 
 
+use Modules\BaseCore\Contracts\Repositories\RelationsRepositoryContract;
 use Modules\BaseCore\Interfaces\RepositoryFetchable;
 use Modules\CoreCRM\Models\Status;
 use Modules\SearchCRM\Interfaces\SearchableRepository;
 
-interface StatusRepositoryContract extends SearchableRepository, RepositoryFetchable
+interface StatusRepositoryContract extends SearchableRepository, RepositoryFetchable,RelationsRepositoryContract
 {
 
     public function create(string $label, string $color):Status;

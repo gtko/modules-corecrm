@@ -5,6 +5,7 @@ namespace Modules\CoreCRM\Contracts\Repositories;
 
 
 use Illuminate\Pagination\LengthAwarePaginator;
+use Modules\BaseCore\Contracts\Repositories\RelationsRepositoryContract;
 use Modules\BaseCore\Interfaces\RepositoryFetchable;
 use Modules\BaseCore\Interfaces\RepositoryFilters;
 use Modules\BaseCore\Interfaces\RepositoryQueryCustom;
@@ -15,7 +16,7 @@ use Modules\CoreCRM\Models\Source;
 use Modules\CoreCRM\Models\Status;
 use Modules\SearchCRM\Interfaces\SearchableRepository;
 
-interface DossierRepositoryContract extends SearchableRepository, RepositoryFetchable, RepositoryFilters, RepositoryQueryCustom
+interface DossierRepositoryContract extends SearchableRepository, RepositoryFetchable, RepositoryFilters, RepositoryQueryCustom,RelationsRepositoryContract
 {
 
     public function create(ClientEntity $client, Commercial $commercial, Source $source, Status $status): Dossier;
