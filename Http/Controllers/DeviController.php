@@ -30,10 +30,10 @@ class DeviController extends Controller
     {
         $this->authorize('create', DevisEntities::class);
 
-        $devisRep->create($dossier, Auth::commercial());
+        $devis = $devisRep->create($dossier, Auth::commercial());
 
         return redirect()
-            ->route('dossiers.show', [$client, $dossier])
+            ->route('devis.edit', [$client, $dossier, $devis->id])
             ->withSuccess(__('basecore::crud.common.created'));
     }
 
