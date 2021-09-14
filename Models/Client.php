@@ -25,7 +25,6 @@ class Client extends ClientEntity
     use HasFactory;
     use HasPersonne;
 
-
     protected $fillable = ['personne_id'];
 
     protected array $searchableFields = ['*'];
