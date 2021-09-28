@@ -33,8 +33,7 @@
                             :arguments="['client' => $client, 'dossier' => $dossier]"
                         >
                             <div class="grid grid-cols-2 w-full gap-2 items-center justify-center">
-                                <a href="{{route('clients.edit', $client)}}" class="btn btn-primary py-1 px-2 w-full">Éditer
-                                    le
+                                <a href="{{route('clients.edit', $client)}}" class="btn btn-primary py-1 px-2 w-full">Éditer le
                                     client</a>
                                 @can('create', Modules\CoreCRM\Models\Devi::class)
                                     <a href="{{route('devis.create', [$client, $dossier])}}"
@@ -65,15 +64,24 @@
                         <x-basecore::icon-label icon="devis" label="Devis" :size="20"/>
                     </x-basecore::nav.menu-item>
 
-                    {{--                    <x-basecore::nav.menu-item name="call">--}}
-                    {{--                        <x-basecore::icon-label icon="folder" label="Appels"/>--}}
-                    {{--                    </x-basecore::nav.menu-item>--}}
-                    {{--                    <x-basecore::nav.menu-item name="email">--}}
-                    {{--                        <x-basecore::icon-label icon="folder" label="Emails"/>--}}
-                    {{--                    </x-basecore::nav.menu-item>--}}
-                    {{--                    <x-basecore::nav.menu-item name="documents">--}}
-                    {{--                        <x-basecore::icon-label icon="document" label="Documents"/>--}}
-                    {{--                    </x-basecore::nav.menu-item>--}}
+                    @if(in_array('call', config('corecrm.features')))
+                    <x-basecore::nav.menu-item name="call">
+                        <x-basecore::icon-label icon="folder" label="Appels"/>
+                    </x-basecore::nav.menu-item>
+                    @endif
+
+                    @if(in_array('email', config('corecrm.features')))
+                    <x-basecore::nav.menu-item name="email">
+                        <x-basecore::icon-label icon="folder" label="Emails"/>
+                    </x-basecore::nav.menu-item>
+                    @endif
+
+                    @if(in_array('document', config('corecrm.features')))
+                    <x-basecore::nav.menu-item name="documents">
+                        <x-basecore::icon-label icon="document" label="Documents"/>
+                    </x-basecore::nav.menu-item>
+                    @endif
+
                     <x-basecore::resolve-type-view
                         :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\DossierTabLabelViewContract::class"
                         :arguments="['client' => $client, 'dossier' => $dossier]"
@@ -156,18 +164,21 @@
                     :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\DossierTabViewContract::class"
                     :arguments="['client' => $client, 'dossier' => $dossier]"
                 />
-
-                {{--                <x-basecore::nav.tab name="call">--}}
-                {{--                    <livewire:appelcrm::appel :dossier-id="$dossier->id" :client-id="$client->id"/>--}}
-                {{--                </x-basecore::nav.tab>--}}
-
-                {{--                <x-basecore::nav.tab name="email">--}}
-                {{--                    email--}}
-                {{--                </x-basecore::nav.tab>--}}
-
-                {{--                <x-basecore::nav.tab name="documents">--}}
-                {{--                    <livewire:corecrm::document :dossier-id="$dossier->id" :client-id="$client->id"/>--}}
-                {{--                </x-basecore::nav.tab>--}}
+                @if(in_array('call', config('corecrm.features')))
+                    <x-basecore::nav.tab name="call">
+                        <livewire:callcrm::appel :dossier-id="$dossier->id" :client-id="$client->id"/>
+                    </x-basecore::nav.tab>
+                @endif
+                @if(in_array('email', config('corecrm.features')))
+                <x-basecore::nav.tab name="email">
+                    email
+                </x-basecore::nav.tab>
+                @endif
+                @if(in_array('document', config('corecrm.features')))
+                <x-basecore::nav.tab name="documents">
+                    <livewire:corecrm::document :dossier-id="$dossier->id" :client-id="$client->id"/>
+                </x-basecore::nav.tab>
+                @endif
 
 
             </x-basecore::partials.card>
