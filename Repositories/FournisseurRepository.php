@@ -4,6 +4,7 @@
 
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Modules\BaseCore\Repositories\AbstractRepository;
 use Modules\BaseCore\Actions\Users\CreateNewTypeUsers;
@@ -33,5 +34,10 @@ class FournisseurRepository extends AbstractRepository implements FournisseurRep
     public function getModel(): Model
     {
         return new Fournisseur();
+    }
+
+    public function getAllList() : Collection
+    {
+        return Fournisseur::all();
     }
 }
