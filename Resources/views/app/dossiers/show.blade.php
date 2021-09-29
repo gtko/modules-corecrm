@@ -162,7 +162,7 @@
                 />
                 @if(in_array('call', config('corecrm.features')))
                     <x-basecore::nav.tab name="call">
-                        <livewire:appelcrm::appel :dossier-id="$dossier->id" :client-id="$client->id"/>
+                        <livewire:callcrm::appel :dossier-id="$dossier->id" :client-id="$client->id"/>
                     </x-basecore::nav.tab>
                 @endif
                 @if(in_array('email', config('corecrm.features')))
