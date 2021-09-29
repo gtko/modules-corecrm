@@ -25,7 +25,7 @@ class ClientDataList extends DataListType
             'format_name' => [
                 'label' => 'Nom',
                 'action' => [
-                    'permission' => ['show', ClientEntity::class],
+                    'permission' => ['view', ClientEntity::class],
                     'route' => function($params){
                         return route('clients.show', $params);
                     },
@@ -50,7 +50,7 @@ class ClientDataList extends DataListType
     {
        return [
            'show' => [
-               'permission' => ['show', ClientEntity::class],
+               'permission' => ['view', ClientEntity::class],
                'route' => function($params){
                    return route('clients.show', $params);
                },
