@@ -19,4 +19,8 @@ Abstract class DevisEntities extends Model
     abstract public function commercial(): BelongsTo;
     abstract public static function getNumStartRef(): int;
     abstract public function getSearchResult(): SearchResult;
+
+    public function getTotal(): float{
+        return 0;
+    }
 }
