@@ -9,7 +9,9 @@ use Modules\BaseCore\Interfaces\RepositoryFetchable;
 use Modules\BaseCore\Interfaces\RepositoryQueryCustom;
 use Modules\CoreCRM\Models\Client;
 use Modules\BaseCore\Models\Personne;
+use Modules\CoreCRM\Models\Commercial;
 use Modules\SearchCRM\Interfaces\SearchableRepository;
+use phpDocumentor\Reflection\Types\Collection;
 
 interface ClientRepositoryContract extends  SearchableRepository, RepositoryFetchable, RepositoryQueryCustom, RelationsRepositoryContract
 {

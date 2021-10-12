@@ -8,6 +8,8 @@ use Modules\BaseCore\Contracts\Repositories\PersonneRepositoryContract;
 use Modules\BaseCore\Helpers\HasInterface;
 use Modules\CoreCRM\Models\Client;
 use Modules\BaseCore\Models\Personne;
+use Modules\CoreCRM\Models\Commercial;
+use phpDocumentor\Reflection\Types\Collection;
 
 class ClientRepository extends AbstractRepository implements ClientRepositoryContract
 {
@@ -50,4 +52,5 @@ class ClientRepository extends AbstractRepository implements ClientRepositoryCon
     {
        return new Client();
     }
+
 }
