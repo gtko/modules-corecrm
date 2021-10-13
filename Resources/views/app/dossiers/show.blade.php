@@ -53,6 +53,7 @@
                     :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\DossierAfterSidebarContract::class"
                     :arguments="['client' => $client, 'dossier' => $dossier]"
                 />
+
             </x-slot>
 
             <x-basecore::partials.card>

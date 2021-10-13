@@ -23,6 +23,7 @@ interface DevisRepositoryContract extends SearchableRepository, RepositoryFetcha
     public function sendPriceFournisseur(DevisEntities $devis, Fournisseur $fournisseur, float $prix = null, Carbon $mail_sended = null, bool $validate = false) :DevisEntities;
     public function detachFournisseur(DevisEntities $devis, Fournisseur $fournisseur) :bool;
     public function validateFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $validate = true);
+    public function getFournsisseur(DevisEntities $devis): Collection;
 
     public function getDevisByDossier(Dossier $dossier):LengthAwarePaginator;
 

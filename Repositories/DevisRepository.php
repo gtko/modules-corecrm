@@ -7,6 +7,7 @@ namespace Modules\CoreCRM\Repositories;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Modules\BaseCore\Repositories\AbstractRepository;
@@ -111,4 +112,8 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
             ->paginate($paginate);
     }
 
+    public function getFournsisseur(DevisEntities $devis): Collection
+    {
+        dd($devis);
+    }
 }
