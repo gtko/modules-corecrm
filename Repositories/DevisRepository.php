@@ -112,8 +112,15 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
             ->paginate($paginate);
     }
 
-    public function getFournsisseur(DevisEntities $devis): Collection
+    public function getFournsisseurValidate(DevisEntities $devi) :Collection
     {
-        dd($devis);
+        return $devi->fournisseurs()->wherePivot('validate', true)->get();
+
+    }
+
+    public function getPrice(DevisEntities $devi, Fournisseur $fournisseur): float
+    {
+
+        return $devi->fournisseurs()->where('personne_id' , $fournisseur->id)->first()->pivot['prix'];
     }
 }
