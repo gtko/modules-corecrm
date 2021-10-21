@@ -17,6 +17,7 @@ use Modules\CoreCRM\Models\Scopes\CanAppel;
 use Modules\CoreCRM\Models\Scopes\HasFlowable;
 use Modules\CoreCRM\Models\Scopes\HasRef;
 use Modules\CoreCRM\Models\Scopes\HasStatuable;
+use Modules\CrmAutoCar\Models\Tag;
 use Modules\SearchCRM\Entities\SearchResult;
 use Modules\SearchCRM\Interfaces\SearchableModel;
 
@@ -28,6 +29,7 @@ use Modules\SearchCRM\Interfaces\SearchableModel;
  * @property Collection $appels
  * @property Carbon $date_start
  * @property Source $source
+ * @property Tag $tag
  * @mixin Builder
  * @mixin \Illuminate\Database\Query\Builder
  */
