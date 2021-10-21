@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\BaseCore\Icons\Icons;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
@@ -54,6 +55,11 @@ class Dossier extends Model implements SearchableModel, Flowable
     protected $casts = [
         'date_start' => 'datetime',
     ];
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 
     public function client(): BelongsTo
     {

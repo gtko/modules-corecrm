@@ -16,7 +16,7 @@
     <x-basecore::nav.layout default="devis">
         <x-basecore::layout.panel-sidebar>
             <x-slot name="sidebar">
-                <x-corecrm::client.sidebar :client="$client">
+                <x-corecrm::client.sidebar :client="$client" :dossier="$dossier">
 
                     <x-slot name="status">
                         <x-basecore::resolve-type-view
