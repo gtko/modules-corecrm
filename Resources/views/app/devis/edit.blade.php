@@ -8,7 +8,7 @@
 
     <x-basecore::layout.panel-sidebar>
         <x-slot name="sidebar">
-            <x-corecrm::client.sidebar :client="$devi->dossier->client">
+            <x-corecrm::client.sidebar :client="$devi->dossier->client" :dossier="$dossier">
                 <x-slot name="status">
                     <x-corecrm::status :label="$devi->dossier->status_label"/>
                 </x-slot>
