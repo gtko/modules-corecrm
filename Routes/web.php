@@ -10,6 +10,7 @@ use Modules\CoreCRM\Http\Controllers\FournisseurController;
 use Modules\CoreCRM\Http\Controllers\PdfDevisDownloadController;
 use Modules\CoreCRM\Http\Controllers\SourceController;
 use Modules\CoreCRM\Http\Controllers\StatusController;
+use Modules\CrmAutoCar\Http\Controllers\VuePlateauController;
 
 
 Route::prefix('/')
@@ -42,4 +43,6 @@ Route::prefix('/')
         Route::resource('clients/{client}/dossiers/{dossier}/devis', DeviController::class)->except('index');
 
         Route::get('pdf/devis/{devis}', [ PdfDevisDownloadController::class, 'download'])->name('pdf-devis-download');
+
+        Route::get('/vue-plateau', [VuePlateauController::class, 'index'])->name('vue-plateau');
     });
