@@ -4,6 +4,7 @@
 namespace Modules\CoreCRM\Contracts\Repositories;
 
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Modules\BaseCore\Contracts\Repositories\RelationsRepositoryContract;
 use Modules\BaseCore\Interfaces\RepositoryFetchable;
@@ -25,6 +26,6 @@ interface DossierRepositoryContract extends SearchableRepository, RepositoryFetc
     public function changeSource(Dossier $dossier, Source $source):Dossier;
     public function changeStatus(Dossier $dossier, Status $status):Dossier;
     public function changeClient(Dossier $dossier, ClientEntity $client):Dossier;
-
+    public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection;
     public function getDossiersByClient(ClientEntity $client,int $paginate): ?LengthAwarePaginator;
 }

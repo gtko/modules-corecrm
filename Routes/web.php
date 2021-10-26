@@ -44,5 +44,5 @@ Route::prefix('/')
 
         Route::get('pdf/devis/{devis}', [ PdfDevisDownloadController::class, 'download'])->name('pdf-devis-download');
 
-        Route::get('/vue-plateau', [VuePlateauController::class, 'index'])->name('vue-plateau');
+
     });
