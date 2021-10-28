@@ -121,6 +121,6 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
     public function getPrice(DevisEntities $devi, Fournisseur $fournisseur): float
     {
 
-        return $devi->fournisseurs()->where('personne_id' , $fournisseur->id)->first()->pivot['prix'];
+        return $devi->fournisseurs()->where('personne_id' , $fournisseur->id)->first()->pivot['prix'] ?? 0.0;
     }
 }
