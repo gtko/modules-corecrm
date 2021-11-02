@@ -5,12 +5,11 @@
             </div>
             <div class="ml-4 mr-auto">
                 <div class="font-medium text-base">{{$client->format_name}}</div>
-                <div class="text-gray-600">
-                    {{$status ?? ''}}
-                </div>
+                <livewire:corecrm::label-status :dossier="$dossier"/>
+
             </div>
         </div>
-    
+
         <div>
             <x-basecore::resolve-type-view
                 :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\SelectTagDossier::class"
