@@ -6,9 +6,10 @@
             <div class="ml-4 mr-auto">
                 <div class="font-medium text-base">{{$client->format_name}}</div>
                 <livewire:corecrm::label-status :dossier="$dossier"/>
-
             </div>
         </div>
+
+        <livewire:corecrm::fiche-similaire :dossier="$dossier"/>
 
         <div>
             <x-basecore::resolve-type-view

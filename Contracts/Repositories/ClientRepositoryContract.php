@@ -10,6 +10,7 @@ use Modules\BaseCore\Interfaces\RepositoryQueryCustom;
 use Modules\CoreCRM\Models\Client;
 use Modules\BaseCore\Models\Personne;
 use Modules\CoreCRM\Models\Commercial;
+use Modules\CoreCRM\Models\Dossier;
 use Modules\SearchCRM\Interfaces\SearchableRepository;
 use phpDocumentor\Reflection\Types\Collection;
 
