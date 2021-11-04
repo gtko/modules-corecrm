@@ -3,6 +3,7 @@
 
 namespace Modules\CoreCRM\DataLists;
 
+use Modules\CoreCRM\Contracts\Entities\ClientEntity;
 use Modules\CoreCRM\Contracts\Repositories\DossierRepositoryContract;
 use Modules\BaseCore\Interfaces\RepositoryFetchable;
 use Modules\CoreCRM\Models\Dossier;
@@ -13,17 +14,24 @@ class DossierDataList extends DataListType
     public function getFields():array
     {
         return [
+            'avatar_url' => [
+                'label' => '',
+                'component' => [
+                    'name' => 'basecore::components.avatar',
+                    'attribute' => 'url'
+                ],
+            ],
             'ref' => [
                 'label' => 'Ref',
-                'action' => [
-                    'permission' => ['show', Dossier::class],
-                    'route' => function($params){
-                        return route('dossiers.show', $params);
-                    },
-                ],
                 'format' => function($item){
                     return '#'.$item->ref;
                 }
+            ],
+            'format_name' => [
+                'label' => 'Nom',
+                'format' => function($item){
+                    return $item->client->format_name;
+                },
             ],
             'status_label' => [
                 'label' => 'Statut',
@@ -34,13 +42,6 @@ class DossierDataList extends DataListType
             ],
             'commercial' => [
                 'label' => 'Commercial',
-                'component' => [
-                    'name' => 'basecore::components.personne.personne-badge',
-                    'attribute' => 'personne'
-                ]
-            ],
-            'client' => [
-                'label' => 'Client',
                 'component' => [
                     'name' => 'basecore::components.personne.personne-badge',
                     'attribute' => 'personne'
@@ -60,6 +61,12 @@ class DossierDataList extends DataListType
        return [
            'show' => [
                'permission' => ['show', Dossier::class],
+               'params' => function($item){
+                    return [
+                        $item->client->id,
+                        $item->id
+                    ];
+               },
                'route' => function($params){
                    return route('dossiers.show', $params);
                },
@@ -72,11 +79,11 @@ class DossierDataList extends DataListType
     public function getCreate(): array
     {
         return [
-            'permission' => ['create', Dossier::class],
+            'permission' => ['create', Client::class],
             'route' => function($params){
-                return route('dossiers.create', $params);
+                return route('clients.create', $params);
             },
-            'label' => 'Ajouter un dossier',
+            'label' => 'Ajouter un client',
             'icon' => 'addCircle'
         ];
     }

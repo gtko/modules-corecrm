@@ -19,7 +19,10 @@ class ClientDataList extends DataListType
                 'label' => '',
                 'component' => [
                     'name' => 'basecore::components.avatar',
-                    'attribute' => 'url'
+                    'attribute' => 'url',
+                    'format' => function($item){
+                        return $item->client->url;
+                    }
                 ],
             ],
             'format_name' => [
