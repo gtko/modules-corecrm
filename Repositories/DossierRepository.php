@@ -134,4 +134,25 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
          return $collection->groupBy('client_id')->first();
     }
+
+    public function getDossierNotAttribute(): Collection
+    {
+        return Dossier::where('commercial_id', '1')->get();
+    }
+
+    public function getDossierAttribute(): Collection
+    {
+        return Dossier::where('commercial_id', '!=', '1')->get();
+
+    }
+
+    public function getDossierTrashed(): Collection
+    {
+        return Dossier::all();
+    }
+
+    public function getSource(): Collection
+    {
+        return Dossier::all()->groupBy('source');
+    }
 }
