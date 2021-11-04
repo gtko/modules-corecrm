@@ -18,7 +18,9 @@ class DossierDataList extends DataListType
                 'label' => '',
                 'component' => [
                     'name' => 'basecore::components.avatar',
-                    'attribute' => 'url'
+                    'attribute' => function($attribute){
+                        return ['url' => $attribute->client->avatar_url];
+                    },
                 ],
             ],
             'ref' => [
