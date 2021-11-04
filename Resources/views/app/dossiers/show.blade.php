@@ -89,6 +89,7 @@
                         :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\DossierTabLabelViewContract::class"
                         :arguments="['client' => $client, 'dossier' => $dossier]"
                     />
+
                 </x-basecore::nav.menu>
 
                 <x-basecore::nav.tab name="note">
