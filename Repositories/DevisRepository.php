@@ -123,4 +123,11 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
         return $devi->fournisseurs()->where('personne_id' , $fournisseur->id)->first()->pivot['prix'] ?? 0.0;
     }
+    public function validatedDevis(DevisEntities $devi, array $data): bool
+    {
+        $newData =  array_merge($devi->data, $data);
+        $devi->data = $newData;
+        return $devi->save();
+
+    }
 }
