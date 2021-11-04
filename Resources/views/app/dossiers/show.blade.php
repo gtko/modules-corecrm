@@ -1,6 +1,6 @@
 <x-basecore::app-layout>
     <x-slot name="breadcrumb">
-        <x-basecore::breadcrumb-item :href="route('clients.index')">Clients</x-basecore::breadcrumb-item>
+        <x-basecore::breadcrumb-item :href="route('dossiers.index')">Clients</x-basecore::breadcrumb-item>
         <x-basecore::breadcrumb-item
             :href="route('clients.show', $client)">{{$client->format_name}}</x-basecore::breadcrumb-item>
         <x-basecore::breadcrumb-item>dossier#{{$dossier->ref}}</x-basecore::breadcrumb-item>
@@ -17,7 +17,6 @@
         <x-basecore::layout.panel-sidebar>
             <x-slot name="sidebar">
                 <x-corecrm::client.sidebar :client="$client" :dossier="$dossier">
-
                     <x-slot name="status">
                         <x-basecore::resolve-type-view
                             :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\DossierSidebarActionsViewContract::class"
@@ -39,6 +38,9 @@
                                     <a href="{{route('devis.create', [$client, $dossier])}}"
                                        class="btn btn-outline-secondary py-1 px-2 w-full">Nouveau devis</a>
                                 @endcan
+
+
+
                                 <x-basecore::resolve-type-view
                                     :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\DossierSidebarAddActionsViewContract::class"
                                     :arguments="['client' => $client, 'dossier' => $dossier]"

@@ -39,7 +39,9 @@ class DossierDataList extends DataListType
                 'label' => 'Statut',
                 'component' => [
                     'name' => 'corecrm::components.status',
-                    'attribute' => 'label'
+                    'attribute' => function($item){
+                        return ['label' => $item->status_label, 'color' => $item->status_color];
+                    }
                 ]
             ],
             'commercial' => [
@@ -93,11 +95,15 @@ class DossierDataList extends DataListType
     public function getRepository(array $parents = []): RepositoryFetchable
     {
         $repository = app(DossierRepositoryContract::class);
+        $query = $repository->newQuery()->orderBy('created_at', 'desc');
         if($parents) {
             $repository->setQuery(
-                $repository->filterByParents($repository->newQuery(), $parents)
+                $repository->filterByParents($query, $parents)
             );
+        }else{
+            $repository->setQuery($query);
         }
+
         return $repository;
     }
 }
