@@ -42,7 +42,6 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
     public function updateData(DevisEntities $devis, array $data): DevisEntities
     {
         $devis->data = $data;
-
         $devis->save();
 
         app(FlowContract::class)->add($devis->dossier, new ClientDossierDevisUpdate($devis, \Auth::user(), $data));
