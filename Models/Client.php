@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Notifications\Notifiable;
 use Modules\BaseCore\Interfaces\TypePersonne;
 use Modules\BaseCore\Models\Scopes\HasPersonne;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
@@ -25,7 +24,7 @@ class Client extends ClientEntity
 {
     use HasFactory;
     use HasPersonne;
-    use Notifiable;
+
 
     protected $fillable = ['personne_id'];
 
