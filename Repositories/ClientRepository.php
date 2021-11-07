@@ -2,17 +2,12 @@
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Modules\BaseCore\Contracts\Repositories\UserRepositoryContract;
 use Modules\BaseCore\Repositories\AbstractRepository;
 use Modules\CoreCRM\Contracts\Repositories\ClientRepositoryContract;
 use Modules\BaseCore\Contracts\Repositories\PersonneRepositoryContract;
 use Modules\BaseCore\Helpers\HasInterface;
-use Modules\CoreCRM\Contracts\Repositories\DossierRepositoryContract;
 use Modules\CoreCRM\Models\Client;
 use Modules\BaseCore\Models\Personne;
-use Modules\CoreCRM\Models\Commercial;
-use Modules\CoreCRM\Models\User;
-use phpDocumentor\Reflection\Types\Collection;
 
 class ClientRepository extends AbstractRepository implements ClientRepositoryContract
 {
@@ -55,5 +50,4 @@ class ClientRepository extends AbstractRepository implements ClientRepositoryCon
     {
        return new Client();
     }
-
 }

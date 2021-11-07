@@ -52,7 +52,7 @@ class ClientPolicy
      * @param \Modules\CoreCRM\Models\Client $model
      * @return bool
      */
-    public function update(UserEntity $user, ClientEntity $model = null)
+    public function update(UserEntity $user, ClientEntity $model)
     {
         return $user->hasPermissionTo('update clients');
     }
