@@ -19,13 +19,13 @@ class ClientDataList extends DataListType
                 'label' => '',
                 'component' => [
                     'name' => 'basecore::components.avatar',
-                    'attribute' => 'url'
+                    'attribute' => 'url',
                 ],
             ],
             'format_name' => [
                 'label' => 'Nom',
                 'action' => [
-                    'permission' => ['show', ClientEntity::class],
+                    'permission' => ['view', ClientEntity::class],
                     'route' => function($params){
                         return route('clients.show', $params);
                     },
@@ -50,7 +50,7 @@ class ClientDataList extends DataListType
     {
        return [
            'show' => [
-               'permission' => ['show', ClientEntity::class],
+               'permission' => ['view', ClientEntity::class],
                'route' => function($params){
                    return route('clients.show', $params);
                },

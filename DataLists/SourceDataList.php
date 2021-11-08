@@ -32,7 +32,7 @@ class SourceDataList extends DataListType
     {
         return [
             'show' => [
-                'permission' => ['show', Source::class],
+                'permission' => ['view', Source::class],
                 'route' => function($params){
                     return route('sources.show', $params);
                 },

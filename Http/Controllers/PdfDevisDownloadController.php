@@ -2,7 +2,6 @@
 
 namespace Modules\CoreCRM\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Modules\CoreCRM\Actions\Devis\GenerateLinkDevis;
 use Modules\CoreCRM\Contracts\Entities\DevisEntities;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\CoreCRM\Contracts\Views\Dossiers;
+namespace Modules\CoreCRM\Contracts\Views\Devis;
 
 
 use Modules\BaseCore\Contracts\Views\ViewContract;
