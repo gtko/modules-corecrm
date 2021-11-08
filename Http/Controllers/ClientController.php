@@ -9,9 +9,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Modules\BaseCore\Contracts\Personnes\CreatePersonneContract;
 use Modules\BaseCore\Contracts\Personnes\UpdatePersonneContract;
+use Modules\CoreCRM\Actions\Clients\CreateClient;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
 use Modules\CoreCRM\Contracts\Repositories\ClientRepositoryContract;
+use Modules\CoreCRM\Contracts\Repositories\CommercialRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\DossierRepositoryContract;
+use Modules\CoreCRM\Contracts\Repositories\SourceRepositoryContract;
+use Modules\CoreCRM\Contracts\Repositories\StatusRepositoryContract;
 use Modules\CoreCRM\Http\Requests\ClientStoreRequest;
 use Modules\CoreCRM\Http\Requests\ClientUpdateRequest;
 use Modules\CoreCRM\Models\Client;
@@ -53,14 +57,12 @@ class ClientController extends Controller
 
         DB::beginTransaction();
 
-        $personne = $action->create($request);
-        $client = $repClient->createClient($personne);
 
         $commercial = app(CommercialRepositoryContract::class)->getById(1);
         $source = app(SourceRepositoryContract::class)->getByLabel('CRM');
         $status = app(StatusRepositoryContract::class)->getById(1);
 
-        $dossier = (new CreateClient())->create($request, $commercial, $source, $status);
+        $client = (new CreateClient())->create($request, $commercial, $source, $status);
 
 
         DB::commit();

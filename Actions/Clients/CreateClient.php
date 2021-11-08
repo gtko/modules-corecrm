@@ -15,7 +15,7 @@ class CreateClient
 
     public function create(Request $request, Commercial $commercial, Source $source, Status $status):Dossier
     {
-        dd($request);
+//        dd($request);
 
         //si email existe et pas le numero on ajoute les numero au client et on mets a jours les data
 
