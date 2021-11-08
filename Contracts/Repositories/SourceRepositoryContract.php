@@ -4,13 +4,12 @@
 namespace Modules\CoreCRM\Contracts\Repositories;
 
 
-use Modules\BaseCore\Contracts\Repositories\RelationsRepositoryContract;
 use Modules\BaseCore\Interfaces\RepositoryFetchable;
 use Modules\CoreCRM\Models\Commercial;
 use Modules\CoreCRM\Models\Source;
 use Modules\SearchCRM\Interfaces\SearchableRepository;
 
-interface SourceRepositoryContract extends SearchableRepository, RepositoryFetchable,RelationsRepositoryContract
+interface SourceRepositoryContract extends SearchableRepository, RepositoryFetchable
 {
 
     public function create(string $label):Source;

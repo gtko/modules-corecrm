@@ -30,10 +30,10 @@ class DeviController extends Controller
     {
         $this->authorize('create', DevisEntities::class);
 
-        $devis = $devisRep->create($dossier, Auth::commercial());
+        $devisRep->create($dossier, Auth::commercial());
 
         return redirect()
-            ->route('devis.edit', [$client, $dossier, $devis->id])
+            ->route('dossiers.show', [$client, $dossier])
             ->withSuccess(__('basecore::crud.common.created'));
     }
 
@@ -48,7 +48,8 @@ class DeviController extends Controller
     {
         $this->authorize('update', $devi);
 
-        return view('corecrm::app.devis.edit',
+        return view(
+            'app.devis.edit',
             compact('devi',  "client", "dossier")
         );
     }
