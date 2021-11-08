@@ -112,6 +112,8 @@ class ClientController extends Controller
     {
         $this->authorize('update', $client);
 
+
+
         DB::beginTransaction();
 
         $updatePersonne->update($request, $client->personne);
