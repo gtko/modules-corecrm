@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\BaseCore\Contracts\Personnes\CreatePersonneContract;
 use Modules\BaseCore\Contracts\Personnes\UpdatePersonneContract;
+use Modules\CoreCRM\Actions\Clients\CreateClient;
 use Modules\CoreCRM\Actions\Clients\CreateClientWithDossier;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
 use Modules\CoreCRM\Contracts\Repositories\ClientRepositoryContract;
@@ -59,12 +60,13 @@ class ClientController extends Controller
 
         DB::beginTransaction();
 
-        $personne = $action->create($request);
-
         $commercial = app(CommercialRepositoryContract::class)->getById(1);
         $source = app(SourceRepositoryContract::class)->getByLabel('CRM');
         $status = app(StatusRepositoryContract::class)->getById(1);
-        $dossier = (new CreateClientWithDossier())->create($personne, $commercial, $source, $status);
+
+        $dossier = (new CreateClient())->create($request, $commercial, $source, $status);
+
+
         DB::commit();
 
         return redirect()
