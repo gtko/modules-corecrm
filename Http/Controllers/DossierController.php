@@ -30,6 +30,11 @@ class DossierController extends Controller
         protected DevisRepositoryContract $devisRep,
     ){}
 
+
+    public function index(){
+        return view('corecrm::app.dossiers.index');
+    }
+
     /**
      * @param \Modules\CoreCRM\Contracts\Entities\ClientEntity $client
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View

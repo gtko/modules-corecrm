@@ -1,5 +1,6 @@
 <?php namespace Modules\CoreCRM\Repositories;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
 use Modules\CoreCRM\Contracts\Services\FlowContract;
@@ -60,6 +61,8 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
     {
         return $client->dossiers()->paginate(15);
     }
+
+
 
 
     public function searchQuery(Builder $query, string $value, mixed $parent = null): Builder
@@ -123,5 +126,33 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         $dossier->save();
 
         return $dossier;
+    }
+
+    public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection
+    {
+        $collection = Dossier::where('commercial_id', $commercial->id)->where('status_id', $status->id)->get();
+
+         return $collection->groupBy('client_id')->first();
+    }
+
+    public function getDossierNotAttribute(): Collection
+    {
+        return Dossier::where('commercial_id', '1')->get();
+    }
+
+    public function getDossierAttribute(): Collection
+    {
+        return Dossier::where('commercial_id', '!=', '1')->get();
+
+    }
+
+    public function getDossierTrashed(): Collection
+    {
+        return Dossier::all();
+    }
+
+    public function getSource(): Collection
+    {
+        return Dossier::all()->groupBy('source');
     }
 }

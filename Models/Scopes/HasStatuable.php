@@ -38,4 +38,9 @@ trait HasStatuable
         return $this->status->weight ?? 0;
     }
 
+    public function getStatusColorAttribute()
+    {
+        return $this->status->color ?? 'gray';
+    }
+
 }

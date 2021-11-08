@@ -3,6 +3,7 @@
 namespace Modules\CoreCRM\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\BaseCore\Contracts\Entities\UserEntity;
 use Modules\CoreCRM\Models\Dossier;
 use Modules\BaseCore\Models\User;
 
@@ -13,7 +14,7 @@ class DossierPolicy
     /**
      * Determine whether the dossier can views any models.
      *
-     * @param  Modules\BaseCore\Models\User  $user
+     * @param \Modules\CoreCRM\Policies\UserEntity $user
      * @return mixed
      */
     public function viewAny(UserEntity $user)

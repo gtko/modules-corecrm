@@ -24,8 +24,15 @@ class Commercial extends User
         });
     }
 
-    public function timer() {
+    public function timer(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Timer::class);
     }
+
+    public function dossiers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Dossier::class);
+    }
+
 
 }
