@@ -13,9 +13,9 @@
             <x-corecrm::timeline.timeline-item-link :url="route('users.show', $flow->datas->getUser())">
                 {{$flow->datas->getUser()->format_name}}
             </x-corecrm::timeline.timeline-item-link>
-            @if(array_key_exists('commentaire', $flow->datas->getData()) && $flow->datas->getData()['commentaire'] != '')
+            @if(isset($flow->datas->getData()['commentaire']) && $flow->datas->getData()['commentaire'] != '' )
                 <div>
-                    Avec le commentaire : {{ $flow->datas->getData()['commentaire']}}
+                    Avec le commentaire : {{ $flow->datas->getData()['commentaire'] }}
                 </div>
             @endif
         </div>
