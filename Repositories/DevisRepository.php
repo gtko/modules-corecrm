@@ -69,10 +69,10 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
         return $devis;
     }
 
-    public function sendPriceFournisseur(DevisEntities $devis, Fournisseur $fournisseur, float $prix = null, Carbon $mail_sended = null, bool $validate = false): DevisEntities
+    public function sendPriceFournisseur(DevisEntities $devis, Fournisseur $fournisseur, Carbon $mail_sended = null, bool $validate = false): DevisEntities
     {
         $devis->fournisseurs()->detach($fournisseur);
-        $devis->fournisseurs()->attach($fournisseur, ['prix' => $prix, 'validate' => $validate, 'mail_sended' => $mail_sended]);
+        $devis->fournisseurs()->attach($fournisseur, ['validate' => $validate, 'mail_sended' => $mail_sended]);
 
         return $devis;
     }
