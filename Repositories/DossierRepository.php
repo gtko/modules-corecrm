@@ -37,7 +37,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
         $dossier->save();
 
-        app(FlowContract::class)->add($dossier,new ClientDossierCreate(Auth::user()));
+        app(FlowContract::class)->add($dossier, new ClientDossierCreate(Auth::user()));
 
         return $dossier;
     }
@@ -47,34 +47,32 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         $dossier = Dossier::find($dossierModel->id);
         $dossier->associate($commercial);
 
-        app(FlowContract::class)->add($dossier,new ClientDossierUpdate(Auth::user()));
+        app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user()));
 
         return $dossier;
     }
 
-    public function getAllDossiers(int $paginate = 15):LengthAwarePaginator
+    public function getAllDossiers(int $paginate = 15): LengthAwarePaginator
     {
         return Dossier::query()->paginate(15);
     }
 
-    public function getDossiersByClient(ClientEntity $client, int $paginate = 15):LengthAwarePaginator
+    public function getDossiersByClient(ClientEntity $client, int $paginate = 15): LengthAwarePaginator
     {
         return $client->dossiers()->paginate(15);
     }
 
 
-
-
     public function searchQuery(Builder $query, string $value, mixed $parent = null): Builder
     {
-        $ref = (int) $value - Dossier::getNumStartRef();
+        $ref = (int)$value - Dossier::getNumStartRef();
         $query = $query->where('id', $ref);
 
-        $query->orWhereHas('status', function($query) use ($value){
+        $query->orWhereHas('status', function ($query) use ($value) {
             $query->where('label', 'LIKE', "%$value%");
         });
 
-        if(!HasInterface::has(DevisRepositoryContract::class, $parent)) {
+        if (!HasInterface::has(DevisRepositoryContract::class, $parent)) {
             $query->orWhereHas('devis', function ($query) use ($value) {
                 return app(DevisRepositoryContract::class)->searchQuery($query, $value, $this);
             });
@@ -91,9 +89,9 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
     public function filterByParents(Builder $query, array $parents): Builder
     {
-        return $query->whereHas('client', function($query) use ($parents){
-                $query->where('id', $parents[0] ?? null);
-            });
+        return $query->whereHas('client', function ($query) use ($parents) {
+            $query->where('id', $parents[0] ?? null);
+        });
     }
 
     public function changeCommercial(Dossier $dossier, Commercial $commercial): Dossier
@@ -132,7 +130,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
     {
         $collection = Dossier::where('commercial_id', $commercial->id)->where('status_id', $status->id)->get();
 
-         return $collection->groupBy('client_id')->first();
+        return $collection->groupBy('client_id')->first();
     }
 
     public function getDossierNotAttribute(): Collection
@@ -154,5 +152,31 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
     public function getSource(): Collection
     {
         return Dossier::all()->groupBy('source');
+    }
+
+    public function getByEmail(string $email): Collection
+    {
+        $dossiers = Dossier::whereHas('client', (function ($query) use ($email) {
+            $query->whereHas('personne', function ($query) use ($email) {
+                $query->whereHas('emails', function ($query) use ($email) {
+                    $query->where('email', $email);
+                });
+            });
+        }))->get();
+
+        return $dossiers;
+    }
+
+    public function getByPhone(string $phone): Collection
+    {
+        $dossiers = Dossier::whereHas('client', (function ($query) use ($phone) {
+            $query->whereHas('personne', function ($query) use ($phone) {
+                $query->whereHas('phones', function ($query) use ($phone) {
+                    $query->where('phone', $phone);
+                });
+            });
+        }))->get();
+
+        return $dossiers;
     }
 }

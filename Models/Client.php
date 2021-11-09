@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Modules\BaseCore\Interfaces\TypePersonne;
+use Modules\BaseCore\Models\Personne;
 use Modules\BaseCore\Models\Scopes\HasPersonne;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
 use Modules\SearchCRM\Entities\SearchResult;

@@ -51,7 +51,7 @@ class ClientController extends Controller
      * @param \Modules\CoreCRM\Http\Requests\ClientStoreRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClientStoreRequest $request,CreatePersonneContract $action, ClientRepositoryContract $repClient)
+    public function store(ClientStoreRequest $request)
     {
         $this->authorize('create', ClientEntity::class);
 

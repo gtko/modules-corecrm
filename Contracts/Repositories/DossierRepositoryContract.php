@@ -28,7 +28,10 @@ interface DossierRepositoryContract extends SearchableRepository, RepositoryFetc
     public function changeClient(Dossier $dossier, ClientEntity $client):Dossier;
     public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection;
     public function getDossiersByClient(ClientEntity $client,int $paginate): ?LengthAwarePaginator;
+    public function getByEmail(string $email): Collection;
+    public function getByPhone(string $phone): Collection;
     public function getDossierNotAttribute(): Collection;
     public function getDossierAttribute(): Collection;
     public function getDossierTrashed(): Collection;
+
 }

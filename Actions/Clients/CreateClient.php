@@ -4,6 +4,7 @@ namespace Modules\CoreCRM\Actions\Clients;
 
 use Illuminate\Http\Request;
 use Modules\BaseCore\Contracts\Personnes\CreatePersonneContract;
+use Modules\CoreCRM\Contracts\Repositories\DossierRepositoryContract;
 use Modules\CoreCRM\Models\Commercial;
 use Modules\CoreCRM\Models\Dossier;
 use Modules\CoreCRM\Models\Source;
@@ -13,17 +14,40 @@ class CreateClient
 {
 
 
-    public function create(Request $request, Commercial $commercial, Source $source, Status $status):Dossier
+    public function create(Request $request, Commercial $commercial, Source $source, Status $status): Dossier
     {
-//        dd($request);
+        $repDossier = (app(DossierRepositoryContract::class));
 
-        //si email existe et pas le numero on ajoute les numero au client et on mets a jours les data
 
-        // si tel existe mais pas email on mais a jour les data et on ajoute l'email
+        foreach ($request->email as $strEmail) {
+
+            $dossiersByEmail = $repDossier->getByEmail($strEmail);
+
+            foreach ($request->phone as $strPhone) {
+
+                $dossierByphone = $repDossier->getByPhone($strPhone);
+
+                if ($dossiersByEmail->count() != 0 && $dossierByphone->count() != 0) {
+                    dump("dossier avec le meme mail et tel");
+                } elseif ($dossiersByEmail->count() != 0 && $dossierByphone->count() == 0) {
+                    dump("dossier avec le meme mail");
+                } elseif ($dossiersByEmail->count() == 0 && $dossierByphone->count() != 0) {
+                    dump("dossier avec le meme tel");
+                } else {
+                    dump("Mail et tel unique");
+                }
+
+            }
+        }
+
+
+        dd('stop');
 
         $personne = app(CreatePersonneContract::class)->create($request);
 
-        $dossier = (new CreateClientWithDossier())->create($personne, $commercial, $source, $status);
+        $client = (new CreateClientWithDossier())->create($personne, $commercial, $source, $status);
+
+        return $client;
     }
 
 }
