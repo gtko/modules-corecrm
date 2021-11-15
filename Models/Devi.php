@@ -76,4 +76,6 @@ class Devi extends DevisEntities implements SearchableModel
         return $result;
     }
 
+
+
 }

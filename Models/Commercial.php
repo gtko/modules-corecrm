@@ -4,6 +4,7 @@ namespace Modules\CoreCRM\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Modules\BaseCore\Models\User;
+use Modules\TimerCRM\Contracts\Repositories\TimerRepositoryContract;
 use Spatie\Permission\Models\Role;
 
 class Commercial extends User
@@ -22,6 +23,18 @@ class Commercial extends User
                 Role::find('name', 'commercial')
             ]);
         });
+    }
+
+    public function getIsActifAttribute()
+    {
+        if(app(TimerRepositoryContract::class)->fetchTimerStarted($this) != null)
+        {
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 
     public function timer(): \Illuminate\Database\Eloquent\Relations\HasMany
