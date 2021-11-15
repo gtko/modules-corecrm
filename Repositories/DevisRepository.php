@@ -62,20 +62,7 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
         return $devis->fournisseurs()->detach($fournisseur);
     }
 
-    public function validateFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $validate = true,)
-    {
-        $devis->fournisseurs()->updateExistingPivot($fournisseur, ['validate' => $validate]);
 
-        return $devis;
-    }
-
-    public function sendPriceFournisseur(DevisEntities $devis, Fournisseur $fournisseur, Carbon $mail_sended = null, bool $validate = false): DevisEntities
-    {
-        $devis->fournisseurs()->detach($fournisseur);
-        $devis->fournisseurs()->attach($fournisseur, ['validate' => $validate, 'mail_sended' => $mail_sended]);
-
-        return $devis;
-    }
 
     public function delete(DevisEntities $devis): bool
     {
@@ -128,5 +115,27 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
         $devi->data = $newData;
         return $devi->save();
 
+    }
+
+    public function validateFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $validate = true,)
+    {
+        $devis->fournisseurs()->updateExistingPivot($fournisseur, ['validate' => $validate]);
+
+        return $devis;
+    }
+
+    public function sendDemandeFournisseur(DevisEntities $devis, Fournisseur $fournisseur, Carbon $mail_sended = null, bool $validate = false): DevisEntities
+    {
+        $devis->fournisseurs()->detach($fournisseur);
+        $devis->fournisseurs()->attach($fournisseur, ['validate' => $validate, 'mail_sended' => $mail_sended]);
+
+        return $devis;
+    }
+
+    public function savePriceFournisseur(DevisEntities $devis, Fournisseur $fournisseur, float $price): DevisEntities
+    {
+        $devis->fournisseurs()->updateExistingPivot($fournisseur, ['prix' => $price]);
+
+        return $devis;
     }
 }
