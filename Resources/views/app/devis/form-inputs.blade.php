@@ -200,7 +200,7 @@
             Informations
         </h3>
         <p class="mt-1 text-sm text-gray-500">
-           informations divers sur les trajets en bus
+           informations divers sur les trajets en autocar
         </p>
     </div>
     <x-basecore::partials.card>
