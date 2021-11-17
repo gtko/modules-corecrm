@@ -27,11 +27,11 @@ class CreateClient
 
                 $dossierByphone = $repDossier->getByPhone($strPhone);
 
-                if ($dossiersByEmail->count() != 0 && $dossierByphone->count() != 0) {
+                if ($dossiersByEmail->count() > 0 && $dossierByphone->count() > 0) {
                     dump("dossier avec le meme mail et tel");
-                } elseif ($dossiersByEmail->count() != 0 && $dossierByphone->count() == 0) {
+                } elseif ($dossiersByEmail->count() > 0 && $dossierByphone->count() === 0) {
                     dump("dossier avec le meme mail");
-                } elseif ($dossiersByEmail->count() == 0 && $dossierByphone->count() != 0) {
+                } elseif ($dossiersByEmail->count() === 0 && $dossierByphone->count() > 0) {
                     dump("dossier avec le meme tel");
                 } else {
 //                    dump("Mail et tel unique");
