@@ -156,27 +156,32 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
     public function getByEmail(string $email): Collection
     {
-        $dossiers = Dossier::whereHas('client', (function ($query) use ($email) {
+        return Dossier::whereHas('client', (function ($query) use ($email) {
             $query->whereHas('personne', function ($query) use ($email) {
                 $query->whereHas('emails', function ($query) use ($email) {
                     $query->where('email', $email);
                 });
             });
         }))->get();
-
-        return $dossiers;
     }
 
     public function getByPhone(string $phone): Collection
     {
-        $dossiers = Dossier::whereHas('client', (function ($query) use ($phone) {
+        return Dossier::whereHas('client', (function ($query) use ($phone) {
             $query->whereHas('personne', function ($query) use ($phone) {
                 $query->whereHas('phones', function ($query) use ($phone) {
                     $query->where('phone', $phone);
                 });
             });
         }))->get();
-
-        return $dossiers;
     }
+
+    public function getDossierByClientAndStatus(Client $client, Status $status):Collection
+    {
+        return Dossier::where('clients_id', $client->id)
+            ->where('status_id', $status->id)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+    }
+
 }

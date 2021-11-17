@@ -11,6 +11,7 @@ use Modules\BaseCore\Interfaces\RepositoryFetchable;
 use Modules\BaseCore\Interfaces\RepositoryFilters;
 use Modules\BaseCore\Interfaces\RepositoryQueryCustom;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
+use Modules\CoreCRM\Models\Client;
 use Modules\CoreCRM\Models\Commercial;
 use Modules\CoreCRM\Models\Dossier;
 use Modules\CoreCRM\Models\Source;
@@ -28,6 +29,7 @@ interface DossierRepositoryContract extends SearchableRepository, RepositoryFetc
     public function changeClient(Dossier $dossier, ClientEntity $client):Dossier;
     public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection;
     public function getDossiersByClient(ClientEntity $client,int $paginate): ?LengthAwarePaginator;
+    public function getDossierByClientAndStatus(Client $client, Status $status):Collection;
     public function getByEmail(string $email): Collection;
     public function getByPhone(string $phone): Collection;
     public function getDossierNotAttribute(): Collection;
