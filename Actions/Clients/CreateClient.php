@@ -34,14 +34,11 @@ class CreateClient
                 } elseif ($dossiersByEmail->count() == 0 && $dossierByphone->count() != 0) {
                     dump("dossier avec le meme tel");
                 } else {
-                    dump("Mail et tel unique");
+//                    dump("Mail et tel unique");
                 }
 
             }
         }
-
-
-        dd('stop');
 
         $personne = app(CreatePersonneContract::class)->create($request);
 
