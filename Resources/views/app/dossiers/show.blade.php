@@ -12,18 +12,15 @@
         </h2>
     </x-slot>
 
-
+    <div class="mt-2">
+        <livewire:corecrm::pipeline-steps :dossier="$dossier" />
+    </div>
     <x-basecore::nav.layout default="devis">
         <x-basecore::layout.panel-sidebar>
             <x-slot name="sidebar">
                 <x-corecrm::client.sidebar :client="$client" :dossier="$dossier">
                     <x-slot name="status">
-                        <x-basecore::resolve-type-view
-                            :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\DossierSidebarActionsViewContract::class"
-                            :arguments="['client' => $client, 'dossier' => $dossier]"
-                        >
                             <x-corecrm::status :label="$dossier->status_label"/>
-                        </x-basecore::resolve-type-view>
                     </x-slot>
                     <x-slot name="actions">
 
@@ -57,8 +54,8 @@
                 />
 
             </x-slot>
-
             <x-basecore::partials.card>
+
                 <x-basecore::nav.menu class="-mt-4">
                     <x-basecore::nav.menu-item name="note">
                         <x-basecore::icon-label icon="note" label="Note"/>

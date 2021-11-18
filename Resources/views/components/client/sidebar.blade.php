@@ -5,7 +5,7 @@
             </div>
             <div class="ml-4 mr-auto">
                 <div class="font-medium text-base">{{$client->format_name}}</div>
-                <livewire:corecrm::label-status :dossier="$dossier"/>
+{{--                <livewire:corecrm::label-status :dossier="$dossier"/>--}}
             </div>
         </div>
 

@@ -20,6 +20,7 @@ use Modules\CoreCRM\Contracts\Repositories\DossierRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\EventRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\FlowRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\FournisseurRepositoryContract;
+use Modules\CoreCRM\Contracts\Repositories\PipelineRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\SourceRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\StatusRepositoryContract;
 use Modules\CoreCRM\Contracts\Services\FlowContract;
@@ -35,6 +36,7 @@ use Modules\CoreCRM\Repositories\DossierRepository;
 use Modules\CoreCRM\Repositories\EventRepository;
 use Modules\CoreCRM\Repositories\FlowRepository;
 use Modules\CoreCRM\Repositories\FournisseurRepository;
+use Modules\CoreCRM\Repositories\PipelineRepository;
 use Modules\CoreCRM\Repositories\SourceRepository;
 use Modules\CoreCRM\Repositories\StatusRepository;
 use Modules\CoreCRM\Services\FlowCRM;
@@ -63,6 +65,7 @@ class CoreCRMServiceProvider extends ServiceProvider
 
         new NotificationsDispatch();
 
+        $this->app->bind(PipelineRepositoryContract::class, PipelineRepository::class);
         $this->app->bind(ClientRepositoryContract::class, ClientRepository::class);
         $this->app->bind(DossierRepositoryContract::class, DossierRepository::class);
         $this->app->bind(StatusRepositoryContract::class, StatusRepository::class);

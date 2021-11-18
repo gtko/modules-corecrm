@@ -21,6 +21,6 @@ class Pipeline extends Model
 
     public function statuses():HasMany
     {
-        return $this->hasMany(Status::class);
+        return $this->hasMany(Status::class)->orderBy('order', 'ASC');
     }
 }

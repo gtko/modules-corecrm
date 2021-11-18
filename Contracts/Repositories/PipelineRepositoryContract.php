@@ -5,6 +5,7 @@ namespace Modules\CoreCRM\Contracts\Repositories;
 use Modules\BaseCore\Interfaces\RepositoryFetchable;
 use Modules\BaseCore\Interfaces\RepositoryQueryCustom;
 use Modules\CoreCRM\Models\Pipeline;
+use Modules\CoreCRM\Models\Status;
 use Modules\SearchCRM\Interfaces\SearchableRepository;
 
 interface PipelineRepositoryContract extends SearchableRepository, RepositoryFetchable, RepositoryQueryCustom
@@ -14,4 +15,7 @@ interface PipelineRepositoryContract extends SearchableRepository, RepositoryFet
 
     public function isDefault(Pipeline $pipeline);
     public function notIsDefault(Pipeline $pipeline);
+
+    public function getDefault():?Pipeline;
+    public function getStatusNew(Pipeline $pipeline):?Status;
 }

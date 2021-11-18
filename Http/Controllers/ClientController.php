@@ -14,12 +14,14 @@ use Modules\CoreCRM\Contracts\Entities\ClientEntity;
 use Modules\CoreCRM\Contracts\Repositories\ClientRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\CommercialRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\DossierRepositoryContract;
+use Modules\CoreCRM\Contracts\Repositories\PipelineRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\SourceRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\StatusRepositoryContract;
 use Modules\CoreCRM\Http\Requests\ClientStoreRequest;
 use Modules\CoreCRM\Http\Requests\ClientUpdateRequest;
 use Modules\CoreCRM\Models\Client;
 use Modules\BaseCore\Models\Personne;
+use Modules\CoreCRM\Repositories\PipelineRepository;
 
 class ClientController extends Controller
 {
@@ -59,10 +61,12 @@ class ClientController extends Controller
 
 
         $commercial = app(CommercialRepositoryContract::class)->getById(1);
-        $source = app(SourceRepositoryContract::class)->getByLabel('CRM');
-        $status = app(StatusRepositoryContract::class)->getById(1);
+        $source = app(SourceRepositoryContract::class)->all()->first();
+        $pipelineRep = app(PipelineRepositoryContract::class);
+        $pipeline = $pipelineRep->getDefault();
+        $status = $pipelineRep->getStatusNew($pipeline);
 
-        $client = (new CreateClient())->create($request, $commercial, $source, $status);
+        $client = (new CreateClient())->create($request, $commercial, $source,$status);
 
 
         DB::commit();
