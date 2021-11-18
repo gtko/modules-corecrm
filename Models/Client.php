@@ -30,8 +30,6 @@ class Client extends ClientEntity
 
     protected $fillable = ['personne_id'];
 
-    protected array $searchableFields = ['*'];
-
     public function Dossiers(): HasMany
     {
         return $this->hasMany(Dossier::class, 'clients_id');
