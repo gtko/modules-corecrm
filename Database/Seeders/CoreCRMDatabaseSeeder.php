@@ -8,7 +8,9 @@ use Modules\BaseCore\Database\Factories\UserFactory;
 use Modules\BaseCore\Models\Email;
 use Modules\BaseCore\Models\Personne;
 use Modules\BaseCore\Models\Phone;
+use Modules\CoreCRM\Contracts\Repositories\PipelineRepositoryContract;
 use Modules\CoreCRM\Models\Source;
+use Modules\CoreCRM\Repositories\PipelineRepository;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -97,5 +99,10 @@ class CoreCRMDatabaseSeeder extends Seeder
         $user->assignRole([$commercialRole]);
 
         Source::create(['label' => 'CRM']);
+        Source::create(['label' => 'FORM']);
+
+        $pipelineRep = app(PipelineRepositoryContract::class);
+        $pipeline = $pipelineRep->create('default');
+        $pipelineRep->isDefault($pipeline);
     }
 }
