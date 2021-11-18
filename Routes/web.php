@@ -45,5 +45,5 @@ Route::prefix('/')
         Route::resource('clients/{client}/dossiers/{dossier}/devis', DeviController::class)->except('index');
 
         Route::get('pdf/devis/{devis}', [ PdfDevisDownloadController::class, 'download'])->name('pdf-devis-download');
-        Route::get('pdf/devis/{devis}/signed', [ PdfDevisDownloadController::class, 'signed'])->name('pdf-devis-download-signed');
+
     });
