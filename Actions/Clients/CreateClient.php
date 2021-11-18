@@ -44,7 +44,7 @@ class CreateClient
                     $personne = $dossierByphone->first()->client->personne;
                     (new PersonneAddPhone())->add([$strPhone], $personne);
                     //on créer un nouveau dossier au client si aucun dossier n'est déja ouvert
-                    return (new CreateDossierIfWithoutOpen())->open($dossiersByEmail->first()->client, $commercial, $source, $status);
+                    return (new CreateDossierIfWithoutOpen())->open($dossierByphone->first()->client, $commercial, $source, $status);
                 }
             }
         }
