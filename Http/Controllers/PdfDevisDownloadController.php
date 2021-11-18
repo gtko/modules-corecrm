@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Modules\CoreCRM\Actions\Devis\GenerateLinkDevis;
 use Modules\CoreCRM\Contracts\Entities\DevisEntities;
 use Modules\BaseCore\Contracts\Services\PdfContract;
+use Modules\CrmBe\Librairies\Yousign\YousignApi;
 
 class PdfDevisDownloadController extends Controller
 {
@@ -18,4 +19,5 @@ class PdfDevisDownloadController extends Controller
 
         return $pdfService->downloadPdf($filename);
     }
+    
 }
