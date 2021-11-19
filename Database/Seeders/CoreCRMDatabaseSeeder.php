@@ -47,6 +47,12 @@ class CoreCRMDatabaseSeeder extends Seeder
         Permission::create(['name' => 'update statuses']);
         Permission::create(['name' => 'delete statuses']);
 
+        Permission::create(['name' => 'list pipelines']);
+        Permission::create(['name' => 'views pipelines']);
+        Permission::create(['name' => 'create pipelines']);
+        Permission::create(['name' => 'update pipelines']);
+        Permission::create(['name' => 'delete pipelines']);
+
         Permission::create(['name' => 'list clients']);
         Permission::create(['name' => 'views clients']);
         Permission::create(['name' => 'create clients']);
@@ -104,5 +110,6 @@ class CoreCRMDatabaseSeeder extends Seeder
         $pipelineRep = app(PipelineRepositoryContract::class);
         $pipeline = $pipelineRep->create('default');
         $pipelineRep->isDefault($pipeline);
+
     }
 }

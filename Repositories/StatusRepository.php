@@ -4,9 +4,11 @@ namespace Modules\CoreCRM\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Modules\BaseCore\Repositories\AbstractRepository;
 use Modules\CoreCRM\Contracts\Repositories\StatusRepositoryContract;
 use Modules\CoreCRM\Enum\StatusTypeEnum;
+use Modules\CoreCRM\Models\Dossier;
 use Modules\CoreCRM\Models\Pipeline;
 use Modules\CoreCRM\Models\Status;
 
@@ -65,5 +67,30 @@ class StatusRepository extends AbstractRepository implements StatusRepositoryCon
         $status->save();
 
         return $status;
+    }
+
+    public function updateOrder(Status $status, int $order): Status
+    {
+        $status->order = $order;
+        $status->save();
+
+        return $status;
+    }
+
+    public function delete(Status $status): bool
+    {
+        DB::beginTransaction();
+        //on deplace tout les dossiers du status dans le new de la pipeline;
+        $pipeline = $status->pipeline;
+        $newStatus = $pipeline->statuses->where('order', '<', $status->order)->sortByDesc('order')->first();
+        //mass update dossier status_id
+        Dossier::where('status_id',$status->id)->update(['status_id' => $newStatus->id]);
+
+        //on delete le status
+        $good = $status->delete();
+
+        DB::commit();
+
+        return $good;
     }
 }

@@ -15,7 +15,7 @@ class CreateStatusesTable extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('label')->unique();
+            $table->string('label');
             $table->integer('weight')->default(0);
             $table->string('color');
 
