@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\BaseCore\Icons\Icons;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
 use Modules\CoreCRM\Contracts\Entities\DevisEntities;
@@ -41,6 +42,7 @@ class Dossier extends Model implements SearchableModel, Flowable
     use HasStatuable;
     use HasFlowable;
     use CanAppel;
+    use SoftDeletes;
 
     protected $fillable = [
         'clients_id',
