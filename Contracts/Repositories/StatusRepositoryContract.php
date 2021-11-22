@@ -22,5 +22,8 @@ interface StatusRepositoryContract extends SearchableRepository, RepositoryFetch
     public function getById(int $id):Status;
 
     public function changePipeline(Status $status,  Pipeline $pipeline):Status;
+    public function updateOrder(Status $status, int $order):Status;
+
+    public function delete(Status $status):bool;
 
 }

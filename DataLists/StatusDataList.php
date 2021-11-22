@@ -43,14 +43,6 @@ class StatusDataList extends DataListType
     public function getActions(): array
     {
         return [
-            'show' => [
-                'permission' => ['show', Status::class],
-                'route' => function($params){
-                    return route('statuses.show', $params);
-                },
-                'label' => 'voir',
-                'icon' => 'show'
-            ],
             'edit' => [
                 'permission' => ['update', Status::class],
                 'route' => function($params){

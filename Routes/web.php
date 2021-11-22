@@ -8,6 +8,7 @@ use Modules\CoreCRM\Http\Controllers\DeviController;
 use Modules\CoreCRM\Http\Controllers\DossierController;
 use Modules\CoreCRM\Http\Controllers\FournisseurController;
 use Modules\CoreCRM\Http\Controllers\PdfDevisDownloadController;
+use Modules\CoreCRM\Http\Controllers\PipelinesController;
 use Modules\CoreCRM\Http\Controllers\SourceController;
 use Modules\CoreCRM\Http\Controllers\StatusController;
 use Modules\CrmAutoCar\Http\Controllers\VuePlateauController;
@@ -25,9 +26,10 @@ Route::prefix('/')
 
         Route::resource('fournisseurs', FournisseurController::class)->except('show');
         Route::resource('clients', ClientController::class);
-        Route::resource('statuses', StatusController::class);
-        Route::resource('sources', SourceController::class);
+        Route::resource('statuses', StatusController::class)->except('show');
+        Route::resource('sources', SourceController::class)->except('show');
         Route::resource('devis', DeviController::class);
+        Route::resource('pipelines', PipelinesController::class)->except('show');
 
         Route::middleware(['secure.devis'])->group(function () {
             Route::get('/devis/{devis}/{token}', function(){
