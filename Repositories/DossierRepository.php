@@ -135,18 +135,18 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
     public function getDossierNotAttribute(): Collection
     {
-        return Dossier::where('commercial_id', '1')->where('deleted_at', null)->get();
+        return Dossier::where('commercial_id', '1')->get();
     }
 
     public function getDossierAttribute(): Collection
     {
-        return Dossier::where('commercial_id', '!=', '1')->where('deleted_at', null)->get();
+        return Dossier::where('commercial_id', '!=', '1')->whereDate('created_at','>', now()->subDays(7))->get();
 
     }
 
     public function getDossierTrashed(): Collection
     {
-        return Dossier::withTrashed()->get();
+        return Dossier::onlyTrashed()->get();
     }
 
     public function getSource(): Collection

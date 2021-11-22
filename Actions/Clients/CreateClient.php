@@ -36,7 +36,7 @@ class CreateClient
                 } elseif ($dossiersByEmail->count() > 0 && $dossierByphone->count() === 0) {
                     //on rajoute l'email à la personne
                     $personne = $dossiersByEmail->first()->client->personne;
-                    $phones = $personne->emails->pluck('phone');
+                    $phones = $personne->phones->pluck('phone')->toArray();
                     $phones[] = $strPhone;
                     (new PersonneAddPhone())->add($phones, $personne);
                     //on créer un nouveau dossier au client si aucun dossier n'est déja ouvert
@@ -44,7 +44,7 @@ class CreateClient
                 } elseif ($dossiersByEmail->count() === 0 && $dossierByphone->count() > 0) {
                     //on rajoute le phone à la personne
                     $personne = $dossierByphone->first()->client->personne;
-                    $emails = $personne->emails->pluck('email');
+                    $emails = $personne->emails->pluck('email')->toArray();
                     $emails[] = $strEmail;
                     (new PersonneAddEmail())->add($emails, $personne);
                     //on créer un nouveau dossier au client si aucun dossier n'est déja ouvert
