@@ -146,7 +146,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
     public function getDossierTrashed(): Collection
     {
-        return Dossier::where('deleted_at', '!=', null)->get();
+        return Dossier::withTrashed()->get();
     }
 
     public function getSource(): Collection
