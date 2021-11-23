@@ -34,8 +34,8 @@ class StatusRepository extends AbstractRepository implements StatusRepositoryCon
     {
         $status->label = $label;
         $status->color = $color;
-        $status->order = $color;
-        $status->type = $color;
+        $status->order = $order;
+        $status->type = $type;
         $status->save();
 
         return $status;

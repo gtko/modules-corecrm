@@ -2,6 +2,7 @@
 
 namespace Modules\CoreCRM\Contracts\Repositories;
 
+use Illuminate\Support\Collection;
 use Modules\BaseCore\Interfaces\RepositoryFetchable;
 use Modules\BaseCore\Interfaces\RepositoryQueryCustom;
 use Modules\CoreCRM\Models\Pipeline;
@@ -18,4 +19,6 @@ interface PipelineRepositoryContract extends SearchableRepository, RepositoryFet
 
     public function getDefault():?Pipeline;
     public function getStatusNew(Pipeline $pipeline):?Status;
+
+    public function updateStatus(Pipeline $pipeline, array|Collection|\Illuminate\Database\Eloquent\Collection $status);
 }

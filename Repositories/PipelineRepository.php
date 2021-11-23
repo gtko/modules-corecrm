@@ -5,6 +5,7 @@ namespace Modules\CoreCRM\Repositories;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Modules\BaseCore\Repositories\AbstractRepository;
 use Modules\CoreCRM\Contracts\Repositories\PipelineRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\StatusRepositoryContract;
@@ -67,5 +68,24 @@ class PipelineRepository extends AbstractRepository implements PipelineRepositor
     public function getStatusNew(Pipeline $pipeline): ?Status
     {
         return $pipeline->statuses->where('type', StatusTypeEnum::TYPE_NEW)->first();
+    }
+
+    public function updateStatus(Pipeline $pipeline, \Illuminate\Database\Eloquent\Collection|array|\Illuminate\Support\Collection $status)
+    {
+        $statuses = $pipeline->statuses;
+        $status = collect($status);
+        $statsRep = app(StatusRepositoryContract::class);
+        DB::beginTransaction();
+        foreach($statuses as $statuse){
+            $newStatus = $status->where('id', $statuse->id)->first();
+            if($newStatus){
+                $statsRep->update($statuse, $newStatus['label'], $newStatus['color'], $newStatus['order'], $newStatus['type']);
+            }else{
+                $statuse->dossiers()->update(['status_id' => $status->first()['id']]);
+                $statuse->delete();
+            }
+        }
+        DB::commit();
+
     }
 }

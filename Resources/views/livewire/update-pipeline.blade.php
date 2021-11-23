@@ -4,11 +4,13 @@
         ><i class="mr-1 icon ion-md-arrow-back"></i
             ></a>
     </x-slot>
+
+    <form wire:submit.prevent="store">
         <x-basecore::inputs.group>
             <x-basecore::inputs.text
                 name="name"
                 label="Nom de la pipeline"
-                value="{{ old('name', $pipeline->name ?? '') }}"
+                wire:model="name"
                 maxlength="255"
                 required="required"
             />
@@ -52,9 +54,9 @@
                         <div class="col-span-6">
                             <x-basecore::inputs.group class="w-full">
                                 <x-basecore::inputs.text
-                                    name="status[-100][label]"
+                                    name="new[label]"
                                     label=""
-                                    value="{{ old('status.-100.label', $pipeline->status_new->label) }}"
+                                    wire:model="new.label"
                                     maxlength="255"
                                     required
                                 />
@@ -63,9 +65,9 @@
                         <div class="col-span-2">
                             <div class="mt-3 overflow-hidden w-8 h-8 rounded-full bg-red-600">
                                 <x-basecore::inputs.color
-                                    name="status[-100][color]"
+                                    name="new[color]"
                                     label=""
-                                    value="{{ old('status.-100.color', $pipeline->status_new->label) }}"
+                                    wire:model="new.color"
                                     class="h-16 w-16 -mt-4 -ml-4"
                                     required
                                 />
@@ -75,8 +77,8 @@
                         </div>
                     </div>
                 </li>
-                @foreach($statuses->whereNotIn('type',[Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN, Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST, Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_NEW] ) as $order => $status)
-                    <li class="py-4" wire:sortable.item="{{ $status->id }}" wire:key="status-{{ $status->id }}">
+                @foreach($form as $order => $status)
+                    <li class="py-4" wire:sortable.item="{{ $status['id'] }}" wire:key="status-{{ $status['id']}}">
                         <div class="grid grid-cols-12 items-center">
                             <div class="col-span-2">
                                 <div wire:sortable.handle class="cursor-move">
@@ -86,10 +88,10 @@
                             <div class="col-span-6">
                                 <x-basecore::inputs.group class="w-full">
                                     <x-basecore::inputs.text
-                                        name="status[{{$order}}][label]"
+                                        name="form[{{$order}}][label]"
                                         label=""
                                         x-model=""
-                                        value="{{ old('status.'.$order.'label', $status->label) }}"
+                                        wire:model="form.{{$order}}.label"
                                         maxlength="255"
                                         required
                                     />
@@ -100,14 +102,14 @@
                                     <x-basecore::inputs.color
                                         name="status[{{$order}}][color]"
                                         label=""
-                                        value="{{ old('status.'.$order.'color', $status->color) }}"
+                                        wire:model="status.{{$order}}.color"
                                         class="h-16 w-16 -mt-4 -ml-4"
                                         required
                                     />
                                 </div>
                             </div>
-                            <x-basecore::loading-replace wire:target="removeStatus({{$status->id}})">
-                                <div class="col-span-2 cursor-pointer" wire:click="removeStatus({{$status->id}})">
+                            <x-basecore::loading-replace wire:target="removeStatus({{ $status['id']}})">
+                                <div class="col-span-2 cursor-pointer" wire:click="removeStatus({{ $status['id']}})">
                                     @icon('delete', null, 'mr-2 hover:text-red-600')
                                 </div>
                             </x-basecore::loading-replace>
@@ -122,9 +124,9 @@
                         <div class="col-span-6">
                             <x-basecore::inputs.group class="w-full">
                                 <x-basecore::inputs.text
-                                    name="status[900]['label']"
+                                    name="win['label']"
                                     label=""
-                                    value="{{ old('status.900.label', $pipeline->status_win->label) }}"
+                                    wire:model="win.label"
                                     maxlength="255"
                                     required
                                 />
@@ -133,9 +135,9 @@
                         <div class="col-span-2">
                             <div class="mt-3 overflow-hidden w-8 h-8 rounded-full bg-red-600">
                                 <x-basecore::inputs.color
-                                    name="status[900]['color']"
+                                    name="win['color']"
                                     label=""
-                                    value="{{ old('status.900.color', $pipeline->status_win->color) }}"
+                                    wire:model="win.color"
                                     class="h-16 w-16 -mt-4 -ml-4"
                                     required
                                 />
@@ -152,9 +154,9 @@
                         <div class="col-span-6">
                             <x-basecore::inputs.group class="w-full">
                                 <x-basecore::inputs.text
-                                    name="status[901][label]"
+                                    name="lost[label]"
                                     label=""
-                                    value="{{ old('status.901.label', $pipeline->status_lost->label) }}"
+                                    wire:model="lost.label"
                                     maxlength="255"
                                     required
                                 />
@@ -163,9 +165,9 @@
                         <div class="col-span-2">
                             <div class="mt-3 overflow-hidden w-8 h-8 rounded-full bg-red-600">
                                 <x-basecore::inputs.color
-                                    name="status[901][color]"
+                                    name="lost[color]"
                                     label=""
-                                    value="{{ old('status.901.color', $pipeline->status_lost->color) }}"
+                                    wire:model="lost.color"
                                     class="h-16 w-16 -mt-4 -ml-4"
                                     required
                                 />
@@ -194,12 +196,13 @@
                         @lang('basecore::crud.common.update')
                     </x-basecore::button>
                 </x-slot>
-                <x-basecore::button wire:click="store">
+                <x-basecore::button type="submit">
                     <i class="mr-1 icon ion-md-save"></i>
                     @lang('basecore::crud.common.update')
                 </x-basecore::button>
             </x-basecore::loading-replace>
 
         </div>
+    </form>
 
 </x-basecore::partials.card>
