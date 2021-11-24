@@ -53,6 +53,12 @@ class CoreCRMDatabaseSeeder extends Seeder
         Permission::create(['name' => 'update pipelines']);
         Permission::create(['name' => 'delete pipelines']);
 
+        Permission::create(['name' => 'list workflows']);
+        Permission::create(['name' => 'views workflows']);
+        Permission::create(['name' => 'create workflows']);
+        Permission::create(['name' => 'update workflows']);
+        Permission::create(['name' => 'delete workflows']);
+
         Permission::create(['name' => 'list clients']);
         Permission::create(['name' => 'views clients']);
         Permission::create(['name' => 'create clients']);

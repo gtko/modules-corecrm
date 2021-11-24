@@ -23,6 +23,7 @@ use Modules\CoreCRM\Contracts\Repositories\FournisseurRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\PipelineRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\SourceRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\StatusRepositoryContract;
+use Modules\CoreCRM\Contracts\Repositories\WorkflowRepositoryContract;
 use Modules\CoreCRM\Contracts\Services\FlowContract;
 use Modules\CoreCRM\Contracts\Views\DevisEditViewContract;
 use Modules\CoreCRM\Flow\Notification\NotificationsDispatch;
@@ -39,6 +40,7 @@ use Modules\CoreCRM\Repositories\FournisseurRepository;
 use Modules\CoreCRM\Repositories\PipelineRepository;
 use Modules\CoreCRM\Repositories\SourceRepository;
 use Modules\CoreCRM\Repositories\StatusRepository;
+use Modules\CoreCRM\Repositories\WorkflowRepository;
 use Modules\CoreCRM\Services\FlowCRM;
 
 
@@ -81,6 +83,8 @@ class CoreCRMServiceProvider extends ServiceProvider
         $this->app->bind(FlowRepositoryContract::class,FlowRepository::class);
         $this->app->bind(EventRepositoryContract::class,EventRepository::class);
         $this->app->bind(FlowContract::class, FlowCRM::class);
+ 
+        $this->app->bind(WorkflowRepositoryContract::class, WorkflowRepository::class);
 
         app(CompositeurThemeContract::class)
             ->setViews(DevisEditViewContract::class,[
