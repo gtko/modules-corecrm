@@ -37,6 +37,15 @@ class WorkflowDataList extends DataListType
                 'label' => 'edit',
                 'icon' => 'edit'
             ],
+            'delete' => [
+                'method' => 'delete',
+                'permission' => ['delete', Workflow::class],
+                'route' => function($params){
+                    return route('workflows.destroy', $params);
+                },
+                'label' => 'Supprimer',
+                'icon' => 'delete'
+            ],
         ];
     }
 

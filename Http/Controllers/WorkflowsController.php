@@ -17,28 +17,14 @@ class WorkflowsController
         return view('corecrm::app.workflows.create');
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(Workflow $workflow)
-    {
-        //
-    }
-
     public function edit(Workflow $workflow)
     {
-        //
-    }
-
-    public function update(Request $request, Workflow $workflow)
-    {
-        //
+        return view('corecrm::app.workflows.edit', compact('workflow'));
     }
 
     public function destroy(Workflow $workflow)
     {
-        //
+        $workflow->delete();
+        return redirect()->route('workflows.index');
     }
 }

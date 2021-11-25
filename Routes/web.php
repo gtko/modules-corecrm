@@ -31,7 +31,7 @@ Route::prefix('/')
         Route::resource('sources', SourceController::class)->except('show');
         Route::resource('devis', DeviController::class);
         Route::resource('pipelines', PipelinesController::class)->except('show');
-        Route::resource('workflows', WorkflowsController::class)->except('show');
+        Route::resource('workflows', WorkflowsController::class)->except('show', 'store', 'update');
 
         Route::middleware(['secure.devis'])->group(function () {
             Route::get('/devis/{devis}/{token}', function(){

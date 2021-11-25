@@ -27,6 +27,7 @@ use Modules\CoreCRM\Contracts\Repositories\WorkflowRepositoryContract;
 use Modules\CoreCRM\Contracts\Services\FlowContract;
 use Modules\CoreCRM\Contracts\Views\DevisEditViewContract;
 use Modules\CoreCRM\Flow\Notification\NotificationsDispatch;
+use Modules\CoreCRM\Flow\Works\WorkflowKernel;
 use Modules\CoreCRM\Models\Client;
 use Modules\CoreCRM\Models\Devi;
 use Modules\CoreCRM\Models\User;
@@ -57,6 +58,7 @@ class CoreCRMServiceProvider extends ServiceProvider
      */
     protected string $moduleNameLower = 'corecrm';
 
+
     /**
      * Register services.
      */
@@ -66,6 +68,7 @@ class CoreCRMServiceProvider extends ServiceProvider
         $this->app->register(AuthServiceProvider::class);
 
         new NotificationsDispatch();
+
 
         $this->app->bind(PipelineRepositoryContract::class, PipelineRepository::class);
         $this->app->bind(ClientRepositoryContract::class, ClientRepository::class);
@@ -83,8 +86,10 @@ class CoreCRMServiceProvider extends ServiceProvider
         $this->app->bind(FlowRepositoryContract::class,FlowRepository::class);
         $this->app->bind(EventRepositoryContract::class,EventRepository::class);
         $this->app->bind(FlowContract::class, FlowCRM::class);
- 
+
         $this->app->bind(WorkflowRepositoryContract::class, WorkflowRepository::class);
+        $this->app->singleton(WorkflowKernel::class);
+
 
         app(CompositeurThemeContract::class)
             ->setViews(DevisEditViewContract::class,[
@@ -111,6 +116,9 @@ class CoreCRMServiceProvider extends ServiceProvider
         $this->registerViewsClass();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+
+        app(WorkflowKernel::class)->dispatch();
+
 
     }
 
