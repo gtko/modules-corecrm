@@ -22,6 +22,14 @@ class WorkflowDataList extends DataListType
 
             "active" => [
                 'label' => 'actif',
+                'component' => [
+                    'name' => 'crmautocar::components.workflow-actif',
+                    'attribute' => function($item){
+                        return [
+                            'workflow' => $item,
+                        ];
+                    }
+                ]
             ],
         ];
     }

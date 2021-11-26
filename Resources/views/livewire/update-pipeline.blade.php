@@ -42,7 +42,7 @@
                             @icon('spinner', 20, 'animate-spin mr-2') Ajouter un status
                         </button>
                     </x-slot>
-                    <button wire:click="addStatus" class="btn btn-primary">@icon('addCircle', 20, 'mr-2') Ajouter un status</button>
+                    <button type="button" wire:click="addStatus" class="btn btn-primary">@icon('addCircle', 20, 'mr-2') Ajouter un status</button>
                 </x-basecore::loading-replace>
             </div>
 
@@ -90,10 +90,9 @@
                                     <x-basecore::inputs.text
                                         name="form[{{$order}}][label]"
                                         label=""
-                                        x-model=""
                                         wire:model="form.{{$order}}.label"
                                         maxlength="255"
-                                        required
+                                        required="required"
                                     />
                                 </x-basecore::inputs.group>
                             </div>
@@ -104,12 +103,12 @@
                                         label=""
                                         wire:model="status.{{$order}}.color"
                                         class="h-16 w-16 -mt-4 -ml-4"
-                                        required
+                                        required="required"
                                     />
                                 </div>
                             </div>
-                            <x-basecore::loading-replace wire:target="removeStatus({{ $status['id']}})">
-                                <div class="col-span-2 cursor-pointer" wire:click="removeStatus({{ $status['id']}})">
+                            <x-basecore::loading-replace wire:target="removeStatus('{{ $status['id'] ?? ''}}')">
+                                <div class="col-span-2 cursor-pointer" wire:click="removeStatus('{{ $status['id'] ?? ''}}')">
                                     @icon('delete', null, 'mr-2 hover:text-red-600')
                                 </div>
                             </x-basecore::loading-replace>

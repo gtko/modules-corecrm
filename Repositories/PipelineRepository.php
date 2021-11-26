@@ -76,11 +76,19 @@ class PipelineRepository extends AbstractRepository implements PipelineRepositor
         $status = collect($status);
         $statsRep = app(StatusRepositoryContract::class);
         DB::beginTransaction();
+
+        foreach($status as $index => $statut){
+            $newStatus = $statsRep->newQuery()->where('id', $statut['id'])->first();
+            if($newStatus){
+                $statsRep->update($newStatus, $newStatus['label'], $newStatus['color'], $newStatus['order'], $newStatus['type']);
+            }else{
+                $statsRep->create($pipeline, $statut['label'], $statut['color'], $statut['order'] ?? $index, StatusTypeEnum::TYPE_CUSTOM);
+            }
+        }
+
         foreach($statuses as $statuse){
             $newStatus = $status->where('id', $statuse->id)->first();
-            if($newStatus){
-                $statsRep->update($statuse, $newStatus['label'], $newStatus['color'], $newStatus['order'], $newStatus['type']);
-            }else{
+            if(!$newStatus){
                 $statuse->dossiers()->update(['status_id' => $status->first()['id']]);
                 $statuse->delete();
             }

@@ -21,7 +21,6 @@
                 label="Description"
                 wire:model="data.description"
                 maxlength="255"
-                required="required"
             />
         </x-basecore::inputs.group>
 

@@ -48,7 +48,7 @@ class UpdatePipeline extends Component
     public function store(StatusRepositoryContract $statusRep, PipelineRepositoryContract $pipelineRep){
 
         $status = [
-            -101 => $this->new,
+            0 => $this->new,
             ...$this->form,
             900 => $this->win,
             901 => $this->lost
