@@ -38,10 +38,8 @@ class WorkflowKernel
     }
 
     public function dispatch(){
-        $workflows = app(WorkflowRepositoryContract::class)->newQuery()->get();
-
-        Event::listen(function (FlowAddEvent $event) use ($workflows){
-
+        Event::listen(function (FlowAddEvent $event){
+            $workflows = app(WorkflowRepositoryContract::class)->newQuery()->get();
             $observable = get_class($event->flow->datas);
             $listeners = [];
             foreach($workflows as $workflow){
