@@ -14,10 +14,10 @@ class ActionsChangeStatus extends WorkFlowAction
             ->changeStatus($data['dossier'], $this->params[0]->getValue());
     }
 
-    public function params(): array
+    public function prepareParams(): array
     {
         return [
-            new (ParamsStatus::class)
+            ParamsStatus::class
         ];
     }
 

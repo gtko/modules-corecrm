@@ -185,6 +185,15 @@
                                             @endforeach
                                         </x-basecore::inputs.select>
                                     </x-basecore::inputs.group>
+                                @else
+                                    <x-basecore::inputs.group>
+                                        <x-basecore::inputs.textarea
+                                            name="name"
+                                            label="{{$params->name()}}"
+                                            wire:model="data.actions.{{$index}}.params.{{$paramskey}}"
+                                            required="required"
+                                        />
+                                    </x-basecore::inputs.group>
                                 @endif
                             @endforeach
                         @endif

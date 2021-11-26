@@ -4,6 +4,7 @@ namespace Modules\CoreCRM\Flow\Works\Actions;
 
 use Modules\CoreCRM\Flow\Works\Events\WorkFlowEvent;
 use Modules\CoreCRM\Flow\Works\Interfaces\WorkFlowDescribe;
+use Modules\CoreCRM\Flow\Works\Params\ParamsTag;
 
 abstract class WorkFlowAction implements WorkFlowDescribe
 {
@@ -26,6 +27,16 @@ abstract class WorkFlowAction implements WorkFlowDescribe
         }
     }
 
+    public function params(): array
+    {
+        $params = [];
+        foreach ($this->prepareParams() as $param){
+            $params[] = (new $param);
+        }
+
+        return $params;
+    }
+
     abstract public function handle();
-    abstract public function params():array;
+    abstract protected function prepareParams():array;
 }

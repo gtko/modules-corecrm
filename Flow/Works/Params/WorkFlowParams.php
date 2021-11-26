@@ -13,7 +13,11 @@ abstract class WorkFlowParams implements WorkFlowDescribe
     public function setValue($value){
         $this->value = $value;
     }
-    abstract public function getValue();
+
+    public function getValue()
+    {
+        return $this->value;
+    }
 
 
 }

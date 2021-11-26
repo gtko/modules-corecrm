@@ -4,7 +4,6 @@ namespace Modules\CoreCRM\Flow\Works\Events;
 
 use Modules\CoreCRM\Flow\Attributes\Attributes;
 use Modules\CoreCRM\Flow\Attributes\ClientDossierCreate;
-use Modules\CoreCRM\Flow\Works\Datas\WorkDataUser;
 
 class EventClientDossierCreate extends WorkFlowEvent
 {

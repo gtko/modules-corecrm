@@ -15,10 +15,10 @@ class ActionsAjouterTag extends WorkFlowAction
         app(TagsRepositoryContract::class)->attachDossier($data['dossier'], $this->params[0]->getValue());
     }
 
-    public function params(): array
+    public function prepareParams(): array
     {
         return [
-            new (ParamsTag::class)
+            ParamsTag::class
         ];
     }
 
