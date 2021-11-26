@@ -43,7 +43,14 @@ use Modules\CoreCRM\Repositories\SourceRepository;
 use Modules\CoreCRM\Repositories\StatusRepository;
 use Modules\CoreCRM\Repositories\WorkflowRepository;
 use Modules\CoreCRM\Services\FlowCRM;
-
+use Modules\CrmAutoCar\Flow\Works\Events\EventClientDevisExterneConsultation;
+use Modules\CrmAutoCar\Flow\Works\Events\EventClientDevisExterneValidation;
+use Modules\CrmAutoCar\Flow\Works\Events\EventClientDossierDemandeFournisseurDelete;
+use Modules\CrmAutoCar\Flow\Works\Events\EventClientDossierDemandeFournisseurSend;
+use Modules\CrmAutoCar\Flow\Works\Events\EventClientDossierDemandeFournisseurValidate;
+use Modules\CrmAutoCar\Flow\Works\Events\EventClientDossierPaiementFournisseurSend;
+use Modules\CrmAutoCar\Flow\Works\Events\EventCreateProformatClient;
+use Modules\CrmAutoCar\Flow\Works\Events\EventDevisSendClient;
 
 
 class CoreCRMServiceProvider extends ServiceProvider
@@ -136,6 +143,7 @@ class CoreCRMServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
         );
     }
+
 
     /**
      * Register class views blade

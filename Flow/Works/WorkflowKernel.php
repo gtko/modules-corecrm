@@ -8,6 +8,10 @@ use Modules\CoreCRM\Events\FlowAddEvent;
 use Modules\CoreCRM\Flow\Notification\Notif;
 use Modules\CoreCRM\Flow\Works\Events\EventClientDossierCreate;
 use Modules\CoreCRM\Flow\Works\Events\EventClientDossierDevisCreate;
+use Modules\CoreCRM\Flow\Works\Events\EventClientDossierDevisUpdate;
+use Modules\CoreCRM\Flow\Works\Events\EventClientDossierNoteCreate;
+use Modules\CoreCRM\Flow\Works\Events\EventClientDossierNoteCreaté;
+use Modules\CoreCRM\Flow\Works\Events\EventClientDossierUpdate;
 use Modules\CoreCRM\Flow\Works\Events\WorkFlowEvent;
 use Modules\CoreCRM\Models\Flow;
 use Modules\CoreCRM\Notifications\Kernel;
@@ -17,7 +21,10 @@ class WorkflowKernel
 
     protected array $storeEvent = [
         EventClientDossierCreate::class,
-        EventClientDossierDevisCreate::class
+        EventClientDossierDevisCreate::class,
+        EventClientDossierDevisUpdate::class,
+        EventClientDossierNoteCreate::class,
+        EventClientDossierUpdate::class
     ];
 
     private function instanceActions(string $actions, Flow $flow): Notif
