@@ -10,7 +10,6 @@ use Modules\CoreCRM\Flow\Works\Events\EventClientDossierCreate;
 use Modules\CoreCRM\Flow\Works\Events\EventClientDossierDevisCreate;
 use Modules\CoreCRM\Flow\Works\Events\EventClientDossierDevisUpdate;
 use Modules\CoreCRM\Flow\Works\Events\EventClientDossierNoteCreate;
-use Modules\CoreCRM\Flow\Works\Events\EventClientDossierNoteCreaté;
 use Modules\CoreCRM\Flow\Works\Events\EventClientDossierUpdate;
 use Modules\CoreCRM\Flow\Works\Events\WorkFlowEvent;
 use Modules\CoreCRM\Models\Flow;
