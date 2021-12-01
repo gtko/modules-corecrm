@@ -15,6 +15,11 @@ class EventClientDossierCreate extends WorkFlowEvent
         ];
     }
 
+    public function category():string
+    {
+        return 'Dossier';
+    }
+
     public function name():string
     {
         return "Création d'un dossier";

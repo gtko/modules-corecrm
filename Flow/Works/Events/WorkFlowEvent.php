@@ -4,6 +4,7 @@ namespace Modules\CoreCRM\Flow\Works\Events;
 
 use Modules\CoreCRM\Flow\Attributes\Attributes;
 use Modules\CoreCRM\Flow\Works\Actions\WorkFlowAction;
+use Modules\CoreCRM\Flow\Works\Conditions\WorkFlowCondition;
 use Modules\CoreCRM\Flow\Works\Interfaces\WorkFlowDescribe;
 use Modules\CoreCRM\Models\Flow;
 
@@ -16,6 +17,16 @@ abstract class WorkFlowEvent implements WorkFlowDescribe
     abstract protected function prepareData(Attributes $flowAttribute):array;
     abstract public function listen():array;
     abstract public function actions():array;
+
+    public function category():string
+    {
+        return 'Autre';
+    }
+
+    public function conditions():array
+    {
+        return [];
+    }
 
     public function init(Flow $flow){
         $this->data = $this->prepareData($flow->datas);
@@ -30,6 +41,18 @@ abstract class WorkFlowEvent implements WorkFlowDescribe
     {
         try {
             $actions = $this->actions();
+            return new ($actions[array_search($class, $actions, true)])($this);
+        }catch(\Exception $e){
+
+        }
+
+        return null;
+    }
+
+    public function makeCondition($class):?WorkFlowCondition
+    {
+        try {
+            $actions = $this->conditions();
             return new ($actions[array_search($class, $actions, true)])($this);
         }catch(\Exception $e){
 

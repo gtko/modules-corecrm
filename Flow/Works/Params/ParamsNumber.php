@@ -2,7 +2,7 @@
 
 namespace Modules\CoreCRM\Flow\Works\Params;
 
-class ParamsString extends WorkFlowParams
+class ParamsNumber extends WorkFlowParams
 {
 
     public function name(): string

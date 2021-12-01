@@ -6,6 +6,10 @@ use Modules\CoreCRM\Flow\Attributes\Attributes;
 use Modules\CoreCRM\Flow\Attributes\ClientDossierDevisCreate;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsAjouterTag;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsChangeStatus;
+use Modules\CoreCRM\Flow\Works\Conditions\ConditionCountDevis;
+use Modules\CoreCRM\Flow\Works\Conditions\ConditionCountDossier;
+use Modules\CoreCRM\Flow\Works\Conditions\ConditionStatus;
+use Modules\CoreCRM\Flow\Works\Conditions\ConditionTag;
 use Modules\CoreCRM\Flow\Works\Datas\WorkDataDevis;
 use Modules\CoreCRM\Models\Flow;
 
@@ -19,6 +23,11 @@ class EventClientDossierDevisCreate extends WorkFlowEvent
         ];
     }
 
+    public function category():string
+    {
+        return 'Devis';
+    }
+
     protected function prepareData(Attributes $flowAttribute):array
     {
         $devis = $flowAttribute->getDevis();
@@ -27,6 +36,16 @@ class EventClientDossierDevisCreate extends WorkFlowEvent
           'devis' => $devis,
           'dossier' => $devis->dossier,
           'user' => $flowAttribute->getUser()
+        ];
+    }
+
+    public function conditions():array
+    {
+        return [
+            ConditionCountDevis::class,
+            ConditionCountDossier::class,
+            ConditionStatus::class,
+            ConditionTag::class
         ];
     }
 

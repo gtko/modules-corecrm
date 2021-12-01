@@ -2,10 +2,8 @@
 
 namespace Modules\CoreCRM\Http\Livewire;
 
-use Illuminate\Support\Arr;
 use Livewire\Component;
 use Modules\CoreCRM\Contracts\Repositories\WorkflowRepositoryContract;
-use Modules\CoreCRM\Flow\Works\Interfaces\TypeDataSelect;
 use Modules\CoreCRM\Flow\Works\WorkflowKernel;
 use Modules\CoreCRM\Models\Workflow;
 
@@ -45,24 +43,19 @@ class WorkflowForm extends Component
                 'description' => '',
                 'events' => [['class' => '']],
                 'conditions' => [],
-                'actions' => [
-                    [
-                        'class' => '',
-                        'params' => []
-                    ]
-                ],
+                'actions' => [],
             ];
         }
     }
 
     public function updatedData($value, $key){
 
-        if($key === 'events.0.class'){
-            $this->data['actions'] = [[
-                'class' => '',
-                'params' => []
-            ]];
-        }
+//        if($key === 'events.0.class'){
+//            $this->data['actions'] = [[
+//                'class' => '',
+//                'params' => []
+//            ]];
+//        }
 
     }
 
@@ -82,12 +75,21 @@ class WorkflowForm extends Component
         ];
     }
 
+    public function deleteCondition($index){
+        unset($this->data['conditions'][$index]);
+    }
+
     public function addAction(){
         $this->data['actions'][] = [
             'class' => '',
             'params' => []
         ];
     }
+
+    public function deleteAction($index){
+        unset($this->data['actions'][$index]);
+    }
+
 
     public function store(WorkflowRepositoryContract $workflowRep){
 
@@ -116,6 +118,21 @@ class WorkflowForm extends Component
     public function render(WorkflowKernel $workflowKernel)
     {
         $kernelEvents = $workflowKernel->getEvents();
-        return view('corecrm::livewire.workflow-form', compact('kernelEvents'));
+        $kernelEvents = collect($kernelEvents)->map(function($class){
+           return new ($class);
+        });
+
+        $grouped = [];
+        foreach($kernelEvents as $events){
+            if(!($grouped[$events->category()] ?? false)){
+                $grouped[$events->category()] = [
+                    'name' => $events->category(),
+                    'events' => []
+                ];
+            }
+            $grouped[$events->category()]['events'][] = $events;
+        }
+
+        return view('corecrm::livewire.workflow-form', compact('grouped'));
     }
 }

@@ -15,6 +15,11 @@ class EventClientDossierNoteCreate extends WorkFlowEvent
         return "Création d'une note";
     }
 
+    public function category():string
+    {
+        return 'Dossier';
+    }
+
     public function describe(): string
     {
         return "Se déclenche à la création d'une note";

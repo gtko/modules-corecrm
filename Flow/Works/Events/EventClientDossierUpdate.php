@@ -12,7 +12,12 @@ class EventClientDossierUpdate extends WorkFlowEvent
 
     public function name(): string
     {
-       return 'Dossier mit à jour';
+       return 'Dossier mis à jour';
+    }
+
+    public function category():string
+    {
+        return 'Dossier';
     }
 
     public function describe(): string

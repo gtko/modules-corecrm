@@ -47,18 +47,39 @@ class WorkflowKernel
                 }
             }
 
+
+
             foreach ($listeners as $workFlowEventClass => $workflow) {
                 $instance = $this->instanceEvent($workFlowEventClass);
                 if (in_array($observable, $instance->listen())) {
                     $instance->init($event->flow);
-                    foreach($workflow->actions as $action) {
-                        $instanceAction = $instance->makeAction($action['class']);
-                        $instanceAction->initParams($action['params']);
-                        $instanceAction->handle();
+
+                    $valid = true;
+                    if(count($workflow->conditions) > 0){
+                        foreach($workflow->conditions as $condition) {
+                            $instanceCondition = $instance->makeCondition($condition['class']);
+                            $instanceCondition->initTarget($condition['value']);
+                            if(!$instanceCondition->resolve($condition['condition'])){
+                                $valid = false;
+                            }
+
+                            //dd($condition, $instanceCondition->getValue(), $instanceCondition->getValueTarget());
+                        }
+                    }
+
+
+                    //dd('END');
+
+
+                    if($valid) {
+                        foreach ($workflow->actions as $action) {
+                            $instanceAction = $instance->makeAction($action['class']);
+                            $instanceAction->initParams($action['params']);
+                            $instanceAction->handle();
+                        }
                     }
                 }
             }
-
         });
 
         //@todo on resolve les events entrant suivant les workflow en bdd et actif
