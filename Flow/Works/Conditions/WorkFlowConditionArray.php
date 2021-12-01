@@ -23,10 +23,10 @@ abstract class WorkFlowConditionArray extends WorkFlowCondition
         $valid = false;
         switch($comparateur){
             case 'in' :
-                $valid = in_array($this->getValue(), $this->getValueTarget());
+                $valid = in_array($this->getValueTarget(), $this->getValue()->toArray());
                 break;
             case 'notin' :
-                $valid = !in_array($this->getValue(), $this->getValueTarget());
+                $valid = !in_array( $this->getValueTarget(),$this->getValue()->toArray());
                 break;
         }
 

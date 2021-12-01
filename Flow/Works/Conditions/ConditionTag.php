@@ -25,11 +25,17 @@ class ConditionTag extends WorkFlowConditionArray
     public function getValue()
     {
         $data = $this->event->getData();
-        return $data['dossier']->tags;
+        return $data['dossier']->tags->pluck('id');
     }
 
     public function getValueItem($item)
     {
         return $item->id;
+    }
+
+    public function getValueTarget(){
+        $param = $this->param();
+        $param->setValue($this->valueTarget);
+        return $param->getValue()->id ?? null;
     }
 }
