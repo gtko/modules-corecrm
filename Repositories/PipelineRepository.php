@@ -79,8 +79,9 @@ class PipelineRepository extends AbstractRepository implements PipelineRepositor
 
         foreach($status as $index => $statut){
             $newStatus = $statsRep->newQuery()->where('id', $statut['id'])->first();
+
             if($newStatus){
-                $statsRep->update($newStatus, $newStatus['label'], $newStatus['color'], $newStatus['order'], $newStatus['type']);
+                $statsRep->update($newStatus, $statut['label'], $statut['color'], $statut['order'], $statut['type']);
             }else{
                 $statsRep->create($pipeline, $statut['label'], $statut['color'], $statut['order'] ?? $index, StatusTypeEnum::TYPE_CUSTOM);
             }

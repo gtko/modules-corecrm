@@ -54,6 +54,7 @@ class UpdatePipeline extends Component
             901 => $this->lost
         ];
 
+
         $pipelineRep->updateName($this->pipeline, $this->name);
         $pipelineRep->updateStatus($this->pipeline, $status);
 

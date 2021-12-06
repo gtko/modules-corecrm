@@ -50,12 +50,10 @@ class WorkflowForm extends Component
 
     public function updatedData($value, $key){
 
-//        if($key === 'events.0.class'){
-//            $this->data['actions'] = [[
-//                'class' => '',
-//                'params' => []
-//            ]];
-//        }
+        if($key === 'events.0.class'){
+            $this->data['actions'] = [];
+            $this->data['conditions'] = [];
+        }
 
     }
 
