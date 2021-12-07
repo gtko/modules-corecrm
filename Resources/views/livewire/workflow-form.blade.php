@@ -302,6 +302,8 @@
                             this.ref.setSelectionRange(caretPosition, caretPosition)
                             this.closeMenu()
                             this.ref.focus()
+                            this.ref.dispatchEvent(new Event('input'));
+                            this.ref.dispatchEvent(new Event('change'));
                         }
                     }
 
@@ -314,7 +316,7 @@
                             ? textBeforeCaret.length - lastToken.length
                             : -1
                         const maybeTrigger = textBeforeCaret[triggerIdx]
-                        const keystrokeTriggered = maybeTrigger === '@'
+                        const keystrokeTriggered = maybeTrigger === '{'
 
                         if (!keystrokeTriggered) {
                             this.closeMenu()
@@ -329,11 +331,11 @@
 
                         setTimeout(() => {
                             this.active = 0
-                            this.left = window.scrollX  + coords.left + left + this.ref.scrollLeft
-                            this.top = window.scrollY +  coords.top + top + coords.height - this.ref.scrollTop
+                            this.left = window.scrollX  + coords.left + left + this.ref.scrollLeft - 300
+                            this.top = window.scrollY +  coords.top + top + coords.height - this.ref.scrollTop - 80
                             this.triggerIdx = triggerIdx
                             this.renderMenu()
-                        }, 0)
+                        }, 100)
                     }
 
                     onKeyDown(ev) {
@@ -364,10 +366,10 @@
                     }
 
                     renderMenu() {
-                        if (this.top === undefined) {
-                            this.menuRef.hidden = true
-                            return
-                        }
+                        // if (this.top === undefined) {
+                        //     // this.menuRef.hidden = true
+                        //     return
+                        // }
 
                         this.menuRef.style.left = this.left + 'px'
                         this.menuRef.style.top = this.top + 'px'
@@ -380,10 +382,34 @@
                                 this.active === idx))
                         })
 
-                        this.menuRef.hidden = false
+                        console.log('Render menu ' + this.active);
+                        // this.menuRef.hidden = false
                     }
                 }
             </script>
+
+                <style>
+                    .menu {
+                        background-color: #f3f3f3;
+                        position: fixed;
+                        z-index:9000;
+                    }
+
+                    .menu-item {
+                        cursor: default;
+                        padding: 1rem;
+                    }
+
+                    .menu-item.selected {
+                        background-color: slateGray;
+                        color: white;
+                    }
+
+                    .menu-item:hover:not(.selected) {
+                        background-color: #fafafa;
+                    }
+
+                </style>
 
             @forelse($this->data['actions'] ?? [] as $index => $actions)
                     <li class="grid grid-cols-2" id="action_{{$index}}">
@@ -405,7 +431,7 @@
                             </x-basecore::inputs.select>
                         </x-basecore::inputs.group>
 
-                        @php
+                        <?php
                             if($this->data['actions'][$index]['class'] ?? false){
                               $actionInstance = $instanceEvent->makeAction($this->data['actions'][$index]['class']);
                             }
@@ -415,30 +441,35 @@
                                 foreach($instanceEvent->variables() as $variable){
                                    foreach($variable->labels() as $label => $description){
                                      $variableData[] = [
-                                         "value" => $variable->namespace().$label,
+                                         "value" => $variable->namespace().'.'.\Illuminate\Support\Str::slug($label),
                                          "label" => "$label - $description",
                                      ];
                                    }
                                 }
                              }
-                        @endphp
+                        ?>
 
                         <div class="flex items-end justify-between" x-data="{
+                            isActivate : [],
                             variables : null,
                             resolveFn : null,
                             replaceFn : null,
                             menuItemFn : null,
                             init(){
 
-                            console.log(this);
+                                for(let elem of this.$root.querySelectorAll('input, textarea')){
+                                    elem.addEventListener('focus', (e) => {
+                                        this.focus(e)
+                                    })
+                                }
 
                                 this.variables = {{json_encode($variableData)}}
 
                                 this.resolveFn = prefix => prefix === ''
-                                    ? variables
-                                    : variables.filter(variable => variable.label.startsWith(prefix))
+                                    ? this.variables
+                                    : this.variables.filter(variable => variable.label.startsWith(prefix))
 
-                                this.replaceFn = (variable, trigger) => `${trigger} {${variable.value}} `
+                                this.replaceFn = (variable, trigger) => `${trigger}${variable.value}} `
 
                                 this.menuItemFn = (variable, setItem, selected) => {
                                     const div = document.createElement('div')
@@ -457,21 +488,25 @@
 
                             },
                             focus(e){
-                                new Mentionify(
-                                    e.target,
-                                    document.getElementById('menu'),
-                                    this.resolveFn,
-                                    this.replaceFn,
-                                    this.menuItemFn
-                                )
+                                if(this.isActivate.indexOf(e.target) === -1){
+                                    console.log('Start mentionnify');
+                                    this.isActivate.push(e.target)
+                                    new Mentionify(
+                                        e.target,
+                                         document.getElementById('menu'),
+                                        this.resolveFn,
+                                        this.replaceFn,
+                                        this.menuItemFn
+                                    )
+                                }
                             }
                         }">
-                            <div class="w-100 flex-grow-1">
+                            <div class="w-100 flex-grow-1 relative" wire:ignore>
                             @if($this->data['actions'][$index]['class'] ?? false)
                                 @php($actionInstance = $instanceEvent->makeAction($this->data['actions'][$index]['class']))
                                 @foreach($actionInstance->params()  as $paramskey =>  $params)
                                         <x-corecrm::workflows.resolve-params :param="$params" model="data.actions.{{$index}}.params.{{$paramskey}}"/>
-                                        <div id="menu" class="menu" role="listbox"></div>
+                                        <div wire:ignore id="menu" class="menu" role="listbox"></div>
                                 @endforeach
                             @endif
                             </div>
