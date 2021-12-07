@@ -62,14 +62,8 @@ class WorkflowKernel
                             if(!$instanceCondition->resolve($condition['condition'])){
                                 $valid = false;
                             }
-
-                            //dd($condition, $instanceCondition->getValue(), $instanceCondition->getValueTarget());
                         }
                     }
-
-
-                    //dd('END');
-
 
                     if($valid) {
                         foreach ($workflow->actions as $action) {

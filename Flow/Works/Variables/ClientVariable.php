@@ -9,7 +9,7 @@ class ClientVariable extends WorkFlowVariable
 
     public function namespace(): string
     {
-        return 'Client';
+        return 'client';
     }
 
     public function data(): array

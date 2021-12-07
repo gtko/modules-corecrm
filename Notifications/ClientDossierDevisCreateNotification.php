@@ -20,8 +20,6 @@ class ClientDossierDevisCreateNotification extends Notif
     {
         foreach(User::role(['super-admin'])->get() as $user){
             $user->notify($this);
-
-
         }
     }
 
