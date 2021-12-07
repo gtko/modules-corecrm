@@ -4,6 +4,7 @@ namespace Modules\CoreCRM\Flow\Works\Events;
 
 use Modules\CoreCRM\Flow\Attributes\Attributes;
 use Modules\CoreCRM\Flow\Attributes\ClientDossierCreate;
+use Modules\CoreCRM\Flow\Works\CategoriesEventEnum;
 
 class EventClientDossierCreate extends WorkFlowEvent
 {
@@ -17,7 +18,7 @@ class EventClientDossierCreate extends WorkFlowEvent
 
     public function category():string
     {
-        return 'Dossier';
+        return CategoriesEventEnum::DOSSIER;
     }
 
     public function name():string

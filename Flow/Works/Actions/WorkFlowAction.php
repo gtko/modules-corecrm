@@ -15,6 +15,11 @@ abstract class WorkFlowAction implements WorkFlowDescribe
         $this->event = $event;
     }
 
+    public function isVariabled():bool
+    {
+        return false;
+    }
+
     /**
      * Instancie les paramètre stocker en bdd et retourne l'instance du params
      */

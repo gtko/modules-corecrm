@@ -6,6 +6,7 @@ use Modules\CoreCRM\Flow\Attributes\Attributes;
 use Modules\CoreCRM\Flow\Attributes\ClientDossierNoteCreate;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsAjouterTag;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsChangeStatus;
+use Modules\CoreCRM\Flow\Works\CategoriesEventEnum;
 
 class EventClientDossierNoteCreate extends WorkFlowEvent
 {
@@ -17,7 +18,7 @@ class EventClientDossierNoteCreate extends WorkFlowEvent
 
     public function category():string
     {
-        return 'Dossier';
+        return CategoriesEventEnum::DOSSIER;
     }
 
     public function describe(): string

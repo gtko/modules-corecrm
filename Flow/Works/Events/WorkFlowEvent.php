@@ -4,6 +4,7 @@ namespace Modules\CoreCRM\Flow\Works\Events;
 
 use Modules\CoreCRM\Flow\Attributes\Attributes;
 use Modules\CoreCRM\Flow\Works\Actions\WorkFlowAction;
+use Modules\CoreCRM\Flow\Works\CategoriesEventEnum;
 use Modules\CoreCRM\Flow\Works\Conditions\WorkFlowCondition;
 use Modules\CoreCRM\Flow\Works\Interfaces\WorkFlowDescribe;
 use Modules\CoreCRM\Models\Flow;
@@ -20,10 +21,15 @@ abstract class WorkFlowEvent implements WorkFlowDescribe
 
     public function category():string
     {
-        return 'Autre';
+        return CategoriesEventEnum::OTHER;
     }
 
     public function conditions():array
+    {
+        return [];
+    }
+
+    public function variables():array
     {
         return [];
     }

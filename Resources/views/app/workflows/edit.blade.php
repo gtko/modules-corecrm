@@ -4,8 +4,8 @@
         <x-basecore::breadcrumb-item>{{$workflow->name}}</x-basecore::breadcrumb-item>
         <x-basecore::breadcrumb-item>edit</x-basecore::breadcrumb-item>
     </x-slot>
-    <x-basecore::layout.panel-left>
+    <x-basecore::layout.panel-full>
         <livewire:corecrm::workflow-form :workflow="$workflow"/>
-    </x-basecore::layout.panel-left>
+    </x-basecore::layout.panel-full>
 
 </x-basecore::app-layout>

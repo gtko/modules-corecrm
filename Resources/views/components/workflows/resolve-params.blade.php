@@ -9,6 +9,8 @@
     <x-corecrm::workflows.select :param="$param" :model="$model"/>
 @elseif($param instanceof Modules\CoreCRM\Flow\Works\Params\ParamsNumber)
     <x-corecrm::workflows.number :param="$param" :model="$model"/>
+@elseif($param instanceof Modules\CoreCRM\Flow\Works\Params\ParamsNotification)
+    <x-corecrm::workflows.notification :param="$param" :model="$model"/>
 @else
     <x-basecore::inputs.group>
         <x-basecore::inputs.textarea
