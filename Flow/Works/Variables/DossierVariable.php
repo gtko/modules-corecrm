@@ -18,7 +18,8 @@ class DossierVariable extends WorkFlowVariable
         return [
             'id' => $dossier->id,
             'ref' => $dossier->ref,
-            'email commercial' => $dossier->commercial->email
+            'email commercial' => $dossier->commercial->email,
+            'client full name' => $dossier->client->format_name
         ];
     }
 
@@ -27,7 +28,8 @@ class DossierVariable extends WorkFlowVariable
         return [
             'id' => 'id du dossier',
             'ref' => 'Réfèrence du dossier',
-            'email commercial' => 'Email du commercial accroché au dossier'
+            'email commercial' => 'Email du commercial accroché au dossier',
+            'client full name' => 'Nom et prénom du client'
         ];
     }
 }
