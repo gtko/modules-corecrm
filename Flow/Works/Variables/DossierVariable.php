@@ -16,20 +16,19 @@ class DossierVariable extends WorkFlowVariable
         $dossier = $this->event->getData()['dossier'];
 
         return [
-            'id' => $dossier->id,
             'ref' => $dossier->ref,
-            'email commercial' => $dossier->commercial->email,
-            'client full name' => $dossier->client->format_name
+            'nombre de devis' => $dossier->devis->count(),
+            'lien' => route('dossiers.show', [$dossier->client, $dossier])
         ];
     }
 
     public function labels(): array
     {
         return [
-            'id' => 'id du dossier',
             'ref' => 'Réfèrence du dossier',
-            'email commercial' => 'Email du commercial accroché au dossier',
-            'client full name' => 'Nom et prénom du client'
+            'nombre de devis' => 'Nombre de devis dans le dossier',
+            'lien' => 'Lien pour voir le dossier sur le CRM'
+
         ];
     }
 }

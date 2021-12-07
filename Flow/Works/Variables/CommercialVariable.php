@@ -18,21 +18,20 @@ class CommercialVariable extends WorkFlowVariable
         $commercial = $this->event->getData()['commercial'];
 
         return [
-          'id' => $commercial->id,
           'email' => $commercial->email,
           'phone' => $commercial->phone,
-          'full name' => $commercial->format_name,
+          'nom et prénom' => $commercial->format_name,
+          'nombre de dossier' => $commercial->dossiers()->count(),
         ];
     }
 
     public function labels(): array
     {
         return [
-            'id' => 'id du commercial',
-            'full name' => 'Nom et prénom du commercial',
-            'email commercial' => 'Email du commercial',
-            'phone' => 'Numéro de téléphone du commercial'
-
+            'nom et prénom' => 'Nom et prénom du commercial',
+            'email' => 'Email du commercial',
+            'phone' => 'Numéro de téléphone du commercial',
+            'nombre de dossier' => 'Nombre de dossier attribué',
         ];
     }
 }

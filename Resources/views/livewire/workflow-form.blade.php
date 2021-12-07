@@ -442,7 +442,7 @@
                                    foreach($variable->labels() as $label => $description){
                                      $variableData[] = [
                                          "value" => $variable->namespace().'.'.\Illuminate\Support\Str::slug($label),
-                                         "label" => "$label - $description",
+                                         "label" => $variable->namespace().'.'."$label - $description",
                                      ];
                                    }
                                 }

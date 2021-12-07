@@ -33,7 +33,6 @@
         name="cci"
         label="CCI"
         wire:model="{{$model}}.cci"
-        required="required"
     />
 </x-basecore::inputs.group>
 <x-basecore::inputs.group>
