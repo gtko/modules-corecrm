@@ -42,4 +42,9 @@ class ParamsTag extends WorkFlowParams implements TypeDataSelect
         $tag = app(TagsRepositoryContract::class);
         return $tag->fetchById($this->value);
     }
+
+    function nameView(): string
+    {
+        return "corecrm::workflows.select";
+    }
 }

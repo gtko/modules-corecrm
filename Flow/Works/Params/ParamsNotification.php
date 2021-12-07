@@ -21,4 +21,8 @@ class ParamsNotification extends WorkFlowParams
     }
 
 
+    function nameView(): string
+    {
+        return "corecrm::workflows.notification";
+    }
 }

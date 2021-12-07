@@ -56,4 +56,9 @@ class ParamsStatus extends WorkFlowParams implements TypeDataSelectGrouped
         $statusRep = app(StatusRepositoryContract::class);
         return $statusRep->fetchById($this->value);
     }
+
+    function nameView(): string
+    {
+        return "corecrm::workflows.select-grouped";
+    }
 }

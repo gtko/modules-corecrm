@@ -15,4 +15,10 @@ class ParamsNumber extends WorkFlowParams
         return '';
     }
 
+
+    function nameView(): string
+    {
+        return "corecrm::workflows.number";
+    }
+
 }

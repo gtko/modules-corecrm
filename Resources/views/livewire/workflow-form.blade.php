@@ -434,19 +434,20 @@
                         <?php
                             if($this->data['actions'][$index]['class'] ?? false){
                               $actionInstance = $instanceEvent->makeAction($this->data['actions'][$index]['class']);
-                            }
 
-                            $variableData = [];
-                            if($actionInstance->isVariabled()){
-                                foreach($instanceEvent->variables() as $variable){
-                                   foreach($variable->labels() as $label => $description){
-                                     $variableData[] = [
-                                         "value" => $variable->namespace().'.'.\Illuminate\Support\Str::slug($label),
-                                         "label" => $variable->namespace().'.'."$label - $description",
-                                     ];
-                                   }
-                                }
-                             }
+
+                                $variableData = [];
+                                if($actionInstance->isVariabled()){
+                                    foreach($instanceEvent->variables() as $variable){
+                                       foreach($variable->labels() as $label => $description){
+                                         $variableData[] = [
+                                             "value" => $variable->namespace().'.'.\Illuminate\Support\Str::slug($label),
+                                             "label" => $variable->namespace().'.'."$label - $description",
+                                         ];
+                                       }
+                                    }
+                                 }
+                            }
                         ?>
 
                         <div class="flex items-end justify-between" x-data="{
@@ -463,7 +464,7 @@
                                     })
                                 }
 
-                                this.variables = {{json_encode($variableData)}}
+                                this.variables = {{json_encode($variableData ?? [])}}
 
                                 this.resolveFn = prefix => prefix === ''
                                     ? this.variables

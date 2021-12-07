@@ -19,5 +19,6 @@ abstract class WorkFlowParams implements WorkFlowDescribe
         return $this->value;
     }
 
+    abstract function nameView():string;
 
 }
