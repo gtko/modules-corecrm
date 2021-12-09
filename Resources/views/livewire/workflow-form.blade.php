@@ -502,15 +502,15 @@
                                 }
                             }
                         }">
-                            <div class="w-100 flex-grow-1 relative" wire:ignore>
+                            <div class="w-100 flex-grow-1 relative">
                             @if($this->data['actions'][$index]['class'] ?? false)
                                 @php($actionInstance = $instanceEvent->makeAction($this->data['actions'][$index]['class']))
                                 @foreach($actionInstance->params()  as $paramskey =>  $params)
-                                        <x-corecrm::workflows.resolve-params :param="$params" model="data.actions.{{$index}}.params.{{$paramskey}}"/>
-                                        <div wire:ignore id="menu" class="menu" role="listbox"></div>
+                                    <x-corecrm::workflows.resolve-params :param="$params" model="data.actions.{{$index}}.params.{{$paramskey}}"/>
                                 @endforeach
                             @endif
                             </div>
+                            <div wire:ignore id="menu" class="menu" role="listbox"></div>
 
                             <x-basecore::loading-replace wire:target="deleteAction({{$index}})">
                                 <x-slot name="loader">

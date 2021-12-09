@@ -5,6 +5,7 @@ namespace Modules\CoreCRM\Flow\Works\Actions;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Modules\CallCRM\Contracts\Repositories\AppelRepositoryContract;
+use Modules\CallCRM\Flow\Attributes\ClientDossierAppelCreate;
 use Modules\CoreCRM\Flow\Attributes\ClientDossierNoteCreate;
 use Modules\CoreCRM\Flow\Works\Params\ParamsString;
 use Modules\CoreCRM\Services\FlowCRM;
@@ -20,7 +21,7 @@ class ActionsAddCall extends WorkFlowAction
         $commercial = $data['commercial'];
 
         $rep = app(AppelRepositoryContract::class);
-        $rep->createAppel(
+        $call = $rep->createAppel(
             $commercial->id,
             Auth::user(),
             $dossier,
@@ -28,6 +29,8 @@ class ActionsAddCall extends WorkFlowAction
             false,
             false
         );
+
+        (new FlowCRM())->add($dossier,new ClientDossierAppelCreate(\Auth::user(), $call));
     }
 
     public function prepareParams(): array

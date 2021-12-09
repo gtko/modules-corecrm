@@ -64,7 +64,7 @@ class DossierDataList extends DataListType
     {
        return [
            'show' => [
-               'permission' => ['show', Dossier::class],
+               'permission' => ['view', Dossier::class],
                'params' => function($item){
                     return [
                         $item->client->id,
@@ -83,7 +83,7 @@ class DossierDataList extends DataListType
     public function getCreate(): array
     {
         return [
-            'permission' => ['create', Client::class],
+            'permission' => ['create', ClientEntity::class],
             'route' => function($params){
                 return route('clients.create', $params);
             },

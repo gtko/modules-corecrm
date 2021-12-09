@@ -29,7 +29,7 @@ class DossierPolicy
      * @param  Modules\CoreCRM\Models\Dossier  $model
      * @return mixed
      */
-    public function view(UserEntity $user, Dossier $model)
+    public function view(UserEntity $user)
     {
         return $user->hasPermissionTo('views dossiers');
     }

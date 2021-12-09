@@ -84,7 +84,7 @@ class DossierController extends Controller
      */
     public function show(ClientEntity $client, Dossier $dossier): View|Factory|Application
     {
-        $this->authorize('views', $dossier);
+        $this->authorize('view', $dossier);
         $devis = $this->devisRep->getDevisByDossier($dossier);
 
         return view('corecrm::app.dossiers.show', compact('client', 'dossier', 'devis'));
