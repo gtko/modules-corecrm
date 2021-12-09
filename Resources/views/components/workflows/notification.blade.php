@@ -94,7 +94,7 @@
                                     </span>
                                     @foreach($instance->event->files() as $index => $file)
                                         <span class="hover:bg-blue-200 hover:text-blue-800 cursor-pointer inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800 mr-1"
-                                            x-on:click="add({'name' : '{{$file->name()}}', 'class' : '{{$file::class}}' })"
+                                            x-on:click="add({'name' : '{{$file->name()}}', 'class' : '{{base64_encode($file::class)}}' })"
                                             x-show="notAdded('{{$file::class}}')"
                                         >
                                             {{$file->name()}}

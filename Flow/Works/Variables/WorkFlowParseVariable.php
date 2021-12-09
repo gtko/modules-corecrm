@@ -24,16 +24,20 @@ class WorkFlowParseVariable
     {
         $response = [];
         foreach($this->datas as $name => $data){
-            $text = $data;
-            foreach ($this->event->variables() as $variable){
-                $namespace = $variable->namespace();
-                foreach ($variable->data() as $key => $value){
-                   $nameVariable = Str::lower('{'.$namespace.'.'.Str::slug($key).'}');
-                   $text = str_replace($nameVariable, $this->formatData($value, $namespace), $text);
+            if(is_string($data)) {
+                $text = $data;
+                foreach ($this->event->variables() as $variable){
+                    $namespace = $variable->namespace();
+                    foreach ($variable->data() as $key => $value){
+                            $nameVariable = Str::lower('{' . $namespace . '.' . Str::slug($key) . '}');
+                            $text = str_replace($nameVariable, $this->formatData($value, $namespace), $text);
+                    }
                 }
-            }
 
-            $response[$name] = trim($text);
+                $response[$name] = trim($text);
+            }else{
+                $response[$name] = $data;
+            }
         }
 
         return $response;

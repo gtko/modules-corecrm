@@ -12,7 +12,7 @@ class Kernel
     public static function list():array
     {
         return array_merge([
-           ClientDossierDevisCreateNotification::class,
+//           ClientDossierDevisCreateNotification::class,
         ], self::$lists);
     }
 

@@ -3,6 +3,7 @@
 namespace Modules\CoreCRM\Flow\Works\Actions;
 
 use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Modules\CoreCRM\Flow\Works\Params\ParamsNotification;
 use Modules\CoreCRM\Flow\Works\Variables\WorkFlowParseVariable;
@@ -19,9 +20,16 @@ class ActionsSendNotification extends WorkFlowAction
         $parseVariable = new WorkFlowParseVariable($this->event, $this->params[0]->getValue());
         $datas = $parseVariable->resolve();
 
-        $maillable = new WorkFlowStandardMail($datas['subject'], $datas['cci'] ?? '', nl2br($datas['content']));
+        $files = [];
+        foreach(($datas['files'] ?? []) as $file){
+            $class = base64_decode($file['class']);
+            $files[] = (new $class($this->event));
+        }
+
+        $maillable = new WorkFlowStandardMail($datas['subject'], $datas['cci'] ?? '', $datas['content'],$files);
         Mail::to($datas['cc'])
             ->send($maillable);
+
     }
 
     public function isVariabled():bool
