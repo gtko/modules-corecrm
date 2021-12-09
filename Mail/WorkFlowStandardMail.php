@@ -8,12 +8,8 @@ use Modules\CoreCRM\Flow\Works\Events\WorkFlowEvent;
 class WorkFlowStandardMail extends Mailable
 {
 
-
-
     public function __construct(public string $sujet, public string $emailsSupplementaire, public string $content, public array $files = [])
-    {
-
-    }
+    {}
 
     public function build()
     {
