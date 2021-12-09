@@ -11,6 +11,11 @@ use Modules\CoreCRM\Flow\Works\Conditions\ConditionCountDevis;
 use Modules\CoreCRM\Flow\Works\Conditions\ConditionCountDossier;
 use Modules\CoreCRM\Flow\Works\Conditions\ConditionStatus;
 use Modules\CoreCRM\Flow\Works\Conditions\ConditionTag;
+use Modules\CoreCRM\Flow\Works\Variables\ClientVariable;
+use Modules\CoreCRM\Flow\Works\Variables\CommercialVariable;
+use Modules\CoreCRM\Flow\Works\Variables\DeviVariable;
+use Modules\CoreCRM\Flow\Works\Variables\DossierVariable;
+use Modules\CoreCRM\Flow\Works\Variables\UserVariable;
 
 class EventClientDossierDevisUpdate extends WorkFlowEvent
 {
@@ -47,7 +52,20 @@ class EventClientDossierDevisUpdate extends WorkFlowEvent
         return [
             'devis' => $devis,
             'dossier' => $devis->dossier,
+            'client' => $devis->dossier->client,
+            'commercial' => $devis->dossier->commercial,
             'user' => $flowAttribute->getUser()
+        ];
+    }
+
+    public function variables():array
+    {
+        return [
+            (new DossierVariable($this)),
+            (new DeviVariable($this)),
+            (new UserVariable($this)),
+            (new CommercialVariable($this)),
+            (new ClientVariable($this)),
         ];
     }
 

@@ -9,7 +9,7 @@ class WorkFlowStandardMail extends Mailable
 
 
 
-    public function __construct(public string $sujet, public array $emailsSupplementaire, public string $content)
+    public function __construct(public string $sujet, public string $emailsSupplementaire, public string $content)
     {
 
     }
@@ -20,9 +20,10 @@ class WorkFlowStandardMail extends Mailable
             'content' => $this->content
         ]);
 
-//        if(count($this->emailsSupplementaire) > 0) {
-//            $mail->cc($this->emailsSupplementaire);
-//        }
+        if(!empty($this->emailsSupplementaire)) {
+            $emails = explode(',', $this->emailsSupplementaire);
+            $mail->cc($emails);
+        }
 
         return $mail->subject($this->sujet);
     }

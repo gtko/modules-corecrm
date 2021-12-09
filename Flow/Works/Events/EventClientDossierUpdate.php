@@ -7,6 +7,11 @@ use Modules\CoreCRM\Flow\Attributes\ClientDossierUpdate;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsAjouterTag;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsChangeStatus;
 use Modules\CoreCRM\Flow\Works\CategoriesEventEnum;
+use Modules\CoreCRM\Flow\Works\Variables\ClientVariable;
+use Modules\CoreCRM\Flow\Works\Variables\CommercialVariable;
+use Modules\CoreCRM\Flow\Works\Variables\DeviVariable;
+use Modules\CoreCRM\Flow\Works\Variables\DossierVariable;
+use Modules\CoreCRM\Flow\Works\Variables\UserVariable;
 
 class EventClientDossierUpdate extends WorkFlowEvent
 {
@@ -30,6 +35,13 @@ class EventClientDossierUpdate extends WorkFlowEvent
     {
         return [
             'user' => $flowAttribute->getUser()
+        ];
+    }
+
+    public function variables():array
+    {
+        return [
+            (new UserVariable($this)),
         ];
     }
 

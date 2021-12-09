@@ -5,6 +5,12 @@ namespace Modules\CoreCRM\Flow\Works\Events;
 use Modules\CoreCRM\Flow\Attributes\Attributes;
 use Modules\CoreCRM\Flow\Attributes\ClientDossierCreate;
 use Modules\CoreCRM\Flow\Works\CategoriesEventEnum;
+use Modules\CoreCRM\Flow\Works\Variables\ClientVariable;
+use Modules\CoreCRM\Flow\Works\Variables\CommercialVariable;
+use Modules\CoreCRM\Flow\Works\Variables\DeviVariable;
+use Modules\CoreCRM\Flow\Works\Variables\DossierVariable;
+use Modules\CoreCRM\Flow\Works\Variables\FournisseurVariable;
+use Modules\CoreCRM\Flow\Works\Variables\UserVariable;
 
 class EventClientDossierCreate extends WorkFlowEvent
 {
@@ -41,6 +47,13 @@ class EventClientDossierCreate extends WorkFlowEvent
     {
         return [
             'user' => $flowAttribute->getUser()
+        ];
+    }
+
+    public function variables():array
+    {
+        return [
+            (new UserVariable($this))
         ];
     }
 }

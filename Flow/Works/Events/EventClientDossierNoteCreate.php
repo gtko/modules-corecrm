@@ -7,6 +7,11 @@ use Modules\CoreCRM\Flow\Attributes\ClientDossierNoteCreate;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsAjouterTag;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsChangeStatus;
 use Modules\CoreCRM\Flow\Works\CategoriesEventEnum;
+use Modules\CoreCRM\Flow\Works\Variables\ClientVariable;
+use Modules\CoreCRM\Flow\Works\Variables\CommercialVariable;
+use Modules\CoreCRM\Flow\Works\Variables\DeviVariable;
+use Modules\CoreCRM\Flow\Works\Variables\DossierVariable;
+use Modules\CoreCRM\Flow\Works\Variables\UserVariable;
 
 class EventClientDossierNoteCreate extends WorkFlowEvent
 {
@@ -31,6 +36,13 @@ class EventClientDossierNoteCreate extends WorkFlowEvent
         return [
             'user' => $flowAttribute->getUser(),
             'note' => $flowAttribute->getNote()
+        ];
+    }
+
+    public function variables():array
+    {
+        return [
+            (new UserVariable($this)),
         ];
     }
 
