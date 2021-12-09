@@ -98,7 +98,8 @@ class WorkflowForm extends Component
                 $this->data['description'],
                 $this->data['events'],
                 $this->data['conditions'],
-                $this->data['actions']
+                $this->data['actions'],
+                $this->workflow->active
             );
         }else{
             $workflowRep->create(
