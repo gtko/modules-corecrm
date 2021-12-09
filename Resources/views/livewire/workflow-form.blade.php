@@ -109,7 +109,7 @@
                                 </x-basecore::inputs.select>
                             </x-basecore::inputs.group>
                             <div class="flex items-end justify-between">
-                                <x-corecrm::workflows.resolve-params :param="$instanceCondition->param()" model="data.conditions.{{$index}}.value"/>
+                                <x-corecrm::workflows.resolve-params :instance='$instanceCondition' :param="$instanceCondition->param()" model="data.conditions.{{$index}}.value"/>
                                 <x-basecore::loading-replace wire:target="deleteCondition({{$index}})">
                                     <x-slot name="loader">
                                         @icon('spinner',null, 'animate-spin ml-1 mb-3')
@@ -506,7 +506,7 @@
                             @if($this->data['actions'][$index]['class'] ?? false)
                                 @php($actionInstance = $instanceEvent->makeAction($this->data['actions'][$index]['class']))
                                 @foreach($actionInstance->params()  as $paramskey =>  $params)
-                                    <x-corecrm::workflows.resolve-params :param="$params" model="data.actions.{{$index}}.params.{{$paramskey}}"/>
+                                    <x-corecrm::workflows.resolve-params :param="$params" :instance="$actionInstance" model="data.actions.{{$index}}.params.{{$paramskey}}"/>
                                 @endforeach
                             @endif
                             </div>

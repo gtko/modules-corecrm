@@ -18,6 +18,9 @@ use Modules\CoreCRM\Flow\Works\Variables\DeviVariable;
 use Modules\CoreCRM\Flow\Works\Variables\DossierVariable;
 use Modules\CoreCRM\Flow\Works\Variables\UserVariable;
 use Modules\CoreCRM\Models\Flow;
+use Modules\CrmAutoCar\Flow\Works\Files\CguPdfFiles;
+use Modules\CrmAutoCar\Flow\Works\Files\DevisPdfFiles;
+use Modules\CrmAutoCar\Flow\Works\Files\ProformatPdfFiles;
 
 class EventClientDossierDevisCreate extends WorkFlowEvent
 {
@@ -44,6 +47,12 @@ class EventClientDossierDevisCreate extends WorkFlowEvent
           'client' => $devis->dossier->client,
           'commercial' => $devis->dossier->commercial,
           'user' => $flowAttribute->getUser()
+        ];
+    }
+
+    public function files():array
+    {
+        return [
         ];
     }
 

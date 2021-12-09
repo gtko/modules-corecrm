@@ -19,7 +19,7 @@ class ActionsSendNotification extends WorkFlowAction
         $parseVariable = new WorkFlowParseVariable($this->event, $this->params[0]->getValue());
         $datas = $parseVariable->resolve();
 
-        $maillable = new WorkFlowStandardMail($datas['subject'], $datas['cci'] ?? '', $datas['content']);
+        $maillable = new WorkFlowStandardMail($datas['subject'], $datas['cci'] ?? '', nl2br($datas['content']));
         Mail::to($datas['cc'])
             ->send($maillable);
     }

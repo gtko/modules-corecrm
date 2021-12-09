@@ -34,6 +34,11 @@ abstract class WorkFlowEvent implements WorkFlowDescribe
         return [];
     }
 
+    public function files():array
+    {
+        return [];
+    }
+
     public function init(Flow $flow){
         $this->data = $this->prepareData($flow->datas);
     }

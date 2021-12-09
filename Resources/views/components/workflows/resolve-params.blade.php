@@ -1,11 +1,13 @@
 @props([
    'param',
-   'model'
+   'model',
+   'instance'
 ])
 
 <x-dynamic-component :component="$param->nameView()"
                      :attributes="new Illuminate\View\ComponentAttributeBag([
                      'param' => $param,
-                     'model' => $model
+                     'model' => $model,
+                     'instance' => $instance
                  ])"
 />
