@@ -2,6 +2,7 @@
 
 namespace Modules\CoreCRM\Flow\Works\Variables;
 
+use Modules\CoreCRM\Contracts\Repositories\CommercialRepositoryContract;
 use Modules\CoreCRM\Models\Commercial;
 
 class CommercialVariable extends WorkFlowVariable
@@ -15,7 +16,8 @@ class CommercialVariable extends WorkFlowVariable
     public function data(): array
     {
        /** @var Commercial $commercial */
-        $commercial = $this->event->getData()['commercial'];
+        $user = $this->event->getData()['commercial'];
+        $commercial = app(CommercialRepositoryContract::class)->fetchById($user->id);
 
         return [
           'email' => $commercial->email,
