@@ -64,6 +64,11 @@
                         <x-basecore::icon-label icon="devis" label="Devis" :size="20"/>
                     </x-basecore::nav.menu-item>
 
+                    <x-basecore::resolve-type-view
+                        :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\DossierTabLabelViewContract::class"
+                        :arguments="['client' => $client, 'dossier' => $dossier]"
+                    />
+
                     @if(in_array('call', config('corecrm.features')))
                     <x-basecore::nav.menu-item name="call">
                         <x-basecore::icon-label icon="folder" label="Appels"/>
@@ -82,16 +87,14 @@
                     </x-basecore::nav.menu-item>
                     @endif
 
-                    <x-basecore::resolve-type-view
-                        :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\DossierTabLabelViewContract::class"
-                        :arguments="['client' => $client, 'dossier' => $dossier]"
-                    />
+
 
                 </x-basecore::nav.menu>
 
                 <x-basecore::nav.tab name="note">
                     <livewire:corecrm::note :dossier-id="$dossier->id" :client-id="$client->id"/>
                 </x-basecore::nav.tab>
+
 
                 <x-basecore::nav.tab name="devis">
                     <x-basecore::resolve-type-view
