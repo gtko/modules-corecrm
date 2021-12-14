@@ -10,7 +10,7 @@ class DossierVariable extends WorkFlowVariable
         return 'dossier';
     }
 
-    public function data(): array
+    public function data(array $params = []): array
     {
         /** @var \Modules\CoreCRM\Models\Dossier $dossier */
         $dossier = $this->event->getData()['dossier'];

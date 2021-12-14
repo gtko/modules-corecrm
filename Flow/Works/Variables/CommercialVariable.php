@@ -13,7 +13,7 @@ class CommercialVariable extends WorkFlowVariable
         return 'commercial';
     }
 
-    public function data(): array
+    public function data(array $params = []): array
     {
        /** @var Commercial $commercial */
         $user = $this->event->getData()['commercial'];

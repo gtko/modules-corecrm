@@ -14,7 +14,7 @@ abstract class WorkFlowVariable
     }
 
     abstract public function namespace():string;
-    abstract public function data():array;
+    abstract public function data(array $params = []):array;
     abstract public function labels():array;
 
 

@@ -12,7 +12,7 @@ class UserVariable extends WorkFlowVariable
         return 'utilisateur';
     }
 
-    public function data(): array
+    public function data(array $params = []): array
     {
        /** @var \Modules\BaseCore\Contracts\Entities\UserEntity $user */
         $user = $this->event->getData()['user'];

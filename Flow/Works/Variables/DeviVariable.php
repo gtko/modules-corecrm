@@ -15,7 +15,7 @@ class DeviVariable extends WorkFlowVariable
         return 'devi';
     }
 
-    public function data(): array
+    public function data(array $params = []): array
     {
         /**  @var Devi $devis */
         $devi = $this->event->getData()['devis'];

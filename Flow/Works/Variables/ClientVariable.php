@@ -12,7 +12,7 @@ class ClientVariable extends WorkFlowVariable
         return 'client';
     }
 
-    public function data(): array
+    public function data(array $params = []): array
     {
        /** @var \Modules\CoreCRM\Contracts\Entities\ClientEntity $client */
         $client = $this->event->getData()['client'];

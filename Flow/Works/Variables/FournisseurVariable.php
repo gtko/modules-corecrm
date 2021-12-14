@@ -12,7 +12,7 @@ class FournisseurVariable extends WorkFlowVariable
         return 'fournisseur';
     }
 
-    public function data(): array
+    public function data(array $params = []): array
     {
         /**  @var Fournisseur $fournisseur */
 
