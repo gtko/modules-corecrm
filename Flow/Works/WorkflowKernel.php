@@ -47,8 +47,6 @@ class WorkflowKernel
                 }
             }
 
-
-
             foreach ($listeners as $workFlowEventClass => $workflow) {
                 $instance = $this->instanceEvent($workFlowEventClass);
                 if (in_array($observable, $instance->listen())) {
@@ -75,8 +73,6 @@ class WorkflowKernel
                 }
             }
         });
-
-        //@todo on resolve les events entrant suivant les workflow en bdd et actif
     }
 
     public function addEvent(WorkFlowEvent $event){
