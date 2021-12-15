@@ -14,6 +14,7 @@ use Modules\CoreCRM\Flow\Works\Events\EventClientDossierUpdate;
 use Modules\CoreCRM\Flow\Works\Events\WorkFlowEvent;
 use Modules\CoreCRM\Models\Flow;
 use Modules\CoreCRM\Notifications\Kernel;
+use Modules\CrmAutoCar\Flow\Attributes\CreateProformatClient;
 
 class WorkflowKernel
 {
@@ -43,15 +44,19 @@ class WorkflowKernel
             $listeners = [];
             foreach($workflows as $workflow){
                 if($workflow->active){
-                    $listeners[collect($workflow->events)->pluck('class')->first()] = $workflow;
+                    $listeners[] = [
+                        'event' => collect($workflow->events)->pluck('class')->first(),
+                        'workflow' => $workflow
+                    ];
                 }
             }
 
-            foreach ($listeners as $workFlowEventClass => $workflow) {
+            foreach ($listeners as $listen) {
+                $workFlowEventClass = $listen['event'];
+                $workflow = $listen['workflow'];
                 $instance = $this->instanceEvent($workFlowEventClass);
                 if (in_array($observable, $instance->listen())) {
                     $instance->init($event->flow);
-
                     $valid = true;
                     if(count($workflow->conditions) > 0){
                         foreach($workflow->conditions as $condition) {
