@@ -15,7 +15,7 @@
     <div class="mt-2">
         <livewire:corecrm::pipeline-steps :dossier="$dossier" />
     </div>
-    <x-basecore::nav.layout default="devis">
+    <x-basecore::nav.layout default="{{$defaultName}}">
         <x-basecore::layout.panel-sidebar>
             <x-slot name="sidebar">
                 <x-corecrm::client.sidebar :client="$client" :dossier="$dossier">

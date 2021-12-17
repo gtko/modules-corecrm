@@ -82,12 +82,13 @@ class DossierController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(ClientEntity $client, Dossier $dossier): View|Factory|Application
+    public function show(Request $request, ClientEntity $client, Dossier $dossier): View|Factory|Application
     {
         $this->authorize('view', $dossier);
         $devis = $this->devisRep->getDevisByDossier($dossier);
+        $defaultName = $request->get('tab', 'devis');
 
-        return view('corecrm::app.dossiers.show', compact('client', 'dossier', 'devis'));
+        return view('corecrm::app.dossiers.show', compact('client', 'dossier', 'devis', 'defaultName'));
     }
 
     /**
