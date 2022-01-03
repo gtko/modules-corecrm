@@ -11,7 +11,6 @@ class GenerateKeyDevis
     public function GenerateKey(DevisEntities $devi):string
     {
         return md5($devi->id . config('app.key'));
-
     }
 
 }
