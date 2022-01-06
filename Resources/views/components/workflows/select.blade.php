@@ -6,7 +6,7 @@
     <x-basecore::inputs.select
         name="name"
         label="{{$param->name()}}"
-        wire:model="{{$model}}"
+        wire:model.defer="{{$model}}"
         required="required"
     >
         <option>Sélectionner un {{$param->name()}}</option>

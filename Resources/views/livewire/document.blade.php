@@ -6,8 +6,8 @@
           x-on:livewire-upload-error="isUploading = false"
           x-on:livewire-upload-progress="progress = $event.detail.progress">
         <div class="grid grid-cols-8 gap-2">
-            <input type="file" id="document" wire:model="file" class="col-span-4 form-control form-control-sm">
-            <x-basecore::inputs.text name="title" wire:model="title" class="col-span-4 form-control form-control-sm"
+            <input type="file" id="document" wire:model.defer="file" class="col-span-4 form-control form-control-sm">
+            <x-basecore::inputs.text name="title" wire:model.defer="title" class="col-span-4 form-control form-control-sm"
                            placeholder="Nom du fichier">Nom du document
             </x-basecore::inputs.text>
 
