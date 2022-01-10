@@ -10,5 +10,4 @@
                                      :type="Modules\CoreCRM\DataLists\DossierDataList::class"
     />
 
-
 </x-basecore::app-layout>
