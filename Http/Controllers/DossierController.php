@@ -33,6 +33,7 @@ class DossierController extends Controller
 
     public function index(){
         return view('corecrm::app.dossiers.index');
+
     }
 
     /**

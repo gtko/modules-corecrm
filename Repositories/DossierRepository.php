@@ -19,6 +19,7 @@ use Modules\CoreCRM\Models\Commercial;
 use Modules\CoreCRM\Models\Dossier;
 use Modules\CoreCRM\Models\Source;
 use Modules\CoreCRM\Models\Status;
+use Modules\CrmAutoCar\Models\Tag;
 
 
 class DossierRepository extends AbstractRepository implements DossierRepositoryContract
@@ -140,7 +141,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
     public function getDossierAttribute(): Collection
     {
-        return Dossier::where('commercial_id', '!=', '1')->whereDate('created_at','>', now()->subDays(7))->get();
+        return Dossier::where('commercial_id', '!=', '1')->whereDate('created_at', '>', now()->subDays(7))->get();
 
     }
 
@@ -176,7 +177,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         }))->get();
     }
 
-    public function getDossierByClientAndStatus(Client $client, Status $status):Collection
+    public function getDossierByClientAndStatus(Client $client, Status $status): Collection
     {
         return Dossier::where('clients_id', $client->id)
             ->where('status_id', $status->id)
