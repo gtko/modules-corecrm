@@ -52,12 +52,12 @@ class CommercialRepository extends AbstractRepository implements CommercialRepos
 
     public function countClientByDays(Commercial $commercial): int
     {
-        return $commercial->dossiers()->whereBetween('created_at', [now()->startOfDay(), now()->endOfDay()])->count();
+        return $commercial->dossiers()->whereBetween('attribution', [now()->startOfDay(), now()->endOfDay()])->count();
 
     }
 
     public function countClientByMounth(Commercial $commercial): int
     {
-        return $commercial->dossiers()->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->count();
+        return $commercial->dossiers()->whereBetween('attribution', [now()->startOfMonth(), now()->endOfMonth()])->count();
     }
 }

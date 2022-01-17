@@ -34,6 +34,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         $dossier->commercial()->associate($commercial);
         $dossier->source()->associate($source);
         $dossier->status()->associate($status);
+        $dossier->attribution = now();
         $dossier->date_start = Carbon::now();
 
         $dossier->save();
@@ -98,6 +99,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
     public function changeCommercial(Dossier $dossier, Commercial $commercial): Dossier
     {
         $dossier->commercial()->associate($commercial);
+        $dossier->attribution = now();
         $dossier->save();
 
         return $dossier;

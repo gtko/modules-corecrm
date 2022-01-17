@@ -13,7 +13,7 @@ class ClientDossierDevisCreate extends Attributes
 {
 
     public function __construct(
-        protected DevisEntities $devis,
+        protected ?DevisEntities $devis,
         protected UserEntity $user
     )
     {
@@ -31,14 +31,14 @@ class ClientDossierDevisCreate extends Attributes
     public function toArray(): array
     {
         return [
-            'devis_id' => $this->devis->id,
+            'devis_id' => $this->devis->id ?? "",
             'user_id' => $this->user->id
         ];
     }
 
     public function getDevis():DevisEntities
     {
-        return $this->devis;
+        return $this->devis ?? "";
     }
 
     public function getUser():UserEntity
