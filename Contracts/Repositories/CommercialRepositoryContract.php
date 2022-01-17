@@ -16,6 +16,8 @@ interface CommercialRepositoryContract extends SearchableRepository,RepositoryFe
     public function create(Personne $personne):Commercial;
     public function getDossiers(Commercial $commmercial): Collection;
     public function getClients(Commercial $commmercial): Collection;
+    public function countClientByDays(Commercial $commercial): int;
+    public function countClientByMounth(Commercial $commercial): int;
     public function getById(int $id):Commercial;
 
 }

@@ -3,7 +3,6 @@
 namespace Modules\CoreCRM\Repositories;
 
 
-
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -48,6 +47,17 @@ class CommercialRepository extends AbstractRepository implements CommercialRepos
 
     public function getClients(Commercial $commmercial): Collection
     {
-       return  $commmercial->dossiers()->get();
+        return $commmercial->dossiers()->get();
+    }
+
+    public function countClientByDays(Commercial $commercial): int
+    {
+        return $commercial->dossiers()->whereBetween('created_at', [now()->startOfDay(), now()->endOfDay()])->count();
+
+    }
+
+    public function countClientByMounth(Commercial $commercial): int
+    {
+        return $commercial->dossiers()->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->count();
     }
 }
