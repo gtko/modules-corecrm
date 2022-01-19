@@ -21,8 +21,10 @@ class TimelineResolve extends Component
     public function render()
     {
         $nameComponent = Str::replace('Flow\Attributes', "View\Components\Timeline", $this->flow->event->key);
+
         if(class_exists($nameComponent)) {
             $component = (new $nameComponent($this->flow));
+
 
             return $component->render();
         }

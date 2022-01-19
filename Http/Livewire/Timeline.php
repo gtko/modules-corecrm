@@ -24,7 +24,9 @@ class Timeline extends Component
     public function render(FlowContract $flowService): View|string
     {
         $dossier = Dossier::find($this->dossier);
+
         $flows = $flowService->list($dossier);
+
         $flows = $flows->map(function($item){
             $item->day = $item->created_at->format('d/m/Y');
             return $item;
