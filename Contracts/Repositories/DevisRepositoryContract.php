@@ -21,6 +21,7 @@ interface DevisRepositoryContract extends SearchableRepository, RepositoryFetcha
     public function updateData(DevisEntities $devis, array $data): DevisEntities;
     public function updateFournisseur(DevisEntities $devis, Fournisseur $fournisseur): DevisEntities;
     public function detachFournisseur(DevisEntities $devis, Fournisseur $fournisseur) :bool;
+    public function duplicate(DevisEntities $devis) : DevisEntities;
 
     public function getFournsisseurValidate(DevisEntities $devi) : Collection;
     public function getPrice(DevisEntities $devi, Fournisseur $fournisseur): float;

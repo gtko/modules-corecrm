@@ -39,6 +39,20 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
         return $devi;
     }
 
+    public function duplicate(DevisEntities $devis): DevisEntities
+    {
+        $newDevis = app(DevisEntities::class)::create([
+            'dossier_id' => $devis->dossier->id,
+            'commercial_id' => $devis->commercial->id,
+            'data' => $devis->data,
+            'tva_applicable' => $devis->tva_applicable,
+        ]);
+
+        app(FlowContract::class)->add($newDevis->dossier, new ClientDossierDevisCreate($newDevis, Auth::user()));
+
+        return $newDevis;
+    }
+
     public function updateData(DevisEntities $devis, array $data): DevisEntities
     {
         $devis->data = $data;
@@ -138,4 +152,5 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
         return $devis;
     }
+
 }
