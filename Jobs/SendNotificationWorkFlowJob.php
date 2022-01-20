@@ -28,7 +28,7 @@ class SendNotificationWorkFlowJob implements ShouldQueue
     {
 
         $files = [];
-        foreach(($datas['files'] ?? []) as $file){
+        foreach(($this->datas['files'] ?? []) as $file){
             $class = base64_decode($file['class']);
             $files[] = (new $class($this->event));
         }
