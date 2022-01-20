@@ -11,7 +11,8 @@ use Modules\CoreCRM\Flow\Interfaces\FlowAttributes;
 use Modules\CoreCRM\Interfaces\Flowable;
 use Modules\CoreCRM\Models\Flow;
 
-class FlowCRM implements FlowContract
+class
+FlowCRM implements FlowContract
 {
 
     public function add(Flowable $flowable, FlowAttributes $flowAttributes): Flow

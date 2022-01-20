@@ -10,7 +10,7 @@
             <x-basecore::inputs.text
                 name="name"
                 label="Nom de la pipeline"
-                wire:model.defer="name"
+                wire:model="name"
                 maxlength="255"
                 required="required"
             />
@@ -56,7 +56,7 @@
                                 <x-basecore::inputs.text
                                     name="new[label]"
                                     label=""
-                                    wire:model.defer="new.label"
+                                    wire:model="new.label"
                                     maxlength="255"
                                     required
                                 />
@@ -67,7 +67,7 @@
                                 <x-basecore::inputs.color
                                     name="new[color]"
                                     label=""
-                                    wire:model.defer="new.color"
+                                    wire:model="new.color"
                                     class="h-16 w-16 -mt-4 -ml-4"
                                     required
                                 />
@@ -90,7 +90,7 @@
                                     <x-basecore::inputs.text
                                         name="form[{{$order}}][label]"
                                         label=""
-                                        wire:model.defer="form.{{$order}}.label"
+                                        wire:model="form.{{$order}}.label"
                                         maxlength="255"
                                         required="required"
                                     />
@@ -101,7 +101,7 @@
                                     <x-basecore::inputs.color
                                         name="status[{{$order}}][color]"
                                         label=""
-                                        wire:model.defer="status.{{$order}}.color"
+                                        wire:model="status.{{$order}}.color"
                                         class="h-16 w-16 -mt-4 -ml-4"
                                         required="required"
                                     />
@@ -125,7 +125,7 @@
                                 <x-basecore::inputs.text
                                     name="win['label']"
                                     label=""
-                                    wire:model.defer="win.label"
+                                    wire:model="win.label"
                                     maxlength="255"
                                     required
                                 />
@@ -136,7 +136,7 @@
                                 <x-basecore::inputs.color
                                     name="win['color']"
                                     label=""
-                                    wire:model.defer="win.color"
+                                    wire:model="win.color"
                                     class="h-16 w-16 -mt-4 -ml-4"
                                     required
                                 />
@@ -155,7 +155,7 @@
                                 <x-basecore::inputs.text
                                     name="lost[label]"
                                     label=""
-                                    wire:model.defer="lost.label"
+                                    wire:model="lost.label"
                                     maxlength="255"
                                     required
                                 />
@@ -166,7 +166,7 @@
                                 <x-basecore::inputs.color
                                     name="lost[color]"
                                     label=""
-                                    wire:model.defer="lost.color"
+                                    wire:model="lost.color"
                                     class="h-16 w-16 -mt-4 -ml-4"
                                     required
                                 />

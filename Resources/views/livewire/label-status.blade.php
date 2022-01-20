@@ -3,7 +3,7 @@
         <div class="col-span-2">
             <x-corecrm::status :label="$dossier->status_label" :color="$dossier->status_color" />
         </div>
-        <select class="form-select form-select-sm" aria-label=".form-select-sm example" wire:model.defer="statusSelect">
+        <select class="form-select form-select-sm" aria-label=".form-select-sm example" wire:model="statusSelect">
             <option selected value="">Status</option>
             @foreach($statusList as $statu)
                 <option value="{{$statu->id}}">{{$statu->label}}</option>
