@@ -30,7 +30,7 @@ class WorkFlowParseVariable
             if(is_string($data)) {
                 $text = $data;
 
-                preg_match_all("#\{(.+)\}#", $text, $result);
+                preg_match_all("#\{([^{}]+)\}#", $text, $result);
 
                 foreach(($result[1] ?? []) as $index => $key){
                     $params = explode('|', $key);
