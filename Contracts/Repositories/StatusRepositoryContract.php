@@ -4,6 +4,7 @@
 namespace Modules\CoreCRM\Contracts\Repositories;
 
 
+use Illuminate\Database\Eloquent\Collection;
 use Modules\BaseCore\Contracts\Repositories\RelationsRepositoryContract;
 use Modules\BaseCore\Interfaces\RepositoryFetchable;
 use Modules\CoreCRM\Enum\StatusTypeEnum;
@@ -20,6 +21,7 @@ interface StatusRepositoryContract extends SearchableRepository, RepositoryFetch
     public function existByLabel(string $label):bool;
     public function findByLabel(string $label):?Status;
     public function getById(int $id):Status;
+    public function fetchByType(string $label):?Collection;
 
     public function changePipeline(Status $status,  Pipeline $pipeline):Status;
     public function updateOrder(Status $status, int $order):Status;

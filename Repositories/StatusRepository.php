@@ -3,6 +3,7 @@
 namespace Modules\CoreCRM\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Modules\BaseCore\Repositories\AbstractRepository;
@@ -92,5 +93,10 @@ class StatusRepository extends AbstractRepository implements StatusRepositoryCon
         DB::commit();
 
         return $good;
+    }
+
+    public function fetchByType(string $type): ?Collection
+    {
+        return Status::where('type', $type)->get();
     }
 }
