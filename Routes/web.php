@@ -44,6 +44,7 @@ Route::prefix('/')
 
         Route::resource('commercials', CommercialController::class)->except('show');
         Route::get('dossiers', [DossierController::class,'index'])->name('dossiers.index');
+        Route::get('dossiers/create', [DossierController::class,'create'])->name('dossiers.create');
         Route::get('clients/{client}/dossiers/{dossier}', [DossierController::class,'show'])->name('dossiers.show');
         //Route::resource('clients/{client}/dossiers/{dossier}', DossierController::class)->except('index');
         Route::resource('clients/{client}/dossiers/{dossier}/devis', DeviController::class)->except('index');
