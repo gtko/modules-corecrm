@@ -32,7 +32,7 @@ class ClientController extends Controller
      */
     public function index(Request $request): Application|Factory|View
     {
-        $this->authorize('views-any',ClientEntity::class);
+        $this->authorize('viewAny',ClientEntity::class);
 
         return view('corecrm::app.clients.index');
     }
@@ -66,12 +66,12 @@ class ClientController extends Controller
         $pipeline = $pipelineRep->getDefault();
         $status = $pipelineRep->getStatusNew($pipeline);
 
-        $client = (new CreateClient())->create($request, $commercial, $source,$status);
+        $dossier = (new CreateClient())->create($request, $commercial, $source,$status);
 
 
         DB::commit();
         return redirect()
-            ->route('clients.show', $client)
+            ->route('dossiers.show', [$dossier->client, $dossier])
             ->withSuccess(__('basecore::crud.common.created'));
     }
 
@@ -82,7 +82,7 @@ class ClientController extends Controller
      */
     public function show(Request $request, ClientEntity $client, DossierRepositoryContract $repDossier)
     {
-        $this->authorize('views', $client);
+        $this->authorize('view', $client);
 
         $dossiers = $repDossier->getDossiersByClient($client);
 
