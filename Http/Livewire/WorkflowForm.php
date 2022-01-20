@@ -27,6 +27,11 @@ class WorkflowForm extends Component
 
     public $edition = false;
 
+    public $listeners = [
+        'workflowUpdated' => 'updateEvent',
+        'workflowActionDeleted' => 'deleteAction',
+    ];
+
     protected $rules = [
         'data.*' => ''
     ];
@@ -48,6 +53,10 @@ class WorkflowForm extends Component
         }
     }
 
+    public function updateEvent($data){
+        $this->data = $data;
+    }
+
     public function updatedData($value, $key){
 
         if($key === 'events.0.class'){
@@ -64,18 +73,6 @@ class WorkflowForm extends Component
             ];
     }
 
-    public function addCondition(){
-        $this->data['conditions'][] = [
-            'class' => '',
-            'field' => '',
-            'condition' => '',
-            'value' => ''
-        ];
-    }
-
-    public function deleteCondition($index){
-        unset($this->data['conditions'][$index]);
-    }
 
     public function addAction(){
         $this->data['actions'][] = [
