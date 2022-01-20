@@ -6,7 +6,7 @@
     <x-basecore::inputs.number
         name="name"
         label="{{$param->name()}}"
-        wire:model.defer="{{$model}}"
+        wire:model="{{$model}}"
         required="required"
     />
 </x-basecore::inputs.group>
