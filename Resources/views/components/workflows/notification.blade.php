@@ -13,8 +13,21 @@
 @endif
 
 <div x-data="{open:false}">
-    <span x-on:click="open=true" class="btn btn-primary">Editer email</span>
 
+   <div class="grid grid-cols-2 gap-2">
+       <input wire:model="{{$model}}.subject" placeholder="sujet de l'email"
+              type="text" class="col-span-2 form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
+        <input wire:model="{{$model}}.delay_min" placeholder="delay minimum (minutes)"
+               type="number" class="form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
+       <select wire:model="{{$model}}.template" class="form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
+           @foreach(app(Modules\CoreCRM\Flow\Works\Services\TemplateMailService::class)->all() as $name => $template)
+               <option value="{{$name}}">Template email {{Illuminate\Support\Str::ucfirst($name)}}</option>
+           @endforeach
+       </select>
+        <input wire:model="{{$model}}.delay_max" placeholder="delay maximum (minutes)"
+               type="number" class="form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
+        <span x-on:click="open=true" class="btn btn-primary">Editer email</span>
+   </div>
     <div x-show='open' class="fixed z-40 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -22,12 +35,6 @@
             <div class="inline-block align-bottom bg-transparent border-0 p-1 text-left overflow-hidden transform transition-all sm:my-4 sm:align-middle sm:max-w-4xl sm:w-full">
                 <div>
                     <div class="relative border bg-white border-gray-300 rounded-lg shadow-xl overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
-                        <label for="template" class="sr-only">Template</label>
-                        <select wire:model="{{$model}}.template" class="block w-full border-0 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0">
-                            @foreach(app(Modules\CoreCRM\Flow\Works\Services\TemplateMailService::class)->all() as $name => $template)
-                                <option value="{{$name}}">Template email {{Illuminate\Support\Str::ucfirst($name)}}</option>
-                            @endforeach
-                        </select>
                         <label for="sujet" class="sr-only">Sujet</label>
                         <input type="text" name="sujet" id="sujet"
                                class="block w-full border-0 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"

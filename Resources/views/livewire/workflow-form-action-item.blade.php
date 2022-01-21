@@ -36,7 +36,7 @@
     }
     ?>
 
-    <div class="flex items-end justify-between" x-data="{
+    <div class="flex mt-3 items-end justify-between" x-data="{
                             isActivate : [],
                             variables : null,
                             resolveFn : null,

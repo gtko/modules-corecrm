@@ -21,7 +21,10 @@ class ActionsSendNotification extends WorkFlowAction
         $parseVariable = new WorkFlowParseVariable($this->event, $this->params[0]->getValue());
         $datas = $parseVariable->resolve();
 
-        SendNotificationWorkFlowJob::dispatch($datas, $this->event);
+        $delay = random_int($datas['delay_min'] ?? 0, $datas['delay_max'] ?? 0);
+
+        SendNotificationWorkFlowJob::dispatch($datas, $this->event)
+            ->delay(now()->addMinutes($delay));
     }
 
     public function isVariabled():bool
