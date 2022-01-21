@@ -21,6 +21,8 @@ class TemplateMailService
             'view' => $view,
             'type' => $type
         ];
+
+        return $this;
     }
 
     public function get($name){

@@ -23,7 +23,6 @@ class WorkFlowStandardMail extends Mailable
         $templateService = app(TemplateMailService::class);
         $template = $templateService->get($this->template);
 
-        dump($template);
         $mail = match ($template['type']) {
             TemplateMailService::TYPE_MARKDOWN => $this->markdown($template['view'], [
                 'subject' => $this->sujet,
@@ -34,7 +33,6 @@ class WorkFlowStandardMail extends Mailable
                 'content' => $this->content
             ]),
         };
-
 
         if(!empty($this->emailsSupplementaire)) {
             $emails = explode(',', $this->emailsSupplementaire);
