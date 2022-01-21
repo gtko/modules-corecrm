@@ -83,15 +83,7 @@ class CoreCRMDatabaseSeeder extends Seeder
         Permission::create(['name' => 'update notes']);
         Permission::create(['name' => 'delete notes']);
 
-        Permission::create(['name' => 'list notes']);
-        Permission::create(['name' => 'views notes']);
-        Permission::create(['name' => 'create notes']);
-        Permission::create(['name' => 'update notes']);
-        Permission::create(['name' => 'delete notes']);
-
-        Permission::create(['name' => 'list emails']);
-        Permission::create(['name' => 'views emails']);
-        Permission::create(['name' => 'create emails']);
+        Permission::create(['name' => 'send emails to clients']);
 
         Permission::create(['name' => 'list documents']);
         Permission::create(['name' => 'views documents']);
