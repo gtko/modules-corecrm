@@ -77,6 +77,28 @@ class CoreCRMDatabaseSeeder extends Seeder
         Permission::create(['name' => 'update devis']);
         Permission::create(['name' => 'delete devis']);
 
+        Permission::create(['name' => 'list notes']);
+        Permission::create(['name' => 'views notes']);
+        Permission::create(['name' => 'create notes']);
+        Permission::create(['name' => 'update notes']);
+        Permission::create(['name' => 'delete notes']);
+
+        Permission::create(['name' => 'list notes']);
+        Permission::create(['name' => 'views notes']);
+        Permission::create(['name' => 'create notes']);
+        Permission::create(['name' => 'update notes']);
+        Permission::create(['name' => 'delete notes']);
+
+        Permission::create(['name' => 'list emails']);
+        Permission::create(['name' => 'views emails']);
+        Permission::create(['name' => 'create emails']);
+
+        Permission::create(['name' => 'list documents']);
+        Permission::create(['name' => 'views documents']);
+        Permission::create(['name' => 'create documents']);
+        Permission::create(['name' => 'update documents']);
+        Permission::create(['name' => 'delete documents']);
+
         $arrayTypeUser = ['commercials', 'fournisseurs'];
         foreach($arrayTypeUser as $type) {
             Permission::create(['name' => 'list ' . $type]);
