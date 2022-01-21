@@ -5,14 +5,19 @@
             <li class="relative md:flex-1 md:flex">
                 <!-- Completed Step -->
                 <span wire:click="change({{$item->id}})" class="cursor-pointer group flex items-center w-full">
-                <span class="px-6 py-4 flex items-center text-sm font-medium">
+                <span class="px-6 py-4 flex items-center text-sm font-medium" x-data="{ tooltip: false }"  @if($status->order != $item->order)  x-on:mouseover="tooltip = true" x-on:mouseleave="tooltip = false" @endif>
                          @if($status->order >= $item->order)
                         <span class="text-white flex-shrink-0 w-10 h-10
                            flex items-center justify-center bg-green-500 rounded-full group-hover:bg-green-600"
-                        title="{{$item->label}}"
-                        >
+                             >
                                 @icon('check', 30)
                             </span>
+                        <div class="relative" x-cloak x-show.transition.origin.top="tooltip">
+                            <span class="ml-4 text-sm font-medium text-black whitespace-nowrap"
+                                  title="{{$item->label}}">
+                          {{$item->label}}
+                      </span>
+                        </div>
                     @else
                         <span
                             class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-indigo-600 rounded-full">
@@ -21,7 +26,8 @@
 
                     @endif
                     @if($status->order <= $item->order)
-                        <span class="ml-4 text-sm font-medium text-black whitespace-nowrap" title="{{$item->label}}">
+                        <span class="ml-4 text-sm font-medium text-black whitespace-nowrap"
+                              title="{{$item->label}}">
                           {{$item->label}}
                       </span>
                     @endif
@@ -73,7 +79,6 @@
                                 @endforeach
                             </span>
                     </span>
-
         </li>
 
     </ol>
