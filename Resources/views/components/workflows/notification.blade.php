@@ -22,6 +22,12 @@
             <div class="inline-block align-bottom bg-transparent border-0 p-1 text-left overflow-hidden transform transition-all sm:my-4 sm:align-middle sm:max-w-4xl sm:w-full">
                 <div>
                     <div class="relative border bg-white border-gray-300 rounded-lg shadow-xl overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+                        <label for="template" class="sr-only">Template</label>
+                        <select wire:model="{{$model}}.template" class="block w-full border-0 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0">
+                            @foreach(app(Modules\CoreCRM\Flow\Works\Services\TemplateMailService::class)->all() as $name => $template)
+                                <option value="{{$name}}">Template email {{Illuminate\Support\Str::ucfirst($name)}}</option>
+                            @endforeach
+                        </select>
                         <label for="sujet" class="sr-only">Sujet</label>
                         <input type="text" name="sujet" id="sujet"
                                class="block w-full border-0 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"

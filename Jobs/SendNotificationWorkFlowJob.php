@@ -26,14 +26,20 @@ class SendNotificationWorkFlowJob implements ShouldQueue
 
     public function handle()
     {
-
         $files = [];
         foreach(($this->datas['files'] ?? []) as $file){
             $class = base64_decode($file['class']);
             $files[] = (new $class($this->event));
         }
 
-        $maillable = new WorkFlowStandardMail($this->datas['subject'], $datas['cci'] ?? '', $this->datas['content'],$files);
+        $maillable = new WorkFlowStandardMail(
+            $this->datas['subject'],
+            $datas['cci'] ?? '',
+            $this->datas['content'],
+            $files,
+            $this->datas['template'] ?? 'default'
+        );
+
         Mail::to($this->datas['cc'])
             ->send($maillable);
     }

@@ -27,6 +27,7 @@ use Modules\CoreCRM\Contracts\Repositories\WorkflowRepositoryContract;
 use Modules\CoreCRM\Contracts\Services\FlowContract;
 use Modules\CoreCRM\Contracts\Views\DevisEditViewContract;
 use Modules\CoreCRM\Flow\Notification\NotificationsDispatch;
+use Modules\CoreCRM\Flow\Works\Services\TemplateMailService;
 use Modules\CoreCRM\Flow\Works\WorkflowKernel;
 use Modules\CoreCRM\Models\Client;
 use Modules\CoreCRM\Models\Devi;
@@ -96,6 +97,7 @@ class CoreCRMServiceProvider extends ServiceProvider
 
         $this->app->bind(WorkflowRepositoryContract::class, WorkflowRepository::class);
         $this->app->singleton(WorkflowKernel::class);
+        $this->app->singleton(TemplateMailService::class);
 
 
         app(CompositeurThemeContract::class)
