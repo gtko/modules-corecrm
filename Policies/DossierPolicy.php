@@ -11,6 +11,33 @@ class DossierPolicy
 {
     use HandlesAuthorization;
 
+
+    public function viewAnyNote(UserEntity $user)
+    {
+        return $user->hasPermissionTo('list notes');
+    }
+
+    public function viewNote(UserEntity $user)
+    {
+        return $user->hasPermissionTo('views notes');
+    }
+
+    public function createNote(UserEntity $user)
+    {
+        return $user->hasPermissionTo('create notes');
+    }
+
+    public function updateNote(UserEntity $user, Dossier $dossier)
+    {
+        return $user->hasPermissionTo('update notes');
+    }
+
+    public function deleteNote(UserEntity $user, Dossier $dossier)
+    {
+        return $user->hasPermissionTo('delete notes');
+    }
+
+
     /**
      * Determine whether the dossier can views any models.
      *
@@ -20,6 +47,11 @@ class DossierPolicy
     public function viewAny(UserEntity $user)
     {
         return $user->hasPermissionTo('list dossiers');
+    }
+
+    public function sendEmail(UserEntity $user)
+    {
+        return $user->hasPermissionTo('send emails to clients');
     }
 
     /**

@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
 use Modules\CoreCRM\Contracts\Repositories\CommercialRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\DevisRepositoryContract;
@@ -88,6 +89,7 @@ class DossierController extends Controller
         $this->authorize('view', $dossier);
         $devis = $this->devisRep->getDevisByDossier($dossier);
         $defaultName = $request->get('tab', 'devis');
+
 
         return view('corecrm::app.dossiers.show', compact('client', 'dossier', 'devis', 'defaultName'));
     }

@@ -57,12 +57,17 @@
             <x-basecore::partials.card>
 
                 <x-basecore::nav.menu class="-mt-4">
-                    <x-basecore::nav.menu-item name="note">
-                        <x-basecore::icon-label icon="note" label="Note"/>
-                    </x-basecore::nav.menu-item>
-                    <x-basecore::nav.menu-item name="devis">
-                        <x-basecore::icon-label icon="devis" label="Devis" :size="20"/>
-                    </x-basecore::nav.menu-item>
+                    @can('createNote', \Modules\CoreCRM\Models\Dossier::class)
+                        <x-basecore::nav.menu-item name="note">
+                            <x-basecore::icon-label icon="note" label="Note"/>
+                        </x-basecore::nav.menu-item>
+                    @endcan
+
+                    @can('viewAny', \Modules\CoreCRM\Contracts\Entities\DevisEntities::class)
+                        <x-basecore::nav.menu-item name="devis">
+                            <x-basecore::icon-label icon="devis" label="Devis" :size="20"/>
+                        </x-basecore::nav.menu-item>
+                    @endcan
 
                     <x-basecore::resolve-type-view
                         :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\DossierTabLabelViewContract::class"
@@ -70,21 +75,27 @@
                     />
 
                     @if(in_array('call', config('corecrm.features')))
-                    <x-basecore::nav.menu-item name="call">
-                        <x-basecore::icon-label icon="folder" label="Appels"/>
-                    </x-basecore::nav.menu-item>
+                        @can('viewAny', \Modules\CallCRM\Models\Appel::class)
+                            <x-basecore::nav.menu-item name="call">
+                                <x-basecore::icon-label icon="folder" label="Appels"/>
+                            </x-basecore::nav.menu-item>
+                        @endcan
                     @endif
 
                     @if(in_array('email', config('corecrm.features')))
-                    <x-basecore::nav.menu-item name="email">
-                        <x-basecore::icon-label icon="folder" label="Emails"/>
-                    </x-basecore::nav.menu-item>
+                        @can('sendEmail', \Modules\CoreCRM\Models\Dossier::class)
+                            <x-basecore::nav.menu-item name="email">
+                                <x-basecore::icon-label icon="folder" label="Emails"/>
+                            </x-basecore::nav.menu-item>
+                        @endcan
                     @endif
 
                     @if(in_array('document', config('corecrm.features')))
-                    <x-basecore::nav.menu-item name="documents">
-                        <x-basecore::icon-label icon="document" label="Documents"/>
-                    </x-basecore::nav.menu-item>
+                        @can('viewAny', \Modules\CoreCRM\Models\Document::class)
+                            <x-basecore::nav.menu-item name="documents">
+                                <x-basecore::icon-label icon="document" label="Documents"/>
+                            </x-basecore::nav.menu-item>
+                        @endcan
                     @endif
 
 
