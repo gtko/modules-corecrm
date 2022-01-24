@@ -5,22 +5,24 @@
             <li class="relative md:flex-1 md:flex">
                 <!-- Completed Step -->
                 <span wire:click="change({{$item->id}})" class="cursor-pointer group flex items-center w-full">
-                <span class="px-6 py-4 flex items-center text-sm font-medium" x-data="{ tooltip: false }"  @if($status->order != $item->order)  x-on:mouseover="tooltip = true" x-on:mouseleave="tooltip = false" @endif>
+                <span class="px-6 py-4 flex items-center text-sm font-medium" x-data="{ tooltip: false }"
+                      @if($status->order != $item->order)  x-on:mouseover="tooltip = true"
+                      x-on:mouseleave="tooltip = false" @endif>
                          @if($status->order >= $item->order)
                         <span class="text-white flex-shrink-0 w-10 h-10
                            flex items-center justify-center bg-green-500 rounded-full group-hover:bg-green-600"
-                             >
+                        >
                                 @icon('check', 30)
                             </span>
                         <div class="relative" x-cloak x-show.transition.origin.top="tooltip">
-                            <span class="ml-4 text-sm font-medium text-black whitespace-nowrap"
-                                  title="{{$item->label}}">
-                          {{$item->label}}
-                      </span>
+                            <div style="z-index: 10000"
+                                class="absolute top-0 z-50 p-2 -mt-1 text-sm leading-tight text-white transform -translate-x-1/2 -translate-y-full bg-blue-600 rounded-lg shadow-lg whitespace-nowrap">
+        {{$item->label}}
+      </div>
                         </div>
                     @else
                         <span
-                            class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-indigo-600 rounded-full">
+                            class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-indigo-600 rounded-full text-black">
                                 <span class="text-indigo-600">{{$loop->index+1}}</span>
                               </span>
 
