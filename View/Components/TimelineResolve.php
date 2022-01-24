@@ -24,8 +24,6 @@ class TimelineResolve extends Component
 
         if(class_exists($nameComponent)) {
             $component = (new $nameComponent($this->flow));
-
-
             return $component->render();
         }
 

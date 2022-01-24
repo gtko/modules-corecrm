@@ -2,7 +2,10 @@
 
 namespace Modules\CoreCRM\View\Components\Timeline;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
+use Modules\CoreCRM\Models\Dossier;
 
 
 class ClientDossierNoteCreate extends TimelineComponent
@@ -12,8 +15,12 @@ class ClientDossierNoteCreate extends TimelineComponent
      *
      * @return \Illuminate\View\View|string
      */
-    public function render(): View
+    public function render(): ?View
     {
-        return view('corecrm::components.timeline.client.dossier.note.create');
+        if(Auth::user()->can('viewNote', \Modules\CoreCRM\Models\Dossier::class)) {
+            return view('corecrm::components.timeline.client.dossier.note.create');
+        }
+
+        return null;
     }
 }

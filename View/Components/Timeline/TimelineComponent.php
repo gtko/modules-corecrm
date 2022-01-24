@@ -15,5 +15,5 @@ abstract class TimelineComponent
     ){}
 
 
-    abstract function render():View;
+    abstract function render(): ?View;
 }
