@@ -18,13 +18,15 @@ class GuardCRM extends SessionGuard
     {
         $user = $this->user();
 
-        if($user) {
-            if ($user->hasRole('commercial') || $user->isSuperAdmin()) {
-                return Commercial::find($user->id);
-            }
+        return Commercial::find($user->id);
 
-            throw new BadRoleDefinedException("Le role commercial n'est pas attribué a cet utilisateur");
-        }
+//        if($user) {
+//            if ($user->hasRole('commercial') || $user->isSuperAdmin()) {
+//                return Commercial::find($user->id);
+//            }
+//
+//            throw new BadRoleDefinedException("Le role commercial n'est pas attribué a cet utilisateur");
+//        }
     }
 
 }

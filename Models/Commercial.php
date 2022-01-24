@@ -11,19 +11,19 @@ class Commercial extends User
 {
     protected $table = 'users';
 
-    public function newQuery(): Builder
-    {
-        return parent::newQuery()->role(['commercial', 'super-admin']);
-    }
-
-    protected static function booted()
-    {
-        static::saved(function ($user) {
-            $user->roles->sync([
-                Role::find('name', 'commercial')
-            ]);
-        });
-    }
+//    public function newQuery(): Builder
+//    {
+//        return parent::newQuery();
+//    }
+//
+//    protected static function booted()
+//    {
+//        static::saved(function ($user) {
+//            $user->roles->sync([
+//                Role::find('name', 'commercial')
+//            ]);
+//        });
+//    }
 
     public function getIsActifAttribute()
     {
