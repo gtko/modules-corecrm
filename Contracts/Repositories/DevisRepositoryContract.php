@@ -17,8 +17,9 @@ use Modules\SearchCRM\Interfaces\SearchableRepository;
 
 interface DevisRepositoryContract extends SearchableRepository, RepositoryFetchable,RelationsRepositoryContract
 {
-    public function create(Dossier $dossier, Commercial $commercial): DevisEntities;
-    public function updateData(DevisEntities $devis, array $data): DevisEntities;
+    public function create(Dossier $dossier, Commercial $commercial, string $title = null): DevisEntities;
+    public function updateData(DevisEntities $devis, array $data, string $title = null): DevisEntities;
+    public function addTitre(DevisEntities $devis, string $title): DevisEntities;
     public function updateFournisseur(DevisEntities $devis, Fournisseur $fournisseur): DevisEntities;
     public function detachFournisseur(DevisEntities $devis, Fournisseur $fournisseur) :bool;
     public function duplicate(DevisEntities $devis) : DevisEntities;

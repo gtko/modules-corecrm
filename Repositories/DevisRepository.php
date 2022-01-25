@@ -25,13 +25,14 @@ use Modules\CoreCRM\Models\Fournisseur;
 class DevisRepository extends AbstractRepository implements DevisRepositoryContract
 {
 
-    public function create(Dossier $dossier, Commercial $commercial): DevisEntities
+    public function create(Dossier $dossier, Commercial $commercial, string $title = null): DevisEntities
     {
         $devi = app(DevisEntities::class)::create([
             'dossier_id' => $dossier->id,
             'commercial_id' => $commercial->id,
             'data' => [],
             'tva_applicable' => true,
+            'title' => $title
         ]);
 
         app(FlowContract::class)->add($dossier, new ClientDossierDevisCreate($devi, Auth::user()));
@@ -53,9 +54,10 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
         return $newDevis;
     }
 
-    public function updateData(DevisEntities $devis, array $data): DevisEntities
+    public function updateData(DevisEntities $devis, array $data, string $title = null): DevisEntities
     {
         $devis->data = $data;
+        $devis->title = $title;
         $devis->save();
 
         app(FlowContract::class)->add($devis->dossier, new ClientDossierDevisUpdate($devis, \Auth::user(), $data));
@@ -157,4 +159,10 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
         return $devis;
     }
 
+    public function addTitre(DevisEntities $devis, string $title): DevisEntities
+    {
+        $devis->title = $title;
+
+        return $devis;
+    }
 }
