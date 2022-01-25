@@ -1,4 +1,6 @@
 <div>
+
+    @can('create', \Modules\CoreCRM\Models\Document::class)
     <form method="POST" wire:submit.prevent="store" class="mt-5"
           x-data="{ isUploading: false, progress: 0 }"
           x-on:livewire-upload-start="isUploading = true"
@@ -20,6 +22,8 @@
         </div>
 
         <form/>
+    @endcan
+
 
         <livewire:corecrm::document-list dossier-id="{{$this->dossier->id}}" />
 

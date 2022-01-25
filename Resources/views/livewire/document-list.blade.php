@@ -8,7 +8,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($documents as $document)
+    @forelse($documents as $document)
         <tr>
             <td class="border-b dark:border-dark-5">{{$document->name}}</td>
             <td class="border-b dark:border-dark-5">{{$document->created_at->format('d-m-Y h:i')}}</td>
@@ -24,7 +24,19 @@
                 </x-basecore::ActionConfirm>
             </td>
         </tr>
-    @endforeach
+    @empty
+        <tr>
+            <td colspan="4">
+                <div class="text-center p-8">
+                    @icon('empty', null, 'mx-auto h-12 w-12 text-gray-400')
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">Aucun document</h3>
+                    <p class="mt-1 text-sm text-gray-500">
+                        Aucun document sur le dossier
+                    </p>
+                </div>
+            </td>
+        </tr>
+    @endforelse
 
     </tbody>
 </table>

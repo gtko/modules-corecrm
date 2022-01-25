@@ -2,6 +2,7 @@
 
 namespace Modules\CoreCRM\Http\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Modules\CoreCRM\Models\Document as ModelDocument;
@@ -35,7 +36,9 @@ class DocumentList extends Component
 
     public function render()
     {
-        $this->documents = ModelDocument::where('dossier_id', $this->dossier_id)->get();
+        if(Auth::user()->can('viewAny', \Modules\CoreCRM\Models\Document::class)) {
+            $this->documents = ModelDocument::where('dossier_id', $this->dossier_id)->get();
+        }
 
         return view('corecrm::livewire.document-list');
     }
