@@ -7,8 +7,9 @@
           x-on:livewire-upload-progress="progress = $event.detail.progress">
         <div class="grid grid-cols-8 gap-2">
             <input type="file" id="document" wire:model.defer="file" class="col-span-4 form-control form-control-sm">
-            <x-basecore::inputs.text name="title" wire:model.defer="title" class="col-span-4 form-control form-control-sm"
-                           placeholder="Nom du fichier">Nom du document
+            <x-basecore::inputs.text name="title" wire:model.defer="title"
+                                     class="col-span-4 form-control form-control-sm"
+                                     placeholder="Nom du fichier">Nom du document
             </x-basecore::inputs.text>
 
         </div>
@@ -19,16 +20,16 @@
             <x-basecore::button type="submit" class="mt-2 btn-sm">Sauvegarder</x-basecore::button>
         </div>
 
-        <form/>
+    </form>
 
-        <livewire:corecrm::document-list dossier-id="{{$this->dossier->id}}" />
+    <livewire:corecrm::document-list dossier-id="{{$this->dossier->id}}"/>
 
-        @push('scripts')
+    @push('scripts')
         <script>
             Livewire.on('documentAdd', () => {
                 document.getElementById("document").value = null;
             });
         </script>
-        @endpush
+    @endpush
 
 </div>
