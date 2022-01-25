@@ -77,10 +77,13 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
     }
 
 
-
     public function delete(DevisEntities $devis): bool
     {
-        return $devis->delete();
+        if ($devis->proformat) {
+            return $devis->delete();
+        }
+        return false;
+
     }
 
     public function searchQuery(Builder $query, string $value, mixed $parent = null): Builder
@@ -112,7 +115,7 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
             ->paginate($paginate);
     }
 
-    public function getFournsisseurValidate(DevisEntities $devi) :Collection
+    public function getFournsisseurValidate(DevisEntities $devi): Collection
     {
         return $devi->fournisseurs()->wherePivot('validate', true)->get();
 
@@ -121,11 +124,12 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
     public function getPrice(DevisEntities $devi, Fournisseur $fournisseur): float
     {
 
-        return $devi->fournisseurs()->where('personne_id' , $fournisseur->id)->first()->pivot['prix'] ?? 0.0;
+        return $devi->fournisseurs()->where('personne_id', $fournisseur->id)->first()->pivot['prix'] ?? 0.0;
     }
+
     public function validatedDevis(DevisEntities $devi, array $data): bool
     {
-        $newData =  array_merge($devi->data, $data);
+        $newData = array_merge($devi->data, $data);
         $devi->data = $newData;
         return $devi->save();
 
