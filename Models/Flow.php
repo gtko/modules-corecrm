@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Modules\CoreCRM\Flow\FlowResolveCast;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Flow
@@ -19,6 +20,7 @@ use Modules\CoreCRM\Flow\FlowResolveCast;
  */
 class Flow extends Model
 {
+    use QueryCacheable;
 
     protected $casts = [
         'datas' => FlowResolveCast::class,

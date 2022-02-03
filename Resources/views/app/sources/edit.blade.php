@@ -1,7 +1,7 @@
 <x-basecore::app-layout>
     <x-slot name="breadcrumb">
         <x-basecore::breadcrumb-item :href="route('sources.index')">Source</x-basecore::breadcrumb-item>
-        <x-basecore::breadcrumb-item :href="route('sources.show', $source)">{{$source->label}}</x-basecore::breadcrumb-item>
+        <x-basecore::breadcrumb-item>{{$source->label}}</x-basecore::breadcrumb-item>
         <x-basecore::breadcrumb-item>Edit</x-basecore::breadcrumb-item>
     </x-slot>
     <x-slot name="header">

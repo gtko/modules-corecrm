@@ -14,7 +14,7 @@ use Modules\BaseCore\Models\Scopes\HasPersonne;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
 use Modules\SearchCRM\Entities\SearchResult;
 use Modules\SearchCRM\Interfaces\SearchableModel;
-
+use Rennokki\QueryCache\Traits\QueryCacheable;
 /**
  * Class Client
  * @property Collection $dossiers
@@ -27,6 +27,10 @@ class Client extends ClientEntity
     use HasFactory;
     use HasPersonne;
     use Notifiable;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+
 
     protected $fillable = ['personne_id'];
 

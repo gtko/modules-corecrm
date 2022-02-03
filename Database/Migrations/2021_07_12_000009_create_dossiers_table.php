@@ -22,7 +22,7 @@ class CreateDossiersTable extends Migration
             $table->timestamp('date_start')->nullable();
 
             $table->index('date_start');
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

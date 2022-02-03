@@ -31,14 +31,6 @@ class SourceDataList extends DataListType
     public function getActions(): array
     {
         return [
-            'show' => [
-                'permission' => ['view', Source::class],
-                'route' => function($params){
-                    return route('sources.show', $params);
-                },
-                'label' => 'voir',
-                'icon' => 'show'
-            ],
             'edit' => [
                 'permission' => ['update', Source::class],
                 'route' => function($params){

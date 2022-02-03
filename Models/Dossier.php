@@ -23,7 +23,7 @@ use Modules\CoreCRM\Models\Scopes\HasStatuable;
 use Modules\CrmAutoCar\Models\Tag;
 use Modules\SearchCRM\Entities\SearchResult;
 use Modules\SearchCRM\Interfaces\SearchableModel;
-
+use Rennokki\QueryCache\Traits\QueryCacheable;
 /**
  * Class Dossier
  * @package Modules\CoreCRM\Models
@@ -44,6 +44,9 @@ class Dossier extends Model implements SearchableModel, Flowable
     use HasFlowable;
     use CanAppel;
     use SoftDeletes;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
 
     protected $fillable = [
         'clients_id',
