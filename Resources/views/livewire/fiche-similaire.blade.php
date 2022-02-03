@@ -11,7 +11,7 @@
                             <x-corecrm::status :label="$dossier->status_label" :color="$dossier->status_color" />
                             <span class="ml-2">#{{$dossier->ref}}</span>
                         </div>
-                        <span class="btn btn-primary py-0 px-2">
+                        <span class="btn btn-primary py-0 px-2 whitespace-nowrap">
                             Voir la fiche
                         </span>
                     </a>
