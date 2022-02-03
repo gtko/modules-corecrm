@@ -11,6 +11,11 @@ class Timeline extends Component
 {
     public int $dossier;
 
+    protected $listeners =
+        [
+            'refreshTimeline' => '$refresh'
+        ];
+
     public function mount(int $dossier): void
     {
         $this->dossier = $dossier;
@@ -27,7 +32,7 @@ class Timeline extends Component
 
         $flows = $flowService->list($dossier);
 
-        $flows = $flows->map(function($item){
+        $flows = $flows->map(function ($item) {
             $item->day = $item->created_at->format('d/m/Y');
             return $item;
         })->groupBy('day');
