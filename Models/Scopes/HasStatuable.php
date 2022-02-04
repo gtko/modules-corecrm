@@ -20,7 +20,7 @@ trait HasStatuable
 
     public function newQuery(): Builder
     {
-        return parent::newQuery()->with('status');
+        return parent::newQuery();
     }
 
     public function status():BelongsTo

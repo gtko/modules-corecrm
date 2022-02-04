@@ -2,6 +2,7 @@
 
 namespace Modules\CoreCRM\View\Components;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
 use Modules\CoreCRM\Models\Flow;
@@ -20,13 +21,15 @@ class TimelineResolve extends Component
      */
     public function render()
     {
-        $nameComponent = Str::replace('Flow\Attributes', "View\Components\Timeline", $this->flow->event->key);
+        return Cache::rememberForever('timeline_v2_flow_'.$this->flow->id.'_'.$this->flow->uptated_at, function(){
+            $nameComponent = Str::replace('Flow\Attributes', "View\Components\Timeline", $this->flow->event->key);
 
-        if(class_exists($nameComponent)) {
-            $component = (new $nameComponent($this->flow));
-            return $component->render();
-        }
+            if(class_exists($nameComponent)) {
+                $component = (new $nameComponent($this->flow));
+                return $component->render()->with(['flow' => $this->flow])->toHtml();
+            }
 
-        return '';
+            return null;
+        });
     }
 }

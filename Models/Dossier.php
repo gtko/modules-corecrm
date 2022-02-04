@@ -46,7 +46,7 @@ class Dossier extends Model implements SearchableModel, Flowable
     use SoftDeletes;
     use QueryCacheable;
 
-    public $cacheFor = 3600;
+//    public $cacheFor = 3600;
 
     protected $fillable = [
         'clients_id',
@@ -57,6 +57,7 @@ class Dossier extends Model implements SearchableModel, Flowable
     ];
 
     protected array $searchableFields = ['*'];
+
 
     protected $casts = [
         'date_start' => 'datetime',

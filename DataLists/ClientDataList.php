@@ -83,7 +83,9 @@ class ClientDataList extends DataListType
     public function getRepository(array $parents = []):RepositoryFetchable
     {
         $rep  = app(ClientRepositoryContract::class);
-        $rep->setQuery($rep->newQuery()->orderBy('created_at', 'desc'));
+        $rep->setQuery($rep->newQuery()
+            ->with('personne.emails', 'personne.phones')
+            ->orderBy('created_at', 'desc'));
         return $rep;
     }
 }

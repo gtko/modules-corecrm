@@ -9,7 +9,7 @@ class User extends \Modules\BaseCore\Models\User
 
 
     use QueryCacheable;
-    protected $cacheFor = 3600;
+//    protected $cacheFor = 3600;
 
     public function isCommercial():bool
     {
