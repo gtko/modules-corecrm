@@ -18,7 +18,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  */
 class Event extends Model
 {
-    use QueryCacheable;
+//    use QueryCacheable;
 
 
     public function flows():HasMany

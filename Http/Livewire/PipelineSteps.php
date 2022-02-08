@@ -17,6 +17,7 @@ class PipelineSteps extends Component
     public function mount(Dossier $dossier)
     {
         $this->dossier = $dossier;
+
     }
 
     public function change(DossierRepositoryContract $dossierRep, StatusRepositoryContract $statusRep,  $status_id)

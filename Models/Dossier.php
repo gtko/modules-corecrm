@@ -44,7 +44,7 @@ class Dossier extends Model implements SearchableModel, Flowable
     use HasFlowable;
     use CanAppel;
     use SoftDeletes;
-    use QueryCacheable;
+//    use QueryCacheable;
 
 //    public $cacheFor = 3600;
 
@@ -55,9 +55,6 @@ class Dossier extends Model implements SearchableModel, Flowable
         'commercial_id',
         'date_start',
     ];
-
-    protected array $searchableFields = ['*'];
-
 
     protected $casts = [
         'date_start' => 'datetime',

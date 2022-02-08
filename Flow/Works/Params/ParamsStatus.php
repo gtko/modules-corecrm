@@ -54,7 +54,7 @@ class ParamsStatus extends WorkFlowParams implements TypeDataSelectGrouped
     public function getValue()
     {
         $statusRep = app(StatusRepositoryContract::class);
-        return $statusRep->fetchById($this->value);
+        return $statusRep->getById($this->value);
     }
 
     function nameView(): string
