@@ -16,7 +16,7 @@
                             </span>
                         <div class="relative" x-cloak x-show.transition.origin.top="tooltip">
                             <div style="z-index: 10000"
-                                class="absolute top-0 z-50 p-2 -mt-1 text-sm leading-tight text-white transform -translate-x-1/2 -translate-y-full bg-blue-600 rounded-lg shadow-lg whitespace-nowrap">
+                                 class="absolute top-0 z-50 p-2 -mt-1 text-sm leading-tight text-white transform -translate-x-1/2 -translate-y-full bg-blue-600 rounded-lg shadow-lg whitespace-nowrap">
         {{$item->label}}
       </div>
                         </div>
