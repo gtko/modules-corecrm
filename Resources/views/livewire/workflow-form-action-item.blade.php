@@ -36,7 +36,7 @@
     }
     ?>
 
-    <div class="flex mt-3 items-end justify-between" x-data="{
+    <div class="flex items-end justify-between" x-data="{
                             isActivate : [],
                             variables : null,
                             resolveFn : null,
@@ -54,19 +54,24 @@
 
         this.resolveFn = prefix => prefix === ''
             ? this.variables
-            : this.variables.filter(variable => variable.label.startsWith(prefix))
+            : this.variables.filter(variable => {
+                    return variable.label.startsWith(prefix) || variable.label.indexOf(prefix) > -1
+            })
 
         this.replaceFn = (variable, trigger) => `${trigger}${variable.value}} `
 
-        this.menuItemFn = (variable, setItem, selected) => {
+        this.menuItemFn = (variable, setItem, selected, query) => {
             const div = document.createElement('div')
             div.setAttribute('role', 'option')
-            div.className = 'menu-item'
+            div.className = 'menu-item flex whitespace-normal whitespace-pre items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3'
             if (selected) {
                 div.classList.add('selected')
                 div.setAttribute('aria-selected', '')
+                div.innerHTML = variable.label.replace(query , `<span class='font-bold text-blue-100'>${query}</span>`);
+            } else {
+                div.innerHTML = variable.label.replace(query, `<span class='font-bold text-green-600'>${query}</span>`);
             }
-            div.textContent = variable.label
+
             div.onclick = setItem
 
             return div
@@ -76,7 +81,6 @@
     },
     focus(e){
         if(this.isActivate.indexOf(e.target) === -1){
-            console.log('Start mentionnify');
             this.isActivate.push(e.target)
             new Mentionify(
                 e.target,
@@ -88,7 +92,7 @@
         }
     }
 }">
-        <div class="w-100 flex-grow-1 relative">
+        <div class="w-100 flex-grow-1 relative w-full">
             @if($this->data['actions'][$index]['class'] ?? false)
                 @php($actionInstance = $instanceEvent->makeAction($this->data['actions'][$index]['class']))
                 @foreach($actionInstance->params()  as $paramskey =>  $params)
@@ -96,7 +100,7 @@
                 @endforeach
             @endif
         </div>
-        <div wire:ignore id="menu" class="menu" role="listbox"></div>
+        <div wire:ignore id="menu" class="menu rounded-md ring-1 ring-black ring-opacity-5 dropdown-menu__content box dark:bg-dark-6" role="listbox"></div>
 
         <x-basecore::loading-replace wire:target="deleteAction({{$index}})">
             <x-slot name="loader">

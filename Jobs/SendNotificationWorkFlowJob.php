@@ -34,7 +34,7 @@ class SendNotificationWorkFlowJob implements ShouldQueue
 
         $maillable = new WorkFlowStandardMail(
             $this->datas['subject'],
-            $datas['cci'] ?? '',
+            $this->datas['cci'] ?? '',
             $this->datas['content'],
             $files,
             $this->datas['template'] ?? 'default'

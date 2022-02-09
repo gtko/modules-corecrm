@@ -99,9 +99,9 @@
                             <div class="col-span-2">
                                 <div class="mt-3 overflow-hidden w-8 h-8 rounded-full bg-red-600">
                                     <x-basecore::inputs.color
-                                        name="status[{{$order}}][color]"
+                                        name="form[{{$order}}][color]"
                                         label=""
-                                        wire:model="status.{{$order}}.color"
+                                        wire:model="form.{{$order}}.color"
                                         class="h-16 w-16 -mt-4 -ml-4"
                                         required="required"
                                     />

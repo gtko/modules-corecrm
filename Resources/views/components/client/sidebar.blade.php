@@ -1,4 +1,4 @@
-<div class="intro-y box mt-5 lg:mt-0">
+<div class="box mt-5 lg:mt-0">
         <div class="relative flex items-center p-5">
             <div class="w-12 h-12 image-fit">
                 <x-basecore::avatar :url="$client->avatar_url"/>

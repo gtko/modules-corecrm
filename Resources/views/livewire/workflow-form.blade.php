@@ -5,8 +5,6 @@
         ><i class="mr-1 icon ion-md-arrow-back"></i
             ></a>
     </x-slot>
-
-
         <x-basecore::inputs.group>
             <x-basecore::inputs.text
                 name="name"
@@ -160,6 +158,7 @@
 
                     return coordinates
                 }
+
                 class Mentionify {
                     constructor(ref, menuRef, resolveFn, replaceFn, menuItemFn) {
                         this.ref = ref
@@ -168,6 +167,7 @@
                         this.replaceFn = replaceFn
                         this.menuItemFn = menuItemFn
                         this.options = []
+                        this.query = ''
 
                         this.makeOptions = this.makeOptions.bind(this)
                         this.closeMenu = this.closeMenu.bind(this)
@@ -233,17 +233,18 @@
                             return
                         }
 
-                        const query = textBeforeCaret.slice(triggerIdx + 1)
-                        this.makeOptions(query)
+                        this.query = textBeforeCaret.slice(triggerIdx + 1)
+                        this.makeOptions(this.query)
 
                         const coords = getCaretCoordinates(this.ref, positionIndex)
                         const { top, left } = this.ref.getBoundingClientRect()
 
                         setTimeout(() => {
                             this.active = 0
-                            this.left = window.scrollX  + coords.left + left + this.ref.scrollLeft - 300
-                            this.top = window.scrollY +  coords.top + top + coords.height - this.ref.scrollTop - 80
+                            this.left = coords.left + left + this.ref.scrollLeft
+                            this.top = coords.top + top + coords.height - this.ref.scrollTop
                             this.triggerIdx = triggerIdx
+
                             this.renderMenu()
                         }, 100)
                     }
@@ -276,51 +277,38 @@
                     }
 
                     renderMenu() {
-                        // if (this.top === undefined) {
-                        //     // this.menuRef.hidden = true
-                        //     return
-                        // }
-
-                        this.menuRef.style.left = this.left + 'px'
-                        this.menuRef.style.top = this.top + 'px'
+                        this.menuRef.style.left = (this.left) + 'px'
+                        this.menuRef.style.top = (this.top) + 'px'
+                        this.menuRef.style.maxHeight = '150px';
+                        this.menuRef.style.overflow = 'auto';
                         this.menuRef.innerHTML = ''
+
+                        console.log();
 
                         this.options.forEach((option, idx) => {
                             this.menuRef.appendChild(this.menuItemFn(
                                 option,
                                 this.selectItem(idx),
-                                this.active === idx))
+                                this.active === idx,
+                                this.query
+                                ),
+                            )
                         })
-
-                        console.log('Render menu ' + this.active);
-                        // this.menuRef.hidden = false
                     }
                 }
             </script>
-
-                <style>
+            <style>
                     .menu {
-                        background-color: #f3f3f3;
                         position: fixed;
                         z-index:9000;
                     }
 
-                    .menu-item {
-                        cursor: default;
-                        padding: 1rem;
-                    }
-
                     .menu-item.selected {
-                        background-color: slateGray;
+                        background-color: #1d87cc;
                         color: white;
                     }
 
-                    .menu-item:hover:not(.selected) {
-                        background-color: #fafafa;
-                    }
-
                 </style>
-
             @forelse($this->data['actions'] ?? [] as $index => $actions)
                     <livewire:corecrm::workflow-form-action-item :data="$data" :index="$index" :key="'action_'.$index"/>
             @empty
