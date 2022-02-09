@@ -53,6 +53,10 @@ class WorkflowForm extends Component
         }
     }
 
+    public function updated(){
+        $this->emit('workflowUpdateEvent', $this->data);
+    }
+
     public function updateEvent($data){
         $this->data = $data;
     }
