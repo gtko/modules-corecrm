@@ -1,18 +1,23 @@
 <nav aria-label="Progress">
     <ol role="list"
         class="border border-gray-300 bg-white rounded-md divide-y divide-gray-300 md:flex md:divide-y-0 overflow-x-scroll">
-        @foreach($pipeline->statuses->whereNotIn('type', [Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN, Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST]) as $item)
+        @php($prev = false)
+        @foreach($pipeline->statuses->whereNotIn('type', [Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN, Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST]) as $index => $item)
             <li class="relative md:flex-1 md:flex">
                 <!-- Completed Step -->
                 <span wire:click="change({{$item->id}})" class="cursor-pointer group flex items-center w-full">
-                <span class="px-6 py-4 flex items-center text-sm font-medium" x-data="{ tooltip: false }"
-                      @if($status->order != $item->order)  x-on:mouseover="tooltip = true"
-                      x-on:mouseleave="tooltip = false" @endif>
+                <span class="pr-4 pl-2 py-2 flex items-center text-sm font-medium"
+                      x-data="{ tooltip: false }"
+                      x-on:mouseover="tooltip = true"
+                      x-on:mouseover.outside="tooltip = false"
+                      x-on:mouseleave="tooltip = false"
+                >
                          @if($status->order >= $item->order)
-                        <span class="text-white flex-shrink-0 w-10 h-10
-                           flex items-center justify-center bg-green-500 rounded-full group-hover:bg-green-600"
-                        >
-                                @icon('check', 30)
+                            <span class="text-white flex-shrink-0 w-10 h-10
+                                   flex items-center justify-center bg-green-500 rounded-full group-hover:bg-green-600"
+                            >
+{{--                                    @icon('check', 30)--}}
+                                {{$loop->index+1}}
                             </span>
                         <div class="relative" x-cloak x-show.transition.origin.top="tooltip">
                             <div style="z-index: 10000"
@@ -22,16 +27,32 @@
                         </div>
                     @else
                         <span
-                            class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-indigo-600 rounded-full text-black">
-                                <span class="text-indigo-600">{{$loop->index+1}}</span>
-                              </span>
-
+                            @if($prev)
+                                class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-indigo-600 rounded-full text-black"
+                            @else
+                                class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-gray-300 rounded-full text-black"
+                            @endif
+                        >
+                            <span class=" @if($prev) text-indigo-600 @else text-gray-600 @endif">{{$loop->index+1}}</span>
+                        </span>
                     @endif
-                    @if($status->order <= $item->order)
-                        <span class="ml-4 text-sm font-medium text-black whitespace-nowrap"
+                        @if($prev)
+                        <span class="ml-2 text-sm font-medium text-black whitespace-nowrap"
                               title="{{$item->label}}">
-                          {{$item->label}}
-                      </span>
+                                    {{$item->label}}
+                            </span>
+                        @php($prev=false)
+                        @else
+                        <div class="relative " x-cloak x-show.transition.origin.top="tooltip">
+                            <div style="z-index: 10000"
+                                 class="absolute top-0 z-50 p-2 -mt-1 text-sm leading-tight text-white transform -translate-x-1/2 -translate-y-full bg-blue-600 rounded-lg shadow-lg whitespace-nowrap">
+                                  {{$item->label}}
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($status->order === $item->order)
+                        @php($prev=true)
                     @endif
                 </span>
             </span>
@@ -44,7 +65,7 @@
                 </div>
             </li>
         @endforeach
-        <li class="relative md:flex-1">
+                <li class="relative md:flex-1">
 
                     <span class="group flex items-center w-full whitespace-nowrap">
                         <span class="px-6 py-4 flex items-center text-sm font-medium">
@@ -61,25 +82,29 @@
                                     </span>
                             @else
                                 <span
-                                    class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-indigo-600 rounded-full">
-                                    <span class="text-indigo-600">{{$pipeline->statuses->count() - 1}}</span>
+                                @if($prev)
+                                    class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-indigo-600 rounded-full text-black"
+                                @else
+                                    class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-gray-300 rounded-full text-black"
+                                @endif
+                                >
+                                    <span class=" @if($prev) text-indigo-600 @else text-gray-600 @endif">{{$pipeline->statuses->count() - 1}}</span>
                                 </span>
                             @endif
 
-
-                            <span class="ml-4 text-sm font-medium text-black">
-                            @foreach($pipeline->statuses->whereIn('type', [Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN, Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST]) as $item)
-                                    <span class="cursor-pointer hover:text-indigo-700
-                                    @if($item->id === $status->id && $item->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN) text-green-700 @endif
-                                    @if($item->id === $status->id && $item->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST) text-red-700 @endif
-                                        "
-                                          wire:click="change({{$item->id}})"
-                                    >
-                                  {{$item->label}}
+                                <span class="ml-4 text-sm font-medium  @if($prev) text-indigo-600 @else text-gray-600 @endif">
+                                @foreach($pipeline->statuses->whereIn('type', [Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN, Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST]) as $item)
+                                        <span class="cursor-pointer hover:text-indigo-900
+                                        @if($item->id === $status->id && $item->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN) text-green-700 @endif
+                                        @if($item->id === $status->id && $item->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST) text-red-700 @endif
+                                            "
+                                              wire:click="change({{$item->id}})"
+                                        >
+                                      {{$item->label}}
+                                    </span>
+                                        @if(!$loop->last) / @endif
+                                    @endforeach
                                 </span>
-                                    @if(!$loop->last) / @endif
-                                @endforeach
-                            </span>
                     </span>
         </li>
 

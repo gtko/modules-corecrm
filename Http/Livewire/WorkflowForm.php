@@ -53,17 +53,19 @@ class WorkflowForm extends Component
         }
     }
 
+    public function updated(){
+        $this->emit('workflowUpdateEvent', $this->data);
+    }
+
     public function updateEvent($data){
         $this->data = $data;
     }
 
     public function updatedData($value, $key){
-
         if($key === 'events.0.class'){
             $this->data['actions'] = [];
             $this->data['conditions'] = [];
         }
-
     }
 
 
@@ -87,6 +89,7 @@ class WorkflowForm extends Component
 
 
     public function store(WorkflowRepositoryContract $workflowRep){
+
 
         if($this->edition){
             $workflowRep->update(

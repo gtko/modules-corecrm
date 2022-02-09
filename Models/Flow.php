@@ -20,7 +20,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  */
 class Flow extends Model
 {
-    use QueryCacheable;
+//    use QueryCacheable;
 
     protected $casts = [
         'datas' => FlowResolveCast::class,

@@ -10,6 +10,7 @@ class WorkflowFormConditions extends Component
     public $data = [];
 
     public $listeners = [
+        'workflowUpdateEvent' => 'refresh',
         'deleteCondition' => 'deleteCondition',
     ];
 
@@ -17,9 +18,12 @@ class WorkflowFormConditions extends Component
         $this->data = $data;
     }
 
-    public function updateEvent($data)
-    {
+    public function refresh($data){
         $this->data = $data;
+    }
+
+    public function updated()
+    {
         $this->emit('workflowUpdated', $this->data);
     }
 
