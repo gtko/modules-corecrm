@@ -15,6 +15,11 @@ class WorkflowFormConditionsItem extends Component
         $this->index = $index;
     }
 
+    public function updated()
+    {
+        $this->emit('workflowUpdated', $this->data);
+    }
+
     public function deleteCondition($index){
         $this->emit('deleteCondition', $index);
     }

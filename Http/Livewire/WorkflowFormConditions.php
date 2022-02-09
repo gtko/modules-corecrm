@@ -17,9 +17,8 @@ class WorkflowFormConditions extends Component
         $this->data = $data;
     }
 
-    public function updateEvent($data)
+    public function updated()
     {
-        $this->data = $data;
         $this->emit('workflowUpdated', $this->data);
     }
 
