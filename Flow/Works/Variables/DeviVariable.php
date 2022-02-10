@@ -25,8 +25,8 @@ class DeviVariable extends WorkFlowVariable
           'lien crm' => route('devis.edit', [$devi->dossier->client, $devi->dossier, $devi]),
           'lien public' => (new GenerateLinkDevis())->GenerateLink($devi),
           'lien pdf' => route('pdf-devis-download',[$devi]),
-          'date départ' => $devi->date_depart->format('d/m/Y'),
-          'date retour' => $devi->date_retour->format('d/m/Y'),
+          'date départ' => ($devi->date_depart)?$devi->date_depart->format('d/m/Y'):'',
+          'date retour' => ($devi->date_retour)?$devi->date_retour->format('d/m/Y'):'',
         ];
     }
 

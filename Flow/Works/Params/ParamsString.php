@@ -17,7 +17,7 @@ class ParamsString extends WorkFlowParams
 
     function nameView(): string
     {
-        return "corecrm::workflows.select-grouped";
+        return "corecrm::workflows.string";
     }
 
 }
