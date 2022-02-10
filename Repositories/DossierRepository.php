@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
+use Modules\CoreCRM\Contracts\Repositories\StatusRepositoryContract;
 use Modules\CoreCRM\Contracts\Services\FlowContract;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -129,7 +130,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         return $dossier;
     }
 
-    public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection
+    public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection | null
     {
         $collection = Dossier::where('commercial_id', $commercial->id)->where('status_id', $status->id)->get();
 
@@ -187,4 +188,16 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
             ->get();
     }
 
+    public function countDossierBlancByCommercial(Commercial $commercial): int
+    {
+        $status = app(StatusRepositoryContract::class)->findByLabel('Blanc');
+
+        $count = $this->getDossiersByCommercialAndStatus($commercial, $status);
+        if ($count == null) {
+            return 0;
+        }
+
+        return $count->count();
+
+    }
 }
