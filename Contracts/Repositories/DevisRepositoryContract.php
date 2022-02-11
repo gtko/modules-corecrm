@@ -28,7 +28,7 @@ interface DevisRepositoryContract extends SearchableRepository, RepositoryFetcha
     public function getPrice(DevisEntities $devi, Fournisseur $fournisseur): float;
     public function validatedDevis(DevisEntities $devi, array $data): bool;
 
-    public function getDevisByDossier(Dossier $dossier):LengthAwarePaginator;
+    public function getDevisByDossier(Dossier $dossier, int $paginate = 15, string $order = 'DESC'):LengthAwarePaginator;
 
     public function sendDemandeFournisseur(DevisEntities $devis, Fournisseur $fournisseur, Carbon $mail_sended = null, bool $validate = false) :DevisEntities;
     public function savePriceFournisseur(DevisEntities $devis, Fournisseur $fournisseur, float $price): DevisEntities;
@@ -36,4 +36,3 @@ interface DevisRepositoryContract extends SearchableRepository, RepositoryFetcha
 
     public function delete(DevisEntities $devis): bool;
 }
-

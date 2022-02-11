@@ -4,6 +4,7 @@
 namespace Modules\CoreCRM\Contracts\Services;
 
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\CoreCRM\Flow\Interfaces\FlowAttributes;
 use Modules\CoreCRM\Interfaces\Flowable;

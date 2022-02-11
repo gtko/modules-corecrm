@@ -9,14 +9,14 @@ use Modules\CoreCRM\Models\Dossier;
 
 class Timeline extends Component
 {
-    public int $dossier;
+    public $dossier;
 
     protected $listeners =
         [
             'refreshTimeline' => '$refresh'
         ];
 
-    public function mount(int $dossier): void
+    public function mount(Dossier $dossier): void
     {
         $this->dossier = $dossier;
     }
@@ -28,9 +28,7 @@ class Timeline extends Component
      */
     public function render(FlowContract $flowService): View|string
     {
-        $dossier = Dossier::find($this->dossier);
-
-        $flows = $flowService->list($dossier);
+        $flows = $flowService->list($this->dossier);
 
         $flows = $flows->map(function ($item) {
             $item->day = $item->created_at->format('d/m/Y');
