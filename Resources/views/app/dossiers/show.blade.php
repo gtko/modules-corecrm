@@ -194,4 +194,15 @@
 
         </x-basecore::layout.panel-sidebar>
     </x-basecore::nav.layout>
+
+
+    @push('modals')
+        <livewire:basecore::modal
+            size="2xl"
+            name="send-mail"
+            :type="Modules\BaseCore\Entities\TypeView::TYPE_LIVEWIRE"
+            path='corecrm::middleware-work-flow-email'
+        />
+    @endpush
+
 </x-basecore::app-layout>

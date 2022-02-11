@@ -84,7 +84,7 @@ class ClientDataList extends DataListType
     {
         $rep  = app(ClientRepositoryContract::class);
         $rep->setQuery($rep->newQuery()
-            ->with('personne.emails', 'personne.phones')
+//            ->with('personne.emails', 'personne.phones')
             ->orderBy('created_at', 'desc'));
         return $rep;
     }
