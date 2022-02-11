@@ -32,7 +32,7 @@ interface DossierRepositoryContract extends SearchableRepository, RepositoryFetc
 
     public function changeClient(Dossier $dossier, ClientEntity $client): Dossier;
 
-    public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection;
+    public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection | null;
 
     public function getDossiersByClient(ClientEntity $client, int $paginate): ?LengthAwarePaginator;
 
@@ -47,5 +47,7 @@ interface DossierRepositoryContract extends SearchableRepository, RepositoryFetc
     public function getDossierAttribute(): Collection;
 
     public function getDossierTrashed(): Collection;
+
+    public function countDossierBlancByCommercial(Commercial $commercial): int;
 
 }
