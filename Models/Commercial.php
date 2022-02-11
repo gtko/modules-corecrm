@@ -10,9 +10,9 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class Commercial extends User
 {
-    use QueryCacheable;
+//    use QueryCacheable;
 
-    public $cacheFor = 3600;
+//    public $cacheFor = 3600;
 
     protected $table = 'users';
 
