@@ -26,7 +26,7 @@
                     </div>
                 </x-slot>
             </x-corecrm::client.sidebar>
-            <livewire:corecrm::timeline :dossier="$devi->dossier->id"/>
+{{--            <livewire:corecrm::timeline :dossier="$devi->dossier->id"/>--}}
 
         </x-slot>
 
