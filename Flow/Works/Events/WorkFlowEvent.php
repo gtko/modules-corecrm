@@ -12,6 +12,7 @@ use Modules\CoreCRM\Models\Flow;
 abstract class WorkFlowEvent implements WorkFlowDescribe
 {
 
+    protected Flow $flow;
     protected array $data = [];
 
 
@@ -40,7 +41,13 @@ abstract class WorkFlowEvent implements WorkFlowDescribe
     }
 
     public function init(Flow $flow){
+        $this->flow = $flow;
         $this->data = $this->prepareData($flow->datas);
+    }
+
+    public function getFlow()
+    {
+        return $this->flow;
     }
 
     public function getData(): array
