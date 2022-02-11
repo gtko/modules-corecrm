@@ -13,36 +13,36 @@
                       x-on:mouseleave="tooltip = false"
                 >
                          @if($status->order >= $item->order)
-                            <span class="text-white flex-shrink-0 w-10 h-10
+                        <span class="text-white flex-shrink-0 w-10 h-10
                                    flex items-center justify-center bg-green-500 rounded-full group-hover:bg-green-600"
-                            >
-{{--                                    @icon('check', 30)--}}
+                        >
                                 {{$loop->index+1}}
                             </span>
                         <div class="relative" x-cloak x-show.transition.origin.top="tooltip">
                             <div style="z-index: 10000"
                                  class="absolute top-0 z-50 p-2 -mt-1 text-sm leading-tight text-white transform -translate-x-1/2 -translate-y-full bg-blue-600 rounded-lg shadow-lg whitespace-nowrap">
-        {{$item->label}}
-      </div>
+                               {{$item->label}}
+                            </div>
                         </div>
                     @else
                         <span
                             @if($prev)
-                                class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-indigo-600 rounded-full text-black"
+                            class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-indigo-600 rounded-full text-black"
                             @else
-                                class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-gray-300 rounded-full text-black"
+                            class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-gray-300 rounded-full text-black"
                             @endif
                         >
-                            <span class=" @if($prev) text-indigo-600 @else text-gray-600 @endif">{{$loop->index+1}}</span>
+                            <span
+                                class=" @if($prev) text-indigo-600 @else text-gray-600 @endif">{{$loop->index+1}}</span>
                         </span>
                     @endif
-                        @if($prev)
+                    @if($prev)
                         <span class="ml-2 text-sm font-medium text-black whitespace-nowrap"
                               title="{{$item->label}}">
                                     {{$item->label}}
                             </span>
                         @php($prev=false)
-                        @else
+                    @else
                         <div class="relative " x-cloak x-show.transition.origin.top="tooltip">
                             <div style="z-index: 10000"
                                  class="absolute top-0 z-50 p-2 -mt-1 text-sm leading-tight text-white transform -translate-x-1/2 -translate-y-full bg-blue-600 rounded-lg shadow-lg whitespace-nowrap">
@@ -65,7 +65,8 @@
                 </div>
             </li>
         @endforeach
-                <li class="relative md:flex-1">
+
+        <li class="relative md:flex-1">
 
                     <span class="group flex items-center w-full whitespace-nowrap">
                         <span class="px-6 py-4 flex items-center text-sm font-medium">
@@ -82,17 +83,19 @@
                                     </span>
                             @else
                                 <span
-                                @if($prev)
+                                    @if($prev)
                                     class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-indigo-600 rounded-full text-black"
-                                @else
+                                    @else
                                     class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-gray-300 rounded-full text-black"
                                 @endif
                                 >
-                                    <span class=" @if($prev) text-indigo-600 @else text-gray-600 @endif">{{$pipeline->statuses->count() - 1}}</span>
+                                    <span
+                                        class=" @if($prev) text-indigo-600 @else text-gray-600 @endif">{{$pipeline->statuses->count() - 1}}</span>
                                 </span>
                             @endif
 
-                                <span class="ml-4 text-sm font-medium  @if($prev) text-indigo-600 @else text-gray-600 @endif">
+                                <span
+                                    class="ml-4 text-sm font-medium  @if($prev) text-indigo-600 @else text-gray-600 @endif">
                                 @foreach($pipeline->statuses->whereIn('type', [Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN, Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST]) as $item)
                                         <span class="cursor-pointer hover:text-indigo-900
                                         @if($item->id === $status->id && $item->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN) text-green-700 @endif

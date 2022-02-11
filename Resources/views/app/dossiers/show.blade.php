@@ -54,6 +54,7 @@
                 />
 
             </x-slot>
+
             <x-basecore::partials.card>
 
                 <x-basecore::nav.menu class="-mt-4">
