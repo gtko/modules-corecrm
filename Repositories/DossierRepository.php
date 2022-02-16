@@ -27,7 +27,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 {
 
 
-    public function create(ClientEntity $client, Commercial $commercial, Source $source, Status $status): Dossier
+    public function create(ClientEntity $client, Commercial $commercial, Source $source, Status $status, array $data = null): Dossier
     {
         $dossier = new Dossier();
 
@@ -35,6 +35,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         $dossier->commercial()->associate($commercial);
         $dossier->source()->associate($source);
         $dossier->status()->associate($status);
+        $dossier->data = $data;
         $dossier->attribution = now();
         $dossier->date_start = Carbon::now();
 
@@ -130,7 +131,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         return $dossier;
     }
 
-    public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection | null
+    public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection|null
     {
         $collection = Dossier::where('commercial_id', $commercial->id)->where('status_id', $status->id)->get();
 

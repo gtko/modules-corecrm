@@ -22,7 +22,7 @@ use Modules\SearchCRM\Interfaces\SearchableRepository;
 interface DossierRepositoryContract extends SearchableRepository, RepositoryFetchable, RepositoryFilters, RepositoryQueryCustom, RelationsRepositoryContract
 {
 
-    public function create(ClientEntity $client, Commercial $commercial, Source $source, Status $status): Dossier;
+    public function create(ClientEntity $client, Commercial $commercial, Source $source, Status $status, array $data = null): Dossier;
 
     public function changeCommercial(Dossier $dossier, Commercial $commercial): Dossier;
 
