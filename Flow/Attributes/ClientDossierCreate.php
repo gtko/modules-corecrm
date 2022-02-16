@@ -21,7 +21,7 @@ class ClientDossierCreate extends Attributes
     public static function instance(array $value): FlowAttributes
     {
         $user = app(UserEntity::class)::find($value['user_id']);
-        return new ClientDossierCreate($user);
+        return app(ClientDossierCreate::class, [$user]);
     }
 
     public function toArray(): array

@@ -26,6 +26,7 @@ use Modules\CoreCRM\Contracts\Repositories\StatusRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\WorkflowRepositoryContract;
 use Modules\CoreCRM\Contracts\Services\FlowContract;
 use Modules\CoreCRM\Contracts\Views\DevisEditViewContract;
+use Modules\CoreCRM\Flow\Attributes\ClientDossierCreate;
 use Modules\CoreCRM\Flow\Notification\NotificationsDispatch;
 use Modules\CoreCRM\Flow\Works\Services\TemplateMailService;
 use Modules\CoreCRM\Flow\Works\WorkflowKernel;
@@ -94,6 +95,8 @@ class CoreCRMServiceProvider extends ServiceProvider
         $this->app->bind(FlowRepositoryContract::class,FlowRepository::class);
         $this->app->bind(EventRepositoryContract::class,EventRepository::class);
         $this->app->bind(FlowContract::class, FlowCRM::class);
+
+        $this->app->bind(ClientDossierCreate::class, ClientDossierCreate::class);
 
         $this->app->bind(WorkflowRepositoryContract::class, WorkflowRepository::class);
         $this->app->singleton(WorkflowKernel::class);
