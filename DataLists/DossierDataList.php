@@ -82,12 +82,14 @@ class DossierDataList extends DataListType
 
     public function getCreate(): array
     {
+
         return [
             'permission' => ['create', ClientEntity::class],
             'route' => function($params){
-                return route('clients.create', $params);
+//                dd($params);
+                return route('dossier-create', $params);
             },
-            'label' => 'Ajouter un client',
+            'label' => 'Ajouter un dossier',
             'icon' => 'addCircle'
         ];
     }
