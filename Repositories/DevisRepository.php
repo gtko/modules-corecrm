@@ -22,6 +22,7 @@ use Modules\CoreCRM\Models\Commercial;
 use Modules\CoreCRM\Models\Dossier;
 use Modules\CoreCRM\Models\Fournisseur;
 
+
 class DevisRepository extends AbstractRepository implements DevisRepositoryContract
 {
 
@@ -81,7 +82,7 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
     public function delete(DevisEntities $devis): bool
     {
-        if ($devis->proformat) {
+        if (!$devis->proformat) {
             return $devis->delete();
         }
         return false;

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 use Modules\SearchCRM\Entities\SearchResult;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property int $id
@@ -15,6 +16,8 @@ use Modules\SearchCRM\Entities\SearchResult;
  */
 Abstract class DevisEntities extends Model
 {
+    use SoftDeletes;
+
     abstract public function dossier(): BelongsTo;
     abstract public function commercial(): BelongsTo;
     abstract public static function getNumStartRef(): int;
