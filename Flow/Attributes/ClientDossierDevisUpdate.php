@@ -22,7 +22,7 @@ class ClientDossierDevisUpdate extends Attributes
 
     public static function instance(array $value): FlowAttributes
     {
-        $devis = app(DevisEntities::class)::find($value['devis_id']);
+        $devis = app(DevisEntities::class)::withTrashed()->find($value['devis_id']);
         $user = app(UserEntity::class)::find($value['user_id']);
         $data = $value['data'] ?? [];
 
