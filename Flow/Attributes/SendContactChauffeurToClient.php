@@ -29,7 +29,7 @@ class SendContactChauffeurToClient extends Attributes
     public static function instance(array $value): FlowAttributes
     {
         $user = app(UserEntity::class)::find($value['user_id']);
-        $devis = app(DevisEntities::class)::find($value['devi_id']);
+        $devis = app(DevisEntities::class)::withTrashed()->find($value['devi_id']);
         $fournisseur = app(FournisseurRepositoryContract::class)->fetchById($value['fournisseur_id']);
         return new SendContactChauffeurToClient($user, $devis, $fournisseur);
     }
