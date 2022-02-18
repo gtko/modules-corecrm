@@ -29,6 +29,7 @@ class ActionsSendNotification extends WorkFlowAction
             ->delay(now()->addMinutes($delay));
     }
 
+
     public function isVariabled():bool
     {
         return true;
