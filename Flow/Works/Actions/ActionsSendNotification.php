@@ -18,7 +18,9 @@ class ActionsSendNotification extends WorkFlowAction
     {
         $data = $this->event->getData();
 
-        $parseVariable = new WorkFlowParseVariable($this->event, $this->params[0]->getValue());
+        $values = $this->event->getFlow()->override_data[self::class]['data'] ?? $this->params[0]->getValue();
+
+        $parseVariable = new WorkFlowParseVariable($this->event, $values);
         $datas = $parseVariable->resolve();
 
         $delay = random_int($datas['delay_min'] ?? 0, $datas['delay_max'] ?? 0);

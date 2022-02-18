@@ -36,8 +36,6 @@
                                        class="btn btn-outline-secondary py-1 px-2 w-full">Nouveau devis</a>
                                 @endcan
 
-
-
                                 <x-basecore::resolve-type-view
                                     :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\DossierSidebarAddActionsViewContract::class"
                                     :arguments="['client' => $client, 'dossier' => $dossier]"

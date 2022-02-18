@@ -13,12 +13,13 @@ use Modules\CoreCRM\Models\Flow;
 class FlowRepository implements FlowRepositoryContract
 {
 
-    public function createFlow(Flowable $flowable, FlowAttributes $flowAttributes): Flow
+    public function createFlow(Flowable $flowable, FlowAttributes $flowAttributes, array $override_data = []): Flow
     {
         $flow = new Flow();
         $flow->event()->associate($flowAttributes->event());
         $flow->flowable()->associate($flowable);
         $flow->datas = $flowAttributes;
+        $flow->override_data = $override_data;
         $flow->save();
 
         FlowAddEvent::dispatch($flow);

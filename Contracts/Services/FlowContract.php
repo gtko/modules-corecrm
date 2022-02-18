@@ -12,7 +12,7 @@ use Modules\CoreCRM\Models\Flow;
 
 interface FlowContract
 {
-    public function add(Flowable $flowable, FlowAttributes $flowAttributes):Flow;
+    public function add(Flowable $flowable, FlowAttributes $flowAttributes, array $override_data = []):Flow;
 
     public function list(Flowable $flowable):Collection;
 

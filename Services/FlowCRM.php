@@ -15,9 +15,9 @@ use Modules\CoreCRM\Models\Flow;
 class FlowCRM implements FlowContract
 {
 
-    public function add(Flowable $flowable, FlowAttributes $flowAttributes): Flow
+    public function add(Flowable $flowable, FlowAttributes $flowAttributes, array $override_data = []): Flow
     {
-        return app(FlowRepositoryContract::class)->createFlow($flowable, $flowAttributes);
+        return app(FlowRepositoryContract::class)->createFlow($flowable, $flowAttributes, $override_data);
     }
 
     public function list(Flowable $flowable): Collection

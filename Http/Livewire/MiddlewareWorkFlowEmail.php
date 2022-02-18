@@ -22,15 +22,12 @@ class MiddlewareWorkFlowEmail extends Component
     }
 
     public function send(){
-
         $kernel = new WorkflowKernel();
         $events =  $kernel->listenEvents($this->observableEvent);
 
         $event = $events->first();
         $action = collect($event['workflow']->actions)->where('class', ActionsSendNotification::class)->first();
-
         $this->emit($this->callback, ['data' => $this->actionData]);
-
     }
 
     public function render()
