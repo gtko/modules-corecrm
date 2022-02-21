@@ -2,7 +2,7 @@
     'variableData' => [],
 ])
 
-<div x-data="{
+<div class='wrapper-mentionify' x-data="{
         isActivate: [],
         variables: null,
         resolveFn: null,
@@ -10,8 +10,13 @@
         menuItemFn: null,
         init() {
 
+            window.addMentionify = (callback) => {
+                callback(this);
+            }
+
             for (let elem of this.$root.querySelectorAll('input, textarea')) {
                 elem.addEventListener('focus', (e) => {
+                console.log('Focus', e);
                     this.focus(e)
                 })
             }
@@ -48,6 +53,7 @@
         focus(e) {
             if (this.isActivate.indexOf(e.target) === -1) {
                 this.isActivate.push(e.target)
+
                 new Mentionify(
                     e.target,
                     document.getElementById('menu'),
