@@ -18,11 +18,10 @@
     </x-basecore::inputs.group>
 
     <?php
+    $variableData = [];
     if($this->data['actions'][$index]['class'] ?? false){
         $actionInstance = $instanceEvent->makeAction($this->data['actions'][$index]['class']);
 
-
-        $variableData = [];
         if($actionInstance->isVariabled()){
             foreach($instanceEvent->variables() as $variable){
                 foreach($variable->labels() as $label => $description){

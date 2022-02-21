@@ -81,14 +81,6 @@
                         @endcan
                     @endif
 
-                    @if(in_array('email', config('corecrm.features')))
-                        @can('sendEmail', \Modules\CoreCRM\Models\Dossier::class)
-                            <x-basecore::nav.menu-item name="email">
-                                <x-basecore::icon-label icon="folder" label="Emails"/>
-                            </x-basecore::nav.menu-item>
-                        @endcan
-                    @endif
-
                     @if(in_array('document', config('corecrm.features')))
                         @can('viewAny', \Modules\CoreCRM\Models\Document::class)
                             <x-basecore::nav.menu-item name="documents">
@@ -123,11 +115,6 @@
                     <x-basecore::nav.tab name="call">
                         <livewire:callcrm::appel :dossier-id="$dossier->id" :client-id="$client->id"/>
                     </x-basecore::nav.tab>
-                @endif
-                @if(in_array('email', config('corecrm.features')))
-                <x-basecore::nav.tab name="email">
-                    email
-                </x-basecore::nav.tab>
                 @endif
                 @if(in_array('document', config('corecrm.features')))
                 <x-basecore::nav.tab name="documents">

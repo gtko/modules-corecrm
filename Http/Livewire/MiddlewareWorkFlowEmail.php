@@ -20,7 +20,6 @@ class MiddlewareWorkFlowEmail extends Component
     public $observableEvent = '';
     public $callback = '';
     public $flowable = [];
-    public $params = [];
 
     public $actionData = [];
     public $variableData = [];
@@ -28,27 +27,33 @@ class MiddlewareWorkFlowEmail extends Component
     public $preview = false;
 
 
-    public function mount($flowable, $observable,$params,$callback){
+    public function mount($flowable, $observable,$callback = null){
        $this->observableEvent = $observable;
        $this->callback = $callback;
        $this->flowable = $flowable;
-       $this->params = $params;
+    }
+
+
+    protected function getInstanceAttributeEvent(){
+        return $this->observableEvent[0][0]::instance($this->observableEvent[0][1]);
     }
 
     public function send(){
         $kernel = new WorkflowKernel();
-        $events =  $kernel->listenEvents($this->observableEvent);
+        $events =  $kernel->listenEvents($this->observableEvent[0][0]);
 
         $event = $events->first();
         $action = collect($event['workflow']->actions)->where('class', ActionsSendNotification::class)->first();
 
-        app(FlowContract::class)->add(
-            app($this->flowable[0])::find($this->flowable[1]),
-            $this->observableEvent::instance($this->params),
-            [
-                ActionsSendNotification::class => ['data' => $this->actionData]
-            ]
-        );
+        foreach($this->observableEvent as $observable) {
+            app(FlowContract::class)->add(
+                app($this->flowable[0])::find($this->flowable[1]),
+                $observable[0]::instance($observable[1]),
+                [
+                    ActionsSendNotification::class => ['data' => $this->actionData]
+                ]
+            );
+        }
 
         $this->emit($this->callback, ['data' => $this->actionData]);
     }
@@ -64,10 +69,12 @@ class MiddlewareWorkFlowEmail extends Component
     public function getEmailProperty(){
 
         $kernel = new WorkflowKernel();
-        $events =  $kernel->listenEvents($this->observableEvent);
+        $events =  $kernel->listenEvents($this->observableEvent[0][0]);
         $event = $events->first();
 
-        $attribute = $this->observableEvent::instance($this->params);
+        $attribute =  $this->getInstanceAttributeEvent();
+
+
         $flow = new Flow();
         $flow->datas = $attribute;
         $event['instance']->init($flow);
@@ -88,10 +95,9 @@ class MiddlewareWorkFlowEmail extends Component
 
     public function render()
     {
-
         //on intercept l'event ici pour précalculer l'email , et le modifier dans une modal
         $kernel = new WorkflowKernel();
-        $events =  $kernel->listenEvents($this->observableEvent);
+        $events =  $kernel->listenEvents($this->observableEvent[0][0]);
 
         $event = $events->first();
 
