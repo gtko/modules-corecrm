@@ -151,6 +151,24 @@
             window.getCaretCoordinates = getCaretCoordinates;
         }
 
+        function getCaretIndex(element) {
+            let position = 0;
+            const isSupported = typeof window.getSelection !== "undefined";
+            if (isSupported) {
+                const selection = window.getSelection();
+                if (selection.rangeCount !== 0) {
+                    const range = window.getSelection().getRangeAt(0);
+                    const preCaretRange = range.cloneRange();
+                    preCaretRange.selectNodeContents(element);
+                    preCaretRange.setEnd(range.endContainer, range.endOffset);
+                    position = preCaretRange.toString().length;
+                }
+            }
+            return position;
+        }
+
+        window.getCaretpos = getCaretIndex;
+
     }());
 
     class Mentionify {
@@ -202,8 +220,11 @@
                 const postMention = this.ref.value.substr(this.ref.selectionStart)
                 const newValue = `${preMention}${mention}${postMention}`
                 this.ref.value = newValue
+                this.ref.innerHtml = newValue
                 const caretPosition = this.ref.value.length - postMention.length
+
                 this.ref.setSelectionRange(caretPosition, caretPosition)
+
                 this.closeMenu()
                 this.ref.focus()
                 this.ref.dispatchEvent(new Event('input'));
@@ -212,8 +233,12 @@
         }
 
         onInput(ev) {
+
+            console.log('WRAPPER CHANGE', this.ref.value);
+
             const positionIndex = this.ref.selectionStart
             const textBeforeCaret = this.ref.value.slice(0, positionIndex)
+            console.log('PositionINDEX', positionIndex, textBeforeCaret);
             const tokens = textBeforeCaret.split(/\s/)
             const lastToken = tokens[tokens.length - 1]
             const triggerIdx = textBeforeCaret.endsWith(lastToken)

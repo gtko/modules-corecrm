@@ -31,7 +31,7 @@ class FournisseurVariable extends WorkFlowVariable
         return [
             'id' => 'id du fournisseur',
             'full name' => 'Nom et prénom du fournisseur',
-            'email fournisseur' => 'Email du fournisseur',
+            'email' => 'Email du fournisseur',
             'phone' => 'Numéro de téléphone du fournisseur'
 
         ];

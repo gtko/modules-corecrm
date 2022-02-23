@@ -24,6 +24,13 @@ class CommercialVariable extends WorkFlowVariable
           'phone' => $commercial->phone,
           'nom et prénom' => $commercial->format_name,
           'nombre de dossier' => $commercial->dossiers()->count(),
+          'signature' => <<<mark
+            <div>
+                $commercial->format_name <br>
+                $commercial->email <br>
+                $commercial->phone <br>
+            </div>
+          mark
         ];
     }
 
@@ -34,6 +41,7 @@ class CommercialVariable extends WorkFlowVariable
             'email' => 'Email du commercial',
             'phone' => 'Numéro de téléphone du commercial',
             'nombre de dossier' => 'Nombre de dossier attribué',
+            'signature' => 'Signature du commercial',
         ];
     }
 }
