@@ -21,6 +21,13 @@ class UserVariable extends WorkFlowVariable
           'email' => $user->email,
           'phone' => $user->phone,
           'nom et prénom' => $user->format_name,
+          'signature' => <<<mark
+            <div>
+                $user->format_name <br>
+                $user->email <br>
+                $user->phone <br>
+            </div>
+          mark
         ];
     }
 
@@ -30,6 +37,7 @@ class UserVariable extends WorkFlowVariable
             'nom et prénom' => 'Nom et prénom',
             'email' => 'Email',
             'phone' => 'Numéro de téléphone',
+            'signature' => "Signature email de l'utilisateur"
         ];
     }
 }
