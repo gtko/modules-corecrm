@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 use Modules\CoreCRM\Flow\Works\Events\WorkFlowEvent;
+use Modules\CoreCRM\Flow\Works\Files\WorkFlowAttachments;
 use Modules\CoreCRM\Mail\WorkFlowStandardMail;
 
 class SendNotificationWorkFlowJob implements ShouldQueue
@@ -37,8 +38,12 @@ class SendNotificationWorkFlowJob implements ShouldQueue
     public function maillable(){
         $files = [];
         foreach(($this->datas['files'] ?? []) as $file){
-            $class = base64_decode($file['class']);
-            $files[] = (new $class($this->event));
+            if($file instanceof WorkFlowAttachments){
+                $files[] = $file;
+            }else {
+                $class = base64_decode($file['class']);
+                $files[] = (new $class($this->event));
+            }
         }
 
         return new WorkFlowStandardMail(

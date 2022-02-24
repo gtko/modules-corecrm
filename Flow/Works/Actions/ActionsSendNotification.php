@@ -24,7 +24,7 @@ class ActionsSendNotification extends WorkFlowAction
         $this->sendEmail();
     }
 
-    protected function resolveDatas(){
+    public function resolveDatas(){
         return (new WorkFlowParseVariable($this->event, $this->getValues()))->resolve();
     }
 
