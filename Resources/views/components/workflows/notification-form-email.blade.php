@@ -3,30 +3,37 @@
    'instance',
 ])
 
-<label for="sujet" class="sr-only">Sujet</label>
+<label for="sujet" class="block font-bold mt-2 mb-1">Sujet</label>
 <input type="text" name="sujet" id="sujet"
-       class="block w-full border-0 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
+       class="block w-full rounded border-gray-400 border-1 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
        placeholder="Sujet"
        autocomplete="off"
        wire:model="{{$model}}.subject"
 >
-<label for="cc" class="sr-only">Pour</label>
+<label for="cc" class="block font-bold mt-2 mb-1">Pour</label>
 <input type="text" name="cc" id="cc"
-       class="block w-full border-0 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
+       class="block w-full rounded border-gray-400 border-1 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
        placeholder="email@dudestinataire.com"
        autocomplete="off"
        wire:model="{{$model}}.cc"
 >
-<label for="sujet" class="sr-only">Autre destinataire</label>
+<label for="sujet" class="block font-bold mt-2 mb-1">Autre destinataire</label>
 <input type="text" name="cci" id="cci"
-       class="block w-full border-0 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
+       class="block w-full rounded border-gray-400 border-1 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
        placeholder="destinataire1gmail.com, destinataire2@gmail.com"
        autocomplete="off"
        wire:model="{{$model}}.cci"
 >
-<label for="description" class="sr-only">Description</label>
+<label for="from" class="block font-bold mt-2 mb-1">Expéditeur</label>
+<input type="text" name="from" id="from"
+       class="block w-full rounded border-gray-400 border-1 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
+       placeholder="expediteur@email.com"
+       autocomplete="off"
+       wire:model="{{$model}}.from"
+>
+<label for="description" class="block font-bold mt-2 mb-1">Contenu de l'email</label>
 <textarea rows="15" name="description" id="description"
-          class="block w-full border-0 py-0 resize-none placeholder-gray-500 focus:ring-0 sm:text-sm"
+          class="block w-full rounded border-gray-400 border-1 py-3 resize-none placeholder-gray-500 focus:ring-0 sm:text-sm"
           placeholder="Contenu de l'email"
           autocomplete="off"
           wire:model="{{$model}}.content"
