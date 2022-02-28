@@ -54,18 +54,27 @@ class FournisseurController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param PersonneStoreRequest $request
      * @return Redirector|RedirectResponse
      * @throws AuthorizationException
      */
-    public function store(PersonneStoreRequest $request): Redirector|RedirectResponse
+    public function store(fournisseurUpdateRequest $request): Redirector|RedirectResponse
     {
         $this->authorize('create', Fournisseur::class);
 
         $personne = (new CreatePersonne())->create($request);
-        /** @todo create user fournisseur */
+        $fournisseurRep = app(FournisseurRepositoryContract::class);
+        $fournisseur = $fournisseurRep->create($personne);
+        $tagRep = app(TagFournisseurRepositoryContract::class);
+        foreach($request->tag_ids as $name){
+            $tag = $tagRep->newQuery()->where('name', $name)->first();
+            if(!$tag){
+                $tag = $tagRep->create($name);
+            }
+            $fournisseur->tagfournisseurs()->attach($tag);
+        }
 
-        return '';
+
+        return redirect()->route('fournisseurs.index')->with('success', 'Fournisseur créé avec succès');
     }
 
 

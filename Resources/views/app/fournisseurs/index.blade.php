@@ -2,7 +2,11 @@
     <x-slot name="breadcrumb">
         <x-basecore::breadcrumb-item>Fournisseurs</x-basecore::breadcrumb-item>
     </x-slot>
-
+    <div class="flex flex-wrap justify-between sm:flex-nowrap items-center mt-2">
+        <a href="{{route('fournisseurs.create')}}" class="btn btn-primary shadow-md mr-2">
+            @icon('addCircle', null, 'mr-2') Ajouter un fournisseur
+        </a>
+    </div>
     <div class="overflow-auto lg:overflow-visible mt-8 sm:mt-0">
         <table class="table table-report sm:mt-2">
             <thead>

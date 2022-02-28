@@ -24,6 +24,19 @@
                 >
                     <x-basecore::personne.form />
 
+                    <x-basecore::inputs.group>
+                        <label>Catégories du fournisseur</label>
+                        <x-basecore::tom-select
+                            name="tag_ids"
+                            :collection="$tags"
+                            label="name"
+                            id="name"
+                            placeholder="Tags"
+                            :create="true"
+                            :livewire="false"
+                        />
+                    </x-basecore::inputs.group>
+
                     <div class="mt-5 flex justify-between items-center">
                         <a href="{{ route('fournisseurs.index') }}" class="button">
                             <i
