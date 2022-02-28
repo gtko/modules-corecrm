@@ -2,42 +2,123 @@
 
 namespace Modules\CoreCRM\Http\Controllers;
 
-use Modules\BaseCore\Http\Controllers\AbstractTypeUserController;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Modules\BaseCore\Actions\Personne\CreatePersonne;
+use Modules\BaseCore\Contracts\Personnes\UpdatePersonneContract;
+use Modules\BaseCore\Http\Requests\PersonneStoreRequest;
+use Modules\BaseCore\Http\Requests\PersonneUpdateRequest;
 use Modules\CoreCRM\Contracts\Repositories\FournisseurRepositoryContract;
-use Modules\CoreCRM\DataLists\FournisseurDataList;
+use Modules\CoreCRM\Contracts\Repositories\TagFournisseurRepositoryContract;
 use Modules\CoreCRM\Models\Fournisseur;
+use Modules\CrmAutoCar\Http\Requests\fournisseurUpdateRequest;
 
 
-class FournisseurController extends AbstractTypeUserController
+class FournisseurController extends Controller
 {
 
-    function getTitle(): string
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function index(FournisseurRepositoryContract $fournisseurRep): View|Factory|Application
     {
-        return 'Fournisseur';
+        $this->authorize('viewAny', Fournisseur::class);
+
+        return view('corecrm::app.fournisseurs.index', [
+            'title' => 'Fournisseurs',
+            'fournisseurs' => $fournisseurRep->fetchAll()
+        ]);
     }
 
-    function getDataList(): string
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Application|Factory|View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function create()
     {
-        return FournisseurDataList::class;
+        $this->authorize('create', Fournisseur::class);
+        $tagRep = app(TagFournisseurRepositoryContract::class);
+        $tags = $tagRep->all();
+        return view('corecrm::app.fournisseurs.create', compact('tags'));
     }
 
-    function getName(): string
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param PersonneStoreRequest $request
+     * @return Redirector|RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function store(PersonneStoreRequest $request): Redirector|RedirectResponse
     {
-        return 'fournisseur';
+        $this->authorize('create', Fournisseur::class);
+
+        $personne = (new CreatePersonne())->create($request);
+        /** @todo create user fournisseur */
+
+        return '';
     }
 
-    function getRouteName(): string
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @return Application|Factory|View
+     * @throws AuthorizationException
+     */
+    public function edit(Fournisseur $fournisseur)
     {
-        return 'fournisseurs';
+        $this->authorize('edit', Fournisseur::class);
+        $tagRep = app(TagFournisseurRepositoryContract::class);
+        $tags = $tagRep->all();
+        return view('corecrm::app.fournisseurs.edit', compact('fournisseur', 'tags'));
     }
 
-    function getModelClass(): string
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param PersonneUpdateRequest $request
+     * @param UpdatePersonneContract $updatePersonne
+     * @param $id
+     * @return Redirector|RedirectResponse
+     */
+    public function update(fournisseurUpdateRequest $request, UpdatePersonneContract $updatePersonne,Fournisseur $fournisseur): Redirector|RedirectResponse
     {
-        return Fournisseur::class;
+        $updatePersonne->update($request, $fournisseur->personne);
+
+        //on check les tags si il exist
+        $fournisseur->tagfournisseurs()->detach();
+        $tagRep = app(TagFournisseurRepositoryContract::class);
+        foreach($request->tag_ids as $name){
+            $tag = $tagRep->newQuery()->where('name', $name)->first();
+            if(!$tag){
+                $tag = $tagRep->create($name);
+            }
+            $fournisseur->tagfournisseurs()->attach($tag);
+        }
+
+        return redirect()->route('fournisseurs.index')->with('success', 'Fournisseur mis à jour');
     }
 
-    function getRepository()
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param $id
+     * @return Redirector|RedirectResponse
+     */
+    public function destroy(Fournisseur $fournisseur)
     {
-        return app(FournisseurRepositoryContract::class);
+        $fournisseur->delete();
+
+        return '';
     }
 }

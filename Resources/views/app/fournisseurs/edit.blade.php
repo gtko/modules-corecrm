@@ -1,7 +1,7 @@
 <x-basecore::app-layout>
     <x-slot name="breadcrumb">
         <x-basecore::breadcrumb-item :href="route('fournisseurs.index')">Fournisseurs</x-basecore::breadcrumb-item>
-        <x-basecore::breadcrumb-item :href="route('fournisseurs.show', $fournisseur)">{{$fournisseur->format_name}}</x-basecore::breadcrumb-item>
+        <x-basecore::breadcrumb-item>{{$fournisseur->format_name}}</x-basecore::breadcrumb-item>
         <x-basecore::breadcrumb-item>Editer</x-basecore::breadcrumb-item>
     </x-slot>
     <x-slot name="header">
@@ -22,6 +22,18 @@
                 class="mt-4"
             >
                 <x-basecore::personne.form :personne="$fournisseur" :editing="true"/>
+
+
+                <x-basecore::tom-select
+                    name="tag_ids"
+                    :collection="$tags"
+                    label="name"
+                    id="name"
+                    :selected="$fournisseur->tagfournisseurs->pluck('name')->toArray()"
+                    placeholder="Tags"
+                    :create="true"
+                    :livewire="false"
+                />
 
                 <div class="mt-10">
                     <a href="{{ route('fournisseurs.index') }}" class="button">

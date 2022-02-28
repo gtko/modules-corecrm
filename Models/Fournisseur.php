@@ -28,4 +28,8 @@ class Fournisseur extends User
         });
     }
 
+
+    public function tagfournisseurs(){
+        return $this->belongsToMany(Tagfournisseur::class,'fournisseur_tagfournisseur', 'fournisseur_id', 'tagfournisseur_id');
+    }
 }
