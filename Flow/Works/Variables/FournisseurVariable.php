@@ -77,12 +77,14 @@ mark;
             mark;
             }
 
-            $detail .= <<<mark
+            if($this->data['nombre_chauffeur'] ?? false) {
+                $detail .= <<<mark
             <div>
                 <h2> Informations complémentaires</h2>
-                Nombre de conducteur(s) : {$this->data['nombre_chauffeur']} <br><br>
+                Nombre de conducteur(s) : {($this->data['nombre_chauffeur'] ?? 0)} <br><br>
             </div>
         mark;
+            }
 
 
             return $detail;
