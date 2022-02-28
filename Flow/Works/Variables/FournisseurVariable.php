@@ -80,7 +80,7 @@ mark;
             $detail .= <<<mark
             <div>
                 <h2> Informations complémentaires</h2>
-                Nombre de conducteur(s) : 6 <br><br>
+                Nombre de conducteur(s) : {$this->data['nombre_chauffeur']} <br><br>
             </div>
         mark;
 
