@@ -102,7 +102,6 @@ class CoreCRMServiceProvider extends ServiceProvider
         $this->app->singleton(WorkflowKernel::class);
         $this->app->singleton(TemplateMailService::class);
 
-
         app(CompositeurThemeContract::class)
             ->setViews(DevisEditViewContract::class,[
                 'devis-view' => new TypeView(TypeView::TYPE_BLADE_COMPONENT, 'corecrm::devis-view')
