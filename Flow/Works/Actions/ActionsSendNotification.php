@@ -14,19 +14,31 @@ class ActionsSendNotification extends WorkFlowAction
 {
 
 
+    public function getValues(){
+       $values = $this->event->getFlow()->override_data[self::class]['data'] ?? $this->params[0]->getValue();
+       return $values;
+    }
+
     public function handle()
     {
-        $data = $this->event->getData();
+        $this->sendEmail();
+    }
 
-        $values = $this->event->getFlow()->override_data[self::class]['data'] ?? $this->params[0]->getValue();
+    public function resolveDatas(){
+        return (new WorkFlowParseVariable($this->event, $this->getValues()))->resolve();
+    }
 
-        $parseVariable = new WorkFlowParseVariable($this->event, $values);
-        $datas = $parseVariable->resolve();
-
+    public function sendEmail(){
+        $datas = $this->resolveDatas();
         $delay = random_int($datas['delay_min'] ?? 0, $datas['delay_max'] ?? 0);
 
         SendNotificationWorkFlowJob::dispatch($datas, $this->event)
             ->delay(now()->addMinutes($delay));
+    }
+
+    public function preview(){
+        $datas = $this->resolveDatas();
+        return (new SendNotificationWorkFlowJob($datas, $this->event))->maillable()->render();
     }
 
 

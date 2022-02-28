@@ -15,24 +15,35 @@ use Modules\CoreCRM\Models\Dossier;
 use Modules\CoreCRM\Models\Fournisseur;
 use Modules\SearchCRM\Interfaces\SearchableRepository;
 
-interface DevisRepositoryContract extends SearchableRepository, RepositoryFetchable,RelationsRepositoryContract
+interface DevisRepositoryContract extends SearchableRepository, RepositoryFetchable, RelationsRepositoryContract
 {
     public function create(Dossier $dossier, Commercial $commercial, string $title = null): DevisEntities;
-    public function updateData(DevisEntities $devis, array $data, string $title = null): DevisEntities;
-    public function addTitre(DevisEntities $devis, string $title): DevisEntities;
-    public function updateFournisseur(DevisEntities $devis, Fournisseur $fournisseur): DevisEntities;
-    public function detachFournisseur(DevisEntities $devis, Fournisseur $fournisseur) :bool;
-    public function duplicate(DevisEntities $devis) : DevisEntities;
 
-    public function getFournsisseurValidate(DevisEntities $devi) : Collection;
+    public function updateData(DevisEntities $devis, array $data, string $title = null): DevisEntities;
+
+    public function addTitre(DevisEntities $devis, string $title): DevisEntities;
+
+    public function updateFournisseur(DevisEntities $devis, Fournisseur $fournisseur): DevisEntities;
+
+    public function detachFournisseur(DevisEntities $devis, Fournisseur $fournisseur): bool;
+
+    public function duplicate(DevisEntities $devis): DevisEntities;
+
+    public function getFournsisseurValidate(DevisEntities $devi): Collection;
+
     public function getPrice(DevisEntities $devi, Fournisseur $fournisseur): float;
+
     public function validatedDevis(DevisEntities $devi, array $data): bool;
 
-    public function getDevisByDossier(Dossier $dossier, int $paginate = 15, string $order = 'DESC'):LengthAwarePaginator;
+    public function getDevisByDossier(Dossier $dossier, int $paginate = 15, string $order = 'DESC'): LengthAwarePaginator;
 
-    public function sendDemandeFournisseur(DevisEntities $devis, Fournisseur $fournisseur, Carbon $mail_sended = null, bool $validate = false) :DevisEntities;
+    public function sendDemandeFournisseur(DevisEntities $devis, Fournisseur $fournisseur, Carbon $mail_sended = null, bool $validate = false): DevisEntities;
+
     public function savePriceFournisseur(DevisEntities $devis, Fournisseur $fournisseur, float $price): DevisEntities;
+
     public function validateFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $validate = true);
+
+    public function changeCommercial(DevisEntities $devis, Commercial $commercial): DevisEntities;
 
     public function delete(DevisEntities $devis): bool;
 }

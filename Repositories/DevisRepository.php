@@ -166,4 +166,12 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
         return $devis;
     }
+
+    public function changeCommercial(DevisEntities $devis, Commercial $commercial): DevisEntities
+    {
+        $devis->commercial_id = $commercial->id;
+        $devis->save();
+
+        return $devis;
+    }
 }

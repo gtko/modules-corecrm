@@ -22,9 +22,6 @@ class WorkFlowParseVariable
 
     public function resolve():array
     {
-
-
-
         $response = [];
         foreach($this->datas as $name => $data){
             if(is_string($data)) {

@@ -36,7 +36,7 @@
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
                 <div class="inline-block align-bottom bg-transparent border-0 p-1 text-left overflow-hidden transform transition-all sm:my-4 sm:align-middle sm:max-w-4xl sm:w-full">
                     <div>
-                        <div class="relative border bg-white border-gray-300 rounded-lg shadow-xl overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+                        <div class="relative border bg-white p-4 border-gray-300 rounded-lg shadow-xl overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
                             <x-corecrm::workflows.notification-form-email
                                 :instance="$instance"
                                 :model="$model"

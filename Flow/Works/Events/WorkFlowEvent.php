@@ -79,4 +79,21 @@ abstract class WorkFlowEvent implements WorkFlowDescribe
         return null;
     }
 
+    public function getVariablesAutoComplete():array
+    {
+        $variableData = [];
+        foreach ($this->variables() as $variable) {
+            foreach ($variable->labels() as $label => $description) {
+                $variableData[] = [
+                    "value" => $variable->namespace() . '.' . \Illuminate\Support\Str::slug($label),
+                    "label" => $variable->namespace() . '.' . "$label - $description",
+                    'title' => $label,
+                    "description" => $description,
+                ];
+            }
+        }
+
+        return $variableData;
+    }
+
 }

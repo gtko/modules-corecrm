@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 use Modules\CoreCRM\Flow\Works\Events\WorkFlowEvent;
+use Modules\CoreCRM\Flow\Works\Files\WorkFlowAttachments;
 use Modules\CoreCRM\Mail\WorkFlowStandardMail;
 
 class SendNotificationWorkFlowJob implements ShouldQueue
@@ -26,21 +27,31 @@ class SendNotificationWorkFlowJob implements ShouldQueue
 
     public function handle()
     {
+        $maillable = $this->maillable();
+        Mail::to($this->datas['cc'])
+            ->send(
+                $maillable
+                ->from($this->datas['from'] ?? 'noreply@crm.com')
+            );
+    }
+
+    public function maillable(){
         $files = [];
         foreach(($this->datas['files'] ?? []) as $file){
-            $class = base64_decode($file['class']);
-            $files[] = (new $class($this->event));
+            if($file instanceof WorkFlowAttachments){
+                $files[] = $file;
+            }else {
+                $class = base64_decode($file['class']);
+                $files[] = (new $class($this->event));
+            }
         }
 
-        $maillable = new WorkFlowStandardMail(
+        return new WorkFlowStandardMail(
             $this->datas['subject'],
             $this->datas['cci'] ?? '',
             $this->datas['content'],
             $files,
             $this->datas['template'] ?? 'default'
         );
-
-        Mail::to($this->datas['cc'])
-            ->send($maillable);
     }
 }
