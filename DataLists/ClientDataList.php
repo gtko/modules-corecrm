@@ -4,6 +4,7 @@
 namespace Modules\CoreCRM\DataLists;
 
 
+use Illuminate\Support\Facades\Auth;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
 use Modules\CoreCRM\Contracts\Repositories\ClientRepositoryContract;
 use Modules\BaseCore\Interfaces\RepositoryFetchable;
@@ -83,9 +84,18 @@ class ClientDataList extends DataListType
     public function getRepository(array $parents = []):RepositoryFetchable
     {
         $rep  = app(ClientRepositoryContract::class);
-        $rep->setQuery($rep->newQuery()
-//            ->with('personne.emails', 'personne.phones')
-            ->orderBy('created_at', 'desc'));
+
+        $query = $rep->newQuery();
+
+        if(!Auth::user()->hasRole('super-admin')){
+            $query->whereHas('dossiers', function($query){
+                $query->where('commercial_id', Auth::id());
+            });
+        }
+
+        $query->orderBy('created_at', 'desc');
+
+        $rep->setQuery($query);
         return $rep;
     }
 }
