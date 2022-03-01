@@ -175,7 +175,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         return Dossier::whereHas('client', (function ($query) use ($phone) {
             $query->whereHas('personne', function ($query) use ($phone) {
                 $query->whereHas('phones', function ($query) use ($phone) {
-                    $query->where('phone', $phone);
+                    $query->where('phone', 'LIKE' , '%'.$phone.'%');
                 });
             });
         }))->get();
