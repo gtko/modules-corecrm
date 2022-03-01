@@ -49,5 +49,6 @@ interface DossierRepositoryContract extends SearchableRepository, RepositoryFetc
     public function getDossierTrashed(): Collection;
 
     public function countDossierBlancByCommercial(Commercial $commercial): int;
+    public function countDossierNewWithoutCommercial(): int;
 
 }

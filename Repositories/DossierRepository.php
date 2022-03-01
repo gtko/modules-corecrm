@@ -13,6 +13,7 @@ use Modules\BaseCore\Repositories\AbstractRepository;
 use Modules\CoreCRM\Contracts\Repositories\DevisRepositoryContract;
 use Modules\CoreCRM\Contracts\Repositories\DossierRepositoryContract;
 use Modules\BaseCore\Helpers\HasInterface;
+use Modules\CoreCRM\Enum\StatusTypeEnum;
 use Modules\CoreCRM\Flow\Attributes\ClientDossierCreate;
 use Modules\CoreCRM\Flow\Attributes\ClientDossierUpdate;
 use Modules\CoreCRM\Models\Client;
@@ -191,6 +192,12 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
     public function countDossierBlancByCommercial(Commercial $commercial): int
     {
+        if($commercial->hasRole('super-admin')) {
+            return Dossier::whereHas('status', function($query){
+                $query->where('type', StatusTypeEnum::TYPE_NEW);
+            })->count();
+        }
+
         $status = app(StatusRepositoryContract::class)->findByLabel('Blanc');
 
         $count = $this->getDossiersByCommercialAndStatus($commercial, $status);
@@ -201,4 +208,12 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         return $count->count();
 
     }
+
+
+    public function countDossierNewWithoutCommercial():int
+    {
+        return Dossier::where('commercial_id', 1)
+            ->count();
+    }
+
 }
