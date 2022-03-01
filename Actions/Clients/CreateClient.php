@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Modules\BaseCore\Actions\Personne\PersonneAddEmail;
 use Modules\BaseCore\Actions\Personne\PersonneAddPhone;
 use Modules\BaseCore\Contracts\Personnes\CreatePersonneContract;
+use Modules\BaseCore\Http\Requests\PersonneStoreRequest;
 use Modules\CoreCRM\Contracts\Repositories\DossierRepositoryContract;
 use Modules\CoreCRM\Models\Commercial;
 use Modules\CoreCRM\Models\Dossier;
@@ -54,7 +55,9 @@ class CreateClient
         }
 
         //on créer une nouvelle personne et un nouveau client avec un dossier vierge
-        $personne = app(CreatePersonneContract::class)->create($request);
+        $personneRequest = new PersonneStoreRequest();
+        $personneRequest->replace($request->all());
+        $personne = app(CreatePersonneContract::class)->create($personneRequest);
         return (new CreateClientWithDossier())->create($personne, $commercial, $source, $status);
     }
 
