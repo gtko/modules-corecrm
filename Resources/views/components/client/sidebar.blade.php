@@ -9,10 +9,10 @@
             </div>
         </div>
 
-    <x-basecore::resolve-type-view
-        :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\SelectCommercial::class"
-        :arguments="['client' => $client, 'dossier' => $dossier]"
-    />
+        <x-basecore::resolve-type-view
+            :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\SelectCommercial::class"
+            :arguments="['client' => $client, 'dossier' => $dossier]"
+        />
         <livewire:corecrm::fiche-similaire :dossier="$dossier"/>
 
         <div>
