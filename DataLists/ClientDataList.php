@@ -87,9 +87,12 @@ class ClientDataList extends DataListType
 
         $query = $rep->newQuery();
 
-        if(!Auth::user()->hasRole('super-admin')){
+        if(!Auth::user()->can('viewAll', ClientEntity::class)){
             $query->whereHas('dossiers', function($query){
                 $query->where('commercial_id', Auth::id());
+                $query->orWhereHas('followers', function($query){
+                    $query->where('id', Auth::id());
+                });
             });
         }
 

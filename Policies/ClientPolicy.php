@@ -23,6 +23,11 @@ class ClientPolicy
         return $user->hasPermissionTo('list clients');
     }
 
+    public function viewAll(UserEntity $user)
+    {
+        return $user->hasPermissionTo('viewsAll clients');
+    }
+
     /**
      * Determine whether the client can views the model.
      *

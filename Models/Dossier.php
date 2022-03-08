@@ -112,4 +112,10 @@ class Dossier extends Model implements SearchableModel, Flowable
     {
         return 1548;
     }
+
+    public function followers():BelongsToMany
+    {
+        return $this->belongsToMany(app(UserEntity::class)::class);
+    }
+
 }

@@ -61,12 +61,14 @@ class CoreCRMDatabaseSeeder extends Seeder
 
         Permission::create(['name' => 'list clients']);
         Permission::create(['name' => 'views clients']);
+        Permission::create(['name' => 'viewsAll clients']);
         Permission::create(['name' => 'create clients']);
         Permission::create(['name' => 'update clients']);
         Permission::create(['name' => 'delete clients']);
 
         Permission::create(['name' => 'list dossiers']);
         Permission::create(['name' => 'views dossiers']);
+        Permission::create(['name' => 'viewsAll dossiers']);
         Permission::create(['name' => 'create dossiers']);
         Permission::create(['name' => 'update dossiers']);
         Permission::create(['name' => 'delete dossiers']);
