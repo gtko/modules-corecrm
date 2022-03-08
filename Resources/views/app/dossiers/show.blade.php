@@ -13,14 +13,14 @@
     </x-slot>
 
     <div class="mt-2">
-        <livewire:corecrm::pipeline-steps :dossier="$dossier" />
+        <livewire:corecrm::pipeline-steps :dossier="$dossier"/>
     </div>
     <x-basecore::nav.layout default="{{$defaultName}}">
         <x-basecore::layout.panel-sidebar>
             <x-slot name="sidebar">
                 <x-corecrm::client.sidebar :client="$client" :dossier="$dossier">
                     <x-slot name="status">
-                            <x-corecrm::status :label="$dossier->status_label"/>
+                        <x-corecrm::status :label="$dossier->status_label"/>
                     </x-slot>
                     <x-slot name="actions">
 
@@ -29,7 +29,8 @@
                             :arguments="['client' => $client, 'dossier' => $dossier]"
                         >
                             <div class="grid grid-cols-2 w-full gap-2 items-center justify-center">
-                                <a href="{{route('clients.edit', $client)}}" class="btn btn-primary py-1 px-2 w-full">Éditer le
+                                <a href="{{route('clients.edit', $client)}}" class="btn btn-primary py-1 px-2 w-full">Éditer
+                                    le
                                     client</a>
                                 @can('create', Modules\CoreCRM\Models\Devi::class)
                                     <a href="{{route('devis.create', [$client, $dossier])}}"
@@ -90,7 +91,6 @@
                     @endif
 
 
-
                 </x-basecore::nav.menu>
 
                 <x-basecore::nav.tab name="note">
@@ -117,9 +117,9 @@
                     </x-basecore::nav.tab>
                 @endif
                 @if(in_array('document', config('corecrm.features')))
-                <x-basecore::nav.tab name="documents">
-                    <livewire:corecrm::document :dossier-id="$dossier->id" :client-id="$client->id"/>
-                </x-basecore::nav.tab>
+                    <x-basecore::nav.tab name="documents">
+                        <livewire:corecrm::document :dossier-id="$dossier->id" :client-id="$client->id"/>
+                    </x-basecore::nav.tab>
                 @endif
 
 
