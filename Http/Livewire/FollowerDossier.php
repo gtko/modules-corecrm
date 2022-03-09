@@ -14,23 +14,44 @@ class FollowerDossier extends Component
 {
     public $dossier;
     public $client;
+    public $label;
+    public $tomselect;
+    public array $roles;
 
-    public array $follow_ids = [];
+    public $follow_ids;
 
-    public function mount(ClientEntity $client, Dossier $dossier){
+    public function mount(ClientEntity $client, Dossier $dossier, $label = true, array $roles = [], $tomselect = false){
         $this->dossier = $dossier;
         $this->client = $client;
+        $this->label = $label;
+        $this->roles = $roles;
+        $this->tomselect = $tomselect;
         $this->follow_ids = $this->dossier->followers->pluck('id')->toArray();
     }
 
     public function updated(){
-        $this->dossier->followers()->sync($this->follow_ids);
+        $this->dossier->followers()->detach();
+        if(is_array($this->follow_ids)){
+            $this->dossier->followers()->attach($this->follow_ids);
+        }else{
+            $this->dossier->followers()->attach([$this->follow_ids]);
+        }
+
         app(FlowContract::class)->add($this->dossier, (new ClientDossierFollowChange(Auth::user(), $this->dossier->followers()->get())));
     }
 
     public function render()
     {
-        $users = app(UserRepositoryContract::class)->all()->where('id', '!=', $this->dossier->commercial_id);
+        $query = app(UserRepositoryContract::class)->newQuery();
+
+        if(!empty($this->roles)){
+            $query->whereHas('roles', function($q) {
+                $q->whereIn('id', $this->roles);
+            });
+        }
+
+        $users = $query->get()->where('id', '!=', $this->dossier->commercial_id);
+
         return view('corecrm::livewire.follower-dossier', compact('users'));
     }
 }
