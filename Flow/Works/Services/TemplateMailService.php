@@ -32,5 +32,4 @@ class TemplateMailService
     public function all(){
         return $this->templates;
     }
-
 }

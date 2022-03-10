@@ -4,6 +4,7 @@ namespace Modules\CoreCRM\Mail;
 
 use Illuminate\Mail\Mailable;
 use Modules\CoreCRM\Flow\Works\Events\WorkFlowEvent;
+use Modules\CoreCRM\Flow\Works\Services\DriversMailService;
 use Modules\CoreCRM\Flow\Works\Services\TemplateMailService;
 
 class WorkFlowStandardMail extends Mailable
