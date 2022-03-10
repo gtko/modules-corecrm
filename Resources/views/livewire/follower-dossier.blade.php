@@ -17,6 +17,7 @@
                 />
                 @else
                     <select wire:model="follow_ids">
+                        <option value="0">Aucun</option>
                         @foreach($users as $user)
                             <option value="{{ $user->id }}">{{ $user->format_name }}</option>
                         @endforeach
