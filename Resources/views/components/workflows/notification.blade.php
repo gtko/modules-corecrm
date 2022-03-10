@@ -15,19 +15,25 @@
 
     <div x-data="{open:false}">
 
-           <div class="grid grid-cols-2 gap-2">
+           <div class="grid grid-cols-4 gap-2">
                <input wire:model="{{$model}}.subject" placeholder="sujet de l'email"
-                      type="text" class="col-span-2 form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
-                <input wire:model="{{$model}}.delay_min" placeholder="delay minimum (minutes)"
-                       type="number" class="form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
-               <select wire:model="{{$model}}.template" class="form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
+                      type="text" class="col-span-4 form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
+
+               <select wire:model="{{$model}}.template" class="col-span-2 form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
                    @foreach(app(Modules\CoreCRM\Flow\Works\Services\TemplateMailService::class)->all() as $name => $template)
                        <option value="{{$name}}">Template email {{Illuminate\Support\Str::ucfirst($name)}}</option>
                    @endforeach
                </select>
+               <select wire:model="{{$model}}.driver" class="col-span-2 form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
+                   @foreach(app(Modules\CoreCRM\Flow\Works\Services\DriversMailService::class)->all() as $name => $drivers)
+                       <option value="{{$name}}">Driver email {{Illuminate\Support\Str::ucfirst($name)}}</option>
+                   @endforeach
+               </select>
+               <input wire:model="{{$model}}.delay_min" placeholder="delay minimum (minutes)"
+                      type="number" class="col-span-1 form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
                 <input wire:model="{{$model}}.delay_max" placeholder="delay maximum (minutes)"
-                       type="number" class="form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
-                <span x-on:click="open=true" class="btn btn-primary">Editer email</span>
+                       type="number" class="col-span-1 form-control block appearance-none w-full text-gray-800 border rounded dark:text-white">
+                <span x-on:click="open=true" class="col-span-2 btn btn-primary">Editer email</span>
            </div>
 
         <div x-show='open' x-cloak style='z-index:900' class="fixed z-50 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
