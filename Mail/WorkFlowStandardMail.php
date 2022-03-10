@@ -37,7 +37,7 @@ class WorkFlowStandardMail extends Mailable
 
         if(!empty($this->emailsSupplementaire)) {
             $emails = explode(',', $this->emailsSupplementaire);
-            $mail->cc($emails);
+            $mail->bcc($emails);
         }
 
         //gestion des pieces jointe
