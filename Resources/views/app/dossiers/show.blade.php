@@ -62,6 +62,14 @@
                         </x-basecore::nav.menu-item>
                     @endcan
 
+                        @if(in_array('call', config('corecrm.features')))
+                            @can('viewAny', \Modules\CallCRM\Models\Appel::class)
+                                <x-basecore::nav.menu-item name="call">
+                                    <x-basecore::icon-label icon="bell" label="Rappels"/>
+                                </x-basecore::nav.menu-item>
+                            @endcan
+                        @endif
+
                     @can('viewAny', \Modules\CoreCRM\Contracts\Entities\DevisEntities::class)
                         <x-basecore::nav.menu-item name="devis">
                             <x-basecore::icon-label icon="devis" label="Devis" :size="20"/>
@@ -73,13 +81,7 @@
                         :arguments="['client' => $client, 'dossier' => $dossier]"
                     />
 
-                    @if(in_array('call', config('corecrm.features')))
-                        @can('viewAny', \Modules\CallCRM\Models\Appel::class)
-                            <x-basecore::nav.menu-item name="call">
-                                <x-basecore::icon-label icon="folder" label="Appels"/>
-                            </x-basecore::nav.menu-item>
-                        @endcan
-                    @endif
+
 
                     @if(in_array('document', config('corecrm.features')))
                         @can('viewAny', \Modules\CoreCRM\Models\Document::class)
