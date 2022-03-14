@@ -127,6 +127,10 @@
 
             </x-basecore::partials.card>
 
+            @if(in_array('note_global', config('corecrm.features')))
+                <livewire:corecrm::dossier-note-global :dossier="$dossier"/>
+            @endif
+
             <livewire:corecrm::timeline :dossier="$dossier"/>
 
         </x-basecore::layout.panel-sidebar>
