@@ -34,7 +34,9 @@ class FollowerDossier extends Component
         if(is_array($this->follow_ids)){
             $this->dossier->followers()->attach($this->follow_ids);
         }else{
-            $this->dossier->followers()->attach([$this->follow_ids]);
+            if($this->follow_ids > 0) {
+                $this->dossier->followers()->attach([$this->follow_ids]);
+            }
         }
 
         app(FlowContract::class)->add($this->dossier, (new ClientDossierFollowChange(Auth::user(), $this->dossier->followers()->get())));
