@@ -132,8 +132,17 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         return $dossier;
     }
 
+    public function changeData(Dossier $dossier, array $data = []): Dossier
+    {
+        $dossier->data = $data;
+        $dossier->save();
+
+        return $dossier;
+    }
+
     public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection|null
     {
+
         $collection = Dossier::where('commercial_id', $commercial->id)->where('status_id', $status->id)->get();
 
         return $collection->groupBy('client_id')->first();
@@ -198,7 +207,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
             })->count();
         }
 
-        $status = app(StatusRepositoryContract::class)->findByLabel('Blanc');
+        $status = app(StatusRepositoryContract::class)->newQuery()->where('type', StatusTypeEnum::TYPE_NEW)->first();
 
         $count = $this->getDossiersByCommercialAndStatus($commercial, $status);
         if ($count == null) {
@@ -215,5 +224,6 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         return Dossier::where('commercial_id', 1)
             ->count();
     }
+
 
 }

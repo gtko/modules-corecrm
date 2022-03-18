@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\BaseCore\Contracts\Repositories\RelationsRepositoryContract;
+use Modules\BaseCore\Interfaces\RepositoryQueryCustom;
 use Modules\CoreCRM\Contracts\Entities\DevisEntities;
 use Modules\BaseCore\Interfaces\RepositoryFetchable;
 use Modules\CoreCRM\Models\Commercial;
@@ -15,7 +16,7 @@ use Modules\CoreCRM\Models\Dossier;
 use Modules\CoreCRM\Models\Fournisseur;
 use Modules\SearchCRM\Interfaces\SearchableRepository;
 
-interface DevisRepositoryContract extends SearchableRepository, RepositoryFetchable, RelationsRepositoryContract
+interface DevisRepositoryContract extends SearchableRepository, RepositoryFetchable, RelationsRepositoryContract, RepositoryQueryCustom
 {
     public function create(Dossier $dossier, Commercial $commercial, string $title = null): DevisEntities;
 

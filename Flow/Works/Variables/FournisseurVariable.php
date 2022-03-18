@@ -65,11 +65,17 @@ mark;
 mark;
 
             if ($this->trajet['retour_point_depart']) {
-                $retour_date = \Carbon\Carbon::parse($this->trajet['retour_date_depart']);
+                if($this->trajet['retour_date_depart'] ?? false) {
+                    $retour_date = \Carbon\Carbon::parse($this->trajet['retour_date_depart']);
+                    $format = $retour_date->format('m/d/Y');
+                }else{
+                    $retour_date = "N/A";
+                    $format = $retour_date;
+                }
                 $detail .= <<<mark
                 <div>
                    <h2>Retour</h2>
-                   Retour de vers {$retour_date->format('m/d/Y')}<br>
+                   Retour le {$format}<br>
                    Départ de  <strong>{$this->trajet['retour_point_depart']}</strong> vers {$this->trajet['retour_point_arriver']}<br>
                    Heure de Départ : {$date->format('H:i')} <br>
                    Nombre de passager : {$this->trajet['retour_pax']}<br><br>
@@ -77,11 +83,20 @@ mark;
             mark;
             }
 
+
             if($this->data['nombre_chauffeur'] ?? false) {
+
+                $chauffeur = 0;
+                if(is_array($this->data['nombre_chauffeur'])) {
+                    $chauffeur = $this->data['nombre_chauffeur'][0];
+                }else{
+                    $chauffeur = $this->data['nombre_chauffeur'];
+                }
+
                 $detail .= <<<mark
             <div>
                 <h2> Informations complémentaires</h2>
-                Nombre de conducteur(s) : {($this->data['nombre_chauffeur'] ?? 0)} <br><br>
+                Nombre de conducteur(s) : {($chauffeur)} <br><br>
             </div>
         mark;
             }

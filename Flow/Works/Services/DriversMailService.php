@@ -34,7 +34,7 @@ class DriversMailService
         return $this->get($name)['from']['name'] ?? null;
     }
 
-    public function mailer($name): Mailer
+    public function mailer($name): String
     {
        return $this->config[$name] ?? config('mail.default');
     }

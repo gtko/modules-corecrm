@@ -89,8 +89,10 @@ class ClientDataList extends DataListType
 
         if(!Auth::user()->can('viewAll', ClientEntity::class)){
             $query->whereHas('dossiers', function($query){
-                $query->where('commercial_id', Auth::id());
-                $query->orWhereHas('followers', function($query){
+                    $query->where('commercial_id', Auth::id());
+
+            })->orWhereHas('dossiers', function($query){
+                $query->WhereHas('followers', function($query){
                     $query->where('id', Auth::id());
                 });
             });
