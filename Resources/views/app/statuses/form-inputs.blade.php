@@ -19,13 +19,4 @@
             required
         ></x-basecore::inputs.color>
     </x-basecore::inputs.group>
-
-
-    // IGI la possibilité de configurer des events
-
-    // 2 - status de base (En attente, Terminer) Départ / arrivé
-
-    // 3 - il y a des matrice d'état
-
-
 </div>
