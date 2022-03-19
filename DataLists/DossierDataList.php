@@ -60,6 +60,14 @@ class DossierDataList extends DataListType
         ];
     }
 
+    public function link($params = []): string
+    {
+        return route('dossiers.show', [
+            $params->client->id,
+            $params->id
+        ]);
+    }
+
     public function getActions(): array
     {
        return [
