@@ -63,11 +63,9 @@
                     @endcan
 
                         @if(in_array('call', config('corecrm.features')))
-                            @can('viewAny', \Modules\CallCRM\Models\Appel::class)
                                 <x-basecore::nav.menu-item name="call">
                                     <x-basecore::icon-label icon="bell" label="Rappels"/>
                                 </x-basecore::nav.menu-item>
-                            @endcan
                         @endif
 
                     @can('viewAny', \Modules\CoreCRM\Contracts\Entities\DevisEntities::class)
