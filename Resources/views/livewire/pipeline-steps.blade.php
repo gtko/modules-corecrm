@@ -3,6 +3,9 @@
         class="border border-gray-300 bg-white rounded-md divide-y divide-gray-300 md:flex md:divide-y-0 overflow-x-scroll">
         @php($prev = false)
         @foreach($pipeline->statuses->whereNotIn('type', [Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN, Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST]) as $index => $item)
+            @if($status->order === $item->order)
+                @php($prev=true)
+            @endif
             <li class="relative md:flex-1 md:flex">
                 <!-- Completed Step -->
                 <span wire:click="change({{$item->id}})" class="cursor-pointer group flex items-center w-full">
@@ -51,9 +54,7 @@
                         </div>
                     @endif
 
-                    @if($status->order-1 === $item->order)
-                        @php($prev=true)
-                    @endif
+
                 </span>
             </span>
 
