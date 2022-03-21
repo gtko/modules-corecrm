@@ -51,7 +51,7 @@
                         </div>
                     @endif
 
-                    @if($status->order === $item->order)
+                    @if($status->order-1 === $item->order)
                         @php($prev=true)
                     @endif
                 </span>
