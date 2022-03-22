@@ -43,10 +43,17 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
     public function duplicate(DevisEntities $devis): DevisEntities
     {
+
+
         $newDevis = app(DevisEntities::class)::create([
             'dossier_id' => $devis->dossier->id,
             'commercial_id' => $devis->commercial->id,
-            'data' => $devis->data,
+            'data' => [
+                'trajets' => $devis->data['trajets'] ?? [],
+                'lines' => $devis->data['lines'] ?? [],
+                'nombre_bus' => $devis->data['nombre_bus'] ?? '',
+                'nombre_chauffeur' => $devis->data['nombre_chauffeur'] ?? '',
+            ],
             'tva_applicable' => $devis->tva_applicable,
         ]);
 
@@ -83,6 +90,8 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
     public function delete(DevisEntities $devis): bool
     {
         if (!$devis->proformat) {
+
+
             return $devis->delete();
         }
         return false;

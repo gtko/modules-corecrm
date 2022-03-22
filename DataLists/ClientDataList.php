@@ -47,6 +47,11 @@ class ClientDataList extends DataListType
         ];
     }
 
+    public function link($params = []): string
+    {
+        return route('clients.show', $params);
+    }
+
     public function getActions(): array
     {
        return [

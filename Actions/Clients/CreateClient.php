@@ -24,7 +24,11 @@ class CreateClient
         foreach ($request->email as $strEmail) {
             $dossiersByEmail = $repDossier->getByEmail($strEmail);
             foreach ($request->phone as $strPhone) {
-                $dossierByphone = $repDossier->getByPhone($strPhone);
+                if($strPhone) {
+                    $dossierByphone = $repDossier->getByPhone($strPhone);
+                }else{
+                    $dossierByphone = collect([]);
+                }
                 if ($dossiersByEmail->count() > 0 && $dossierByphone->count() > 0) {
                     if($dossiersByEmail->first()->clients_id === $dossierByphone->first()->clients_id) {
                         //on créer un nouveau dossier au client si aucun dossier n'est déja ouvert
