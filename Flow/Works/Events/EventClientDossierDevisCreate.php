@@ -81,17 +81,6 @@ class EventClientDossierDevisCreate extends WorkFlowEvent
         ];
     }
 
-    public function actions(): array
-    {
-        return [
-            ActionsChangeStatus::class,
-            ActionsAjouterTag::class,
-            ActionsSupprimerTag::class,
-            ActionsSendNotification::class,
-            ActionsAddNote::class,
-            ActionsAddCall::class
-        ];
-    }
 
     public function name(): string
     {

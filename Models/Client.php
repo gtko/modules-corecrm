@@ -27,9 +27,6 @@ class Client extends ClientEntity
     use HasFactory;
     use HasPersonne;
     use Notifiable;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
 
 
     protected $fillable = ['personne_id'];
