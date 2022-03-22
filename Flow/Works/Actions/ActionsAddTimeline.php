@@ -37,7 +37,7 @@ class ActionsAddTimeline extends WorkFlowAction
     public function sendTimeline(){
         $eventData = $this->event->getData();
         $datas = $this->resolveDatas();
-        (new FlowCRM())->add($eventData['dossier'],new ClientDossierAddTimeline($eventData['user'], $datas['titre'], $datas['message']));
+        (new FlowCRM())->add($eventData['dossier'],new ClientDossierAddTimeline($eventData['user'] ?? null, $datas['titre'], $datas['message']));
     }
 
     protected function prepareParams(): array

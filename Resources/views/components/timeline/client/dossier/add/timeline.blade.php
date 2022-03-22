@@ -1,6 +1,10 @@
 <x-corecrm::timeline-item>
     <x-slot name="image">
-        <img alt="" src="{{$flow->datas->getUser()->avatar_url}}"/>
+        @if($flow->datas->getUser())
+            <img alt="" src="{{$flow->datas->getUser()->avatar_url}}"/>
+        @else
+            @icon('lightningBolt', null, '')
+        @endif
     </x-slot>
     <div class="flex items-center">
         <div class="font-medium">

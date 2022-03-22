@@ -11,11 +11,11 @@ use Modules\BaseCore\Models\User;
 
 class ClientDossierAddTimeline extends Attributes
 {
-    protected UserEntity $user;
+    protected ?UserEntity $user;
     protected string $titre;
     protected string $message;
 
-    public function __construct(UserEntity $user, string $titre, string $message)
+    public function __construct(?UserEntity $user = null, string $titre, string $message)
     {
         parent::__construct();
         $this->user = $user;
@@ -25,7 +25,7 @@ class ClientDossierAddTimeline extends Attributes
 
     public static function instance(array $value): FlowAttributes
     {
-        $user = app(UserRepositoryContract::class)->fetchById($value['user_id'] ?? 1);
+        $user = app(UserRepositoryContract::class)->fetchById($value['user_id'] ?? 0);
         return app(ClientDossierAddTimeline::class, [
             'user' => $user,
             'titre' => $value['titre'] ?? '',
@@ -36,7 +36,7 @@ class ClientDossierAddTimeline extends Attributes
     public function toArray(): array
     {
        return [
-           'user_id' => $this->user_id ?? 1,
+           'user_id' => $this->user_id ?? null,
            'titre' => $this->titre,
            'message' => $this->message
        ];
@@ -52,7 +52,7 @@ class ClientDossierAddTimeline extends Attributes
         return $this->message;
     }
 
-    public function getUser():UserEntity
+    public function getUser():?UserEntity
     {
         return $this->user;
     }
