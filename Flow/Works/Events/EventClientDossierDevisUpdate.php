@@ -76,12 +76,4 @@ class EventClientDossierDevisUpdate extends WorkFlowEvent
                 ClientDossierDevisUpdate::class
             ];
     }
-
-    public function actions(): array
-    {
-        return [
-            ActionsChangeStatus::class,
-            ActionsAjouterTag::class
-        ];
-    }
 }

@@ -4,6 +4,12 @@ namespace Modules\CoreCRM\Flow\Works\Events;
 
 use Modules\CoreCRM\Flow\Attributes\Attributes;
 use Modules\CoreCRM\Flow\Attributes\ClientDossierCreate;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsAddNote;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsAddTimeline;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsAjouterTag;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsChangeStatus;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsSendNotification;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsSupprimerTag;
 use Modules\CoreCRM\Flow\Works\CategoriesEventEnum;
 use Modules\CoreCRM\Flow\Works\Variables\ClientVariable;
 use Modules\CoreCRM\Flow\Works\Variables\CommercialVariable;
@@ -40,13 +46,20 @@ class EventClientDossierCreate extends WorkFlowEvent
 
     public function actions():array
     {
-        return [];
+        return [
+            ActionsChangeStatus::class,
+            ActionsAjouterTag::class,
+            ActionsAddTimeline::class,
+            ActionsSupprimerTag::class,
+            ActionsAddNote::class,
+            ActionsSendNotification::class
+        ];
     }
 
     protected function prepareData(Attributes $flowAttribute): array
     {
         return [
-            'user' => $flowAttribute->getUser()
+            'user' => $flowAttribute->getUser(),
         ];
     }
 

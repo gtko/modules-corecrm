@@ -3,6 +3,13 @@
 namespace Modules\CoreCRM\Flow\Works\Events;
 
 use Modules\CoreCRM\Flow\Attributes\Attributes;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsAddCall;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsAddNote;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsAddTimeline;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsAjouterTag;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsChangeStatus;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsSendNotification;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsSupprimerTag;
 use Modules\CoreCRM\Flow\Works\Actions\WorkFlowAction;
 use Modules\CoreCRM\Flow\Works\CategoriesEventEnum;
 use Modules\CoreCRM\Flow\Works\Conditions\WorkFlowCondition;
@@ -18,7 +25,20 @@ abstract class WorkFlowEvent implements WorkFlowDescribe
 
     abstract protected function prepareData(Attributes $flowAttribute):array;
     abstract public function listen():array;
-    abstract public function actions():array;
+
+    public function actions(): array
+    {
+        return [
+            ActionsChangeStatus::class,
+            ActionsAjouterTag::class,
+            ActionsSupprimerTag::class,
+            ActionsSendNotification::class,
+            ActionsAddNote::class,
+            ActionsAddCall::class,
+            ActionsAddTimeline::class
+        ];
+    }
+
 
     public function category():string
     {
