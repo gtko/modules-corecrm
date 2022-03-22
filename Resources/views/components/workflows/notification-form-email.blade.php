@@ -27,9 +27,16 @@
 <label for="from" class="block font-bold mt-2 mb-1">Expéditeur</label>
 <input type="text" name="from" id="from"
        class="block w-full rounded border-gray-400 border-1 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
-       placeholder="expediteur@email.com"
+       placeholder="{{config('mail.from.address')}}"
        autocomplete="off"
        wire:model="{{$model}}.from"
+>
+<label for="from" class="block font-bold mt-2 mb-1">Nom de l'expéditeur</label>
+<input type="text" name="from_name" id="from"
+       class="block w-full rounded border-gray-400 border-1 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
+       placeholder="{{config('mail.from.name')}}"
+       autocomplete="off"
+       wire:model="{{$model}}.from_name"
 >
 <label for="description" class="block font-bold mt-2 mb-1">Contenu de l'email</label>
 <textarea rows="15" name="description" id="description"

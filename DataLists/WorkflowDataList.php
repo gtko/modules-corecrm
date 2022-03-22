@@ -71,6 +71,9 @@ class WorkflowDataList extends DataListType
 
     public function getRepository(array $parents = []): RepositoryFetchable
     {
-        return app(WorkflowRepositoryContract::class);
+        $rep = app(WorkflowRepositoryContract::class);
+        $rep->setQuery($rep->newQuery()->orderBy('name', 'asc'));
+
+        return $rep;
     }
 }
