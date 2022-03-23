@@ -16,6 +16,7 @@ use Modules\CoreCRM\Flow\Works\Variables\CommercialVariable;
 use Modules\CoreCRM\Flow\Works\Variables\DeviVariable;
 use Modules\CoreCRM\Flow\Works\Variables\DossierVariable;
 use Modules\CoreCRM\Flow\Works\Variables\UserVariable;
+use Modules\CrmAutoCar\Flow\Works\Variables\GestionnaireVariable;
 
 class EventClientDossierDevisUpdate extends WorkFlowEvent
 {
@@ -65,6 +66,7 @@ class EventClientDossierDevisUpdate extends WorkFlowEvent
             (new DeviVariable($this)),
             (new UserVariable($this)),
             (new CommercialVariable($this)),
+            (new GestionnaireVariable($this)),
             (new ClientVariable($this)),
         ];
     }

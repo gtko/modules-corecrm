@@ -25,6 +25,7 @@ use Modules\CoreCRM\Models\Flow;
 use Modules\CrmAutoCar\Flow\Works\Files\CguPdfFiles;
 use Modules\CrmAutoCar\Flow\Works\Files\DevisPdfFiles;
 use Modules\CrmAutoCar\Flow\Works\Files\ProformatPdfFiles;
+use Modules\CrmAutoCar\Flow\Works\Variables\GestionnaireVariable;
 
 class EventClientDossierDevisCreate extends WorkFlowEvent
 {
@@ -67,6 +68,7 @@ class EventClientDossierDevisCreate extends WorkFlowEvent
             (new DeviVariable($this)),
             (new UserVariable($this)),
             (new CommercialVariable($this)),
+            (new GestionnaireVariable($this)),
             (new ClientVariable($this)),
         ];
     }
