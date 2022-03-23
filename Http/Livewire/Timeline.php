@@ -11,6 +11,7 @@ class Timeline extends Component
 {
     public $dossier;
 
+
     protected $listeners =
         [
             'refreshTimeline' => '$refresh'

@@ -21,7 +21,7 @@ class TimelineResolve extends Component
      */
     public function render()
     {
-        return Cache::rememberForever('timeline_v2_flow_'.$this->flow->id.'_'.$this->flow->uptated_at.'_'.uniqid('test', true), function(){
+        return Cache::rememberForever('timeline_v3_flow_'.$this->flow->id.'_'.$this->flow->uptated_at.'_'.uniqid('test', true), function(){
 
             $nameComponent = Str::replace('Flow\Attributes', "View\Components\Timeline", $this->flow->datas->getKeyEvent());
             if(class_exists($nameComponent)) {
