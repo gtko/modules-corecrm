@@ -5,8 +5,8 @@
         <div class="report-timeline mt-5 relative" wire:poll.visible="">
             @foreach($flows as $label => $days)
                 <div class="intro-x text-gray-500 text-xs text-center my-4">{{$label}}</div>
-                @foreach($days as $flow)
-                    <x-corecrm::timeline-resolve :flow="$flow"/>
+                @foreach($days as $index => $flow)
+                    <x-corecrm::timeline-resolve :key="$index . '__'. $flow->id" :flow="$flow"/>
                 @endforeach
             @endforeach
         </div>
