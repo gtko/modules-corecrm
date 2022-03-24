@@ -18,7 +18,9 @@ class FournisseurRepository extends AbstractRepository implements FournisseurRep
 
     public function create(Personne $personne): Fournisseur
     {
-        $user = (new CreateNewTypeUsers())->createNewType($personne, 'fournisseur');
+        $user = (new CreateNewTypeUsers())->createNewType($personne, 'fournisseur', [
+            'enabled' => true,
+        ]);
 
         return Fournisseur::find($user->id);
     }
