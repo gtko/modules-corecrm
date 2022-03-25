@@ -40,6 +40,6 @@ class FournisseurRepository extends AbstractRepository implements FournisseurRep
 
     public function getAllList() : Collection
     {
-        return Fournisseur::all();
+        return $this->newQuery()->get();
     }
 }
