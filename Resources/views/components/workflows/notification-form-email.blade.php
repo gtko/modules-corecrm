@@ -54,10 +54,9 @@
     </div>
 </div>
 <div class="absolute bottom-0 inset-x-px" x-data="{
-    files : $wire.get('{{$model}}.files'),
+    files : @entangle($model.'.files'),
     add(object){
         this.files.push(object)
-        $wire.set('{{$model}}.files', this.files)
     },
     remove(id){
         this.files = this.files.filter((item) => {
