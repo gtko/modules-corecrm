@@ -31,9 +31,9 @@ class SendNotificationWorkFlowJob implements ShouldQueue
     {
         $maillable = $this->maillable();
 
-        $driver = $this->datas['driver'] ?? 'default';
+        $driver = strtolower($this->datas['driver'] ?? 'default');
         $driverService = app(DriversMailService::class);
-        $fromName = null;
+        $fromName = null;  
         if($driver !== 'default') {
             $from = $driverService->from($driver);
             $fromName = $driverService->fromName($driver);

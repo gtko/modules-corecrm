@@ -4,7 +4,7 @@
     </x-slot>
     <div class="flex items-center">
         <div class="font-medium">
-           Changement des abonnés sur le dossier :
+           Changement du gestionnaire sur le dossier :
             <div class="flex justify-start items-center space-x-2">
             @foreach($flow->datas->getFollowers() as $follower)
                 <div class="bg-gray-200 p-2">{{$follower->format_name}}</div>
