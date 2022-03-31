@@ -1,12 +1,12 @@
 <nav aria-label="Progress">
     <ol role="list"
-        class="border border-gray-300 bg-white rounded-md divide-y divide-gray-300 md:flex md:divide-y-0 overflow-x-scroll">
+        class="border border-gray-300 bg-white rounded-md divide-y divide-gray-300 flex divide-y-0 overflow-x-scroll">
         @php($prev = false)
         @foreach($pipeline->statuses->whereNotIn('type', [Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN, Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST]) as $index => $item)
             @if($status->order === $item->order)
                 @php($prev=true)
             @endif
-            <li class="relative md:flex-1 md:flex">
+            <li class="relative flex-1 flex">
                 <!-- Completed Step -->
                 <span wire:click="change({{$item->id}})" class="cursor-pointer group flex items-center w-full">
                 <span class="pr-4 pl-2 py-2 flex items-center text-sm font-medium"

@@ -319,12 +319,12 @@
     window.Mentionify = Mentionify;
 </script>
 <style>
-    .menu {
+    .content .menu {
         position: fixed;
         z-index: 9000;
     }
 
-    .menu-item.selected {
+    .content .menu-item.selected {
         background-color: #1d87cc;
         color: white;
     }
