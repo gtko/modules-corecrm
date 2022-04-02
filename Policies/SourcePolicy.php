@@ -3,6 +3,7 @@
 namespace Modules\CoreCRM\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\BaseCore\Contracts\Entities\UserEntity;
 use Modules\CoreCRM\Models\Source;
 use Modules\BaseCore\Models\User;
 

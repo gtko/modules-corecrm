@@ -47,7 +47,7 @@ class DossierPolicy
     public function viewAny(UserEntity $user)
     {
         return $user->hasPermissionTo('list dossiers');
-    } 
+    }
 
     public function viewAll(UserEntity $user)
     {
