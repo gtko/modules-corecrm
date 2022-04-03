@@ -64,7 +64,10 @@ class WorkFlowParseVariable
         //on traite un lien en boutton
         if(Str::contains($value, '://')) {
             $label = ($parameters[0] ?? false)?$parameters[0]:"Voir $namespace";
-            $component = <<<mark
+
+            if($label !== 'text') {
+
+                $component = <<<mark
                <table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;"><tbody><tr>
                 <td align="center" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;"><tbody><tr>
@@ -77,11 +80,14 @@ class WorkFlowParseVariable
                 </td>
                 </tr></tbody></table>
             mark;
-            return $component;
+                return $component;
+            }
         }
 
         //on ajoute un prefix
-        $value = ($parameters[0] ?? false)?$parameters[0] .' '.$value:$value;
+        if(isset($label) && $label !== 'text') {
+            $value = ($parameters[0] ?? false) ? $parameters[0] . ' ' . $value : $value;
+        }
 
         return $value;
     }

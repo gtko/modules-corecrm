@@ -5,6 +5,7 @@ namespace Modules\CoreCRM\Flow\Works\Events;
 use Modules\CoreCRM\Flow\Attributes\Attributes;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsAddCall;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsAddNote;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsAddNotif;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsAddTimeline;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsAjouterTag;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsChangeStatus;
@@ -35,7 +36,8 @@ abstract class WorkFlowEvent implements WorkFlowDescribe
             ActionsSendNotification::class,
             ActionsAddNote::class,
             ActionsAddCall::class,
-            ActionsAddTimeline::class
+            ActionsAddTimeline::class,
+            ActionsAddNotif::class
         ];
     }
 

@@ -39,6 +39,7 @@ class ClientVariable extends WorkFlowVariable
           'phone' => $client->phone,
           'nom et prénom' => $client->format_name,
           'adresse' => $client->full_address,
+          'lien' => route('clients.show', $client->id),
         ];
     }
 
@@ -50,7 +51,8 @@ class ClientVariable extends WorkFlowVariable
             'nom et prénom' => 'Nom et prénom',
             'email' => 'Email',
             'phone' => 'Numéro de téléphone',
-            'adresse' => 'Adresse postal'
+            'adresse' => 'Adresse postal',
+            'lien' => 'Lien de la fiche du CRM',
         ];
     }
 }
