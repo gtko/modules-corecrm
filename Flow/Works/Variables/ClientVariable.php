@@ -37,6 +37,7 @@ class ClientVariable extends WorkFlowVariable
           'salutation avec majuscule' => Str::ucfirst($salutation),
           'email' => $client->email,
           'phone' => $client->phone,
+          'avatar' => $client->avatar_url,
           'nom et prénom' => $client->format_name,
           'adresse' => $client->full_address,
           'lien' => route('clients.show', $client->id),
@@ -48,6 +49,7 @@ class ClientVariable extends WorkFlowVariable
         return [
             'salutation' => 'monsieur ou madame ou madame, monsieur',
             'salutation avec majuscule' => 'Monsieur ou Madame ou Madame, monsieur',
+            'avatar' => 'url de l\'avatar',
             'nom et prénom' => 'Nom et prénom',
             'email' => 'Email',
             'phone' => 'Numéro de téléphone',
