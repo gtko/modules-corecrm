@@ -52,7 +52,9 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         $dossier = Dossier::find($dossierModel->id);
         $dossier->associate($commercial);
 
-        app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user()));
+        if(Auth::check()) {
+            app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user(), 'Mise à jours du dossier'));
+        }
 
         return $dossier;
     }
@@ -101,33 +103,51 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
     public function changeCommercial(Dossier $dossier, Commercial $commercial): Dossier
     {
+        $commercialOrigin = $dossier->commercial;
         $dossier->commercial()->associate($commercial);
         $dossier->attribution = now();
         $dossier->save();
+
+        if(Auth::check()) {
+            app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user(), 'Changement du commercial de '.$commercialOrigin->format_name. ' vers ' . $commercial->format_name));
+        }
 
         return $dossier;
     }
 
     public function changeSource(Dossier $dossier, Source $source): Dossier
     {
+        $sourceOrigin = $dossier->source;
         $dossier->source()->associate($source);
         $dossier->save();
+
+        app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user(),'Changement de source '.$sourceOrigin->label. ' sur '. $source->label));
 
         return $dossier;
     }
 
     public function changeStatus(Dossier $dossier, Status $status): Dossier
     {
+        $statusOrigin = $dossier->status;
         $dossier->status()->associate($status);
         $dossier->save();
+
+        if(Auth::check()) {
+            app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user(), 'Changement de status de '.$statusOrigin->label.' vers ' . $status->label));
+        }
 
         return $dossier;
     }
 
     public function changeClient(Dossier $dossier, ClientEntity $client): Dossier
     {
+        $clientOrigin = $dossier->client;
         $dossier->client()->associate($client);
         $dossier->save();
+
+        if(Auth::check()) {
+            app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user(), 'Changement du client de '.$clientOrigin->format_name.' vers ' . $client->format_name));
+        }
 
         return $dossier;
     }
@@ -136,6 +156,10 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
     {
         $dossier->data = $data;
         $dossier->save();
+
+        if(Auth::check()) {
+            app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user(), 'Mise à jours des datas du dossier'));
+        }
 
         return $dossier;
     }

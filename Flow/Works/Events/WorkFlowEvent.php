@@ -9,6 +9,7 @@ use Modules\CoreCRM\Flow\Works\Actions\ActionsAddNotif;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsAddTimeline;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsAjouterTag;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsChangeStatus;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsDetachAllTag;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsSendNotification;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsSupprimerTag;
 use Modules\CoreCRM\Flow\Works\Actions\WorkFlowAction;
@@ -37,7 +38,8 @@ abstract class WorkFlowEvent implements WorkFlowDescribe
             ActionsAddNote::class,
             ActionsAddCall::class,
             ActionsAddTimeline::class,
-            ActionsAddNotif::class
+            ActionsAddNotif::class,
+            ActionsDetachAllTag::class
         ];
     }
 
@@ -49,7 +51,9 @@ abstract class WorkFlowEvent implements WorkFlowDescribe
 
     public function conditions():array
     {
-        return [];
+        return [
+
+        ];
     }
 
     public function variables():array
@@ -63,6 +67,7 @@ abstract class WorkFlowEvent implements WorkFlowDescribe
     }
 
     public function init(Flow $flow){
+        $flow->datas->setModel($flow);
         $this->flow = $flow;
         $this->data = $this->prepareData($flow->datas);
     }

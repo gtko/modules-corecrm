@@ -42,19 +42,7 @@ class EventClientDossierCreate extends WorkFlowEvent
     {
         return "Evenement déclencher a la création d'un dossier dans un client";
     }
-
-
-    public function actions():array
-    {
-        return [
-            ActionsChangeStatus::class,
-            ActionsAjouterTag::class,
-            ActionsAddTimeline::class,
-            ActionsSupprimerTag::class,
-            ActionsAddNote::class,
-            ActionsSendNotification::class
-        ];
-    }
+ 
 
     protected function prepareData(Attributes $flowAttribute): array
     {
