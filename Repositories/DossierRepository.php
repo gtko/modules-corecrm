@@ -231,7 +231,10 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
             })->count();
         }
 
-        $status = app(StatusRepositoryContract::class)->newQuery()->where('type', StatusTypeEnum::TYPE_NEW)->first();
+        $status = app(StatusRepositoryContract::class)
+            ->newQuery()
+            ->where('type', StatusTypeEnum::TYPE_NEW)
+            ->first();
 
         $count = $this->getDossiersByCommercialAndStatus($commercial, $status);
         if ($count == null) {
