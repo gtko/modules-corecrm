@@ -35,7 +35,7 @@ class ActionsAddNotif extends WorkFlowAction
     }
 
     public function resolveDatas(){
-        return (new WorkFlowParseVariable($this->event, $this->getValues()))->resolve();
+        return (new WorkFlowParseVariable($this->event, $this->getValues()))->desactiveConvertLinkToButton()->resolve();
     }
 
     public function sendNotification(){
