@@ -15,6 +15,8 @@ interface FlowAttributes
     public function toJson():string;
     public function toArray():array;
 
+
+
     /**
      * @return string Nommage de la clée de l'evenement 'devis.signed', 'dossier.create.devi' ...
      */

@@ -19,6 +19,10 @@ abstract class Attributes implements FlowAttributes
         $this->event = app(EventRepositoryContract::class)->createEvent($this->getKeyEvent());
     }
 
+    public function componentCacheable():bool{
+        return true;
+    }
+
     public function event(): Event
     {
        return $this->event;

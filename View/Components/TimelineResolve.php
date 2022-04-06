@@ -14,6 +14,16 @@ class TimelineResolve extends Component
       public Flow $flow
     ){}
 
+    public function resolve(){
+        $nameComponent = Str::replace('Flow\Attributes', "View\Components\Timeline", $this->flow->datas->getKeyEvent());
+        if(class_exists($nameComponent)) {
+            $component = (new $nameComponent($this->flow));
+            return $component->render()->with(['flow' => $this->flow])->toHtml();
+        }
+
+        return null;
+    }
+
     /**
      * Get the views / contents that represent the component.
      *
@@ -21,15 +31,12 @@ class TimelineResolve extends Component
      */
     public function render()
     {
-        return Cache::rememberForever('timeline_v5_flow_'.$this->flow->id.'_'.$this->flow->updated_at, function(){
+        if($this->flow->datas->componentCacheable()) {
+            return Cache::rememberForever('timeline_v5_flow_' . $this->flow->id . '_' . $this->flow->updated_at, function () {
+                return $this->resolve();
+            });
+        }
 
-            $nameComponent = Str::replace('Flow\Attributes', "View\Components\Timeline", $this->flow->datas->getKeyEvent());
-            if(class_exists($nameComponent)) {
-                $component = (new $nameComponent($this->flow));
-                return $component->render()->with(['flow' => $this->flow])->toHtml();
-            }
-
-            return null;
-        });
+        return $this->resolve();
     }
 }
