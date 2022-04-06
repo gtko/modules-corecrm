@@ -20,6 +20,13 @@ class WorkflowDataList extends DataListType
                 'lass' => 'w-36'
             ],
 
+            'event' => [
+                'label' => 'Evenement',
+                'format' => function($item) {
+                   return $item->events[0]['class'];
+                }
+            ],
+
             "active" => [
                 'label' => 'actif',
                 'component' => [
@@ -27,6 +34,7 @@ class WorkflowDataList extends DataListType
                     'attribute' => function($item){
                         return [
                             'workflow' => $item,
+                            'key' => $item->id
                         ];
                     }
                 ]
