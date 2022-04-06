@@ -10,6 +10,7 @@ use Modules\CoreCRM\Models\Dossier;
 class Timeline extends Component
 {
     public $dossier;
+    public $inverse = false;
 
 
     protected $listeners =
@@ -17,9 +18,10 @@ class Timeline extends Component
             'refreshTimeline' => '$refresh'
         ];
 
-    public function mount(Dossier $dossier): void
+    public function mount(Dossier $dossier, $inverse = false): void
     {
         $this->dossier = $dossier;
+        $this->inverse = $inverse;
     }
 
     /**
@@ -30,11 +32,16 @@ class Timeline extends Component
     public function render(FlowContract $flowService): View|string
     {
         $flows = $flowService->list($this->dossier);
-
         $flows = $flows->map(function ($item) {
             $item->day = $item->created_at->format('d/m/Y');
             return $item;
-        })->groupBy('day');
+        });
+
+        if($this->inverse) {
+            $flows = $flows->reverse();
+        }
+
+        $flows = $flows->groupBy('day');
 
         return view('corecrm::livewire.timeline', [
             'flows' => $flows
