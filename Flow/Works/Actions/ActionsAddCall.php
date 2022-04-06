@@ -19,7 +19,7 @@ class ActionsAddCall extends WorkFlowAction
     {
         $data = $this->event->getData();
         $dossier = $data['dossier'];
-        $commercial = $data['commercial'];
+        $commercial = $data['user'];
 
         $rep = app(AppelRepositoryContract::class);
         $call = $rep->createAppel(
