@@ -226,9 +226,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
     public function countDossierBlancByCommercial(Commercial $commercial): int
     {
         if($commercial->hasRole('super-admin')) {
-            return Dossier::whereHas('status', function($query){
-                $query->where('type', StatusTypeEnum::TYPE_NEW);
-            })->count();
+            return 0;
         }
 
         $status = app(StatusRepositoryContract::class)
