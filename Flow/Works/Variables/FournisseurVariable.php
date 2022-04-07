@@ -39,10 +39,11 @@ class FournisseurVariable extends WorkFlowVariable
         $this->data = $this->event->getData()['devis']->data;
         $this->trajet = $this->data['trajets'][0] ?? [];
         if ($this->trajet['commentaire'] ?? false){
+            $commentaire = nl2br($this->trajet['commentaire']);
             return <<<mark
 <div>
    <h2>Commentaire</h2>
-   <p style="color:#4d4d4d;">{$this->trajet['commentaire']}</p>
+   <p style="color:#4d4d4d;">{$commentaire}</p>
 </div>
 mark;
         }
