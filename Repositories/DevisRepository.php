@@ -100,7 +100,9 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
     public function searchQuery(Builder $query, string $value, mixed $parent = null): Builder
     {
-        $id = (int)$value - app(DevisEntities::class)::getNumStartRef();
+        $devis = app(DevisEntities::class);
+        $devisRef = str_replace($devis::getPrefixRef(), '', $value);
+        $id = (int)$devisRef - $devis::getNumStartRef();
         $query->where('id', $id)->orWhere('title', $value);
 
         if (!HasInterface::has(DossierRepositoryContract::class, $parent)) {

@@ -125,6 +125,10 @@
 
             </x-basecore::partials.card>
 
+            @if(in_array('task_dossier', config('corecrm.features')))
+                <livewire:corecrm::dossier-tasks :dossier="$dossier"/>
+            @endif
+
             @if(in_array('note_global', config('corecrm.features')))
                 <livewire:corecrm::dossier-note-global :dossier="$dossier"/>
             @endif

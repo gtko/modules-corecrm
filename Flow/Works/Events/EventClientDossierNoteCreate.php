@@ -38,7 +38,8 @@ class EventClientDossierNoteCreate extends WorkFlowEvent
     {
         return [
             'user' => $flowAttribute->getUser(),
-            'note' => $flowAttribute->getNote()
+            'note' => $flowAttribute->getNote(),
+            'dossier' => $this->flow->flowable,
         ];
     }
 
