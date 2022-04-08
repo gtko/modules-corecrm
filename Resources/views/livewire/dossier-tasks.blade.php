@@ -27,7 +27,14 @@
             </div>
             <div class="p-5 flex flex-col sm:flex-row items-center text-center sm:text-left text-slate-500">
                 <div></div>
-                <div class="sm:ml-auto mt-2 sm:mt-0">Dernière tâche ajoutée {{$tasks->last()->created_at->diffForHumans()}}</div>
+                <div class="sm:ml-auto mt-2 sm:mt-0">
+                    @if($tasks->count() > 0)
+                        Dernière tâche ajoutée
+                        {{$tasks->last()->created_at->diffForHumans()}}
+                    @else
+                        Aucune tâche pour le moment
+                    @endif
+                </div>
             </div>
         </div>
 
