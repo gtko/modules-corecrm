@@ -12,6 +12,10 @@ class DossierTasks extends Component
 
     public $dossier;
 
+    protected $listeners = [
+        'taskChecked' => '$refresh',
+    ];
+
     public function mount(Dossier $dossier){
         $this->dossier = $dossier;
     }
@@ -26,7 +30,9 @@ class DossierTasks extends Component
     {
 
         $tasks = app(TaskRepositoryContract::class)
-            ->newQuery()->where('url', route('dossiers.show', [$this->dossier->client, $this->dossier]))
+            ->newQuery()
+            ->where('url', route('dossiers.show', [$this->dossier->client, $this->dossier]))
+            ->where('checked', false)
             ->get();
 
         return view('corecrm::livewire.dossier-tasks', compact('tasks'));

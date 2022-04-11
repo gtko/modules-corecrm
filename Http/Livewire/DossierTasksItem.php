@@ -23,6 +23,16 @@ class DossierTasksItem extends Component
     public function checked(){
         $this->task->checked = true;
         $this->task->save();
+        $this->emit('taskChecked');
+    }
+
+    public function appel($state){
+        $data = $this->task->data;
+        $data['appel'] = $state;
+        $this->task->data = $data;
+        $this->task->checked = true;
+        $this->task->save();
+        $this->emit('taskChecked');
     }
 
     public function render()

@@ -7,7 +7,7 @@
         </h2>
     </div>
 
-    <div wire:poll.visible>
+    <div>
         <div class="intro-y inbox">
             <div class="p-5 flex flex-col-reverse sm:flex-row text-slate-500 border-b border-slate-200/60">
                 <div class="flex items-center mt-3 sm:mt-0 border-t sm:border-0 border-slate-200/60 pt-5 sm:pt-0 mt-5 sm:mt-0 -mx-5 sm:mx-0 px-5 sm:px-0">
@@ -35,8 +35,6 @@
                     @if($tasks->count() > 0)
                         Dernière tâche ajoutée
                         {{$tasks->last()->created_at->diffForHumans()}}
-                    @else
-                        Aucune tâche pour le moment
                     @endif
                 </div>
             </div>
