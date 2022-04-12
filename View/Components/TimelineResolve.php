@@ -31,6 +31,8 @@ class TimelineResolve extends Component
      */
     public function render()
     {
+        return $this->resolve();
+
         try {
             if ($this->flow->datas->componentCacheable()) {
                 return Cache::rememberForever('timeline_v5_flow_' . $this->flow->id . '_' . $this->flow->updated_at, function () {

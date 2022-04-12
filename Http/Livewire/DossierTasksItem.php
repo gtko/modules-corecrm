@@ -21,17 +21,39 @@ class DossierTasksItem extends Component
     }
 
     public function checked(){
-        $this->task->checked = true;
-        $this->task->save();
+        if($this->task->data['uuid'] ?? false){
+            $tasks  = Task::where('data->uuid', $this->task->data['uuid'])->get();
+            foreach($tasks as $task){
+                $task->checked = true;
+                $task->save();
+            }
+        }else {
+            $this->task->checked = true;
+            $this->task->save();
+        }
         $this->emit('taskChecked');
+
     }
 
     public function appel($state){
-        $data = $this->task->data;
-        $data['appel'] = $state;
-        $this->task->data = $data;
-        $this->task->checked = true;
-        $this->task->save();
+
+        if($this->task->data['uuid'] ?? false){
+            $tasks  = Task::where('data->uuid', $this->task->data['uuid'])->get();
+            foreach($tasks as $task){
+                $data = $task->data;
+                $data['appel'] = $state;
+                $task->data = $data;
+                $task->checked = true;
+                $task->save();
+            }
+        }else {
+            $data = $this->task->data;
+            $data['appel'] = $state;
+            $this->task->data = $data;
+            $this->task->checked = true;
+            $this->task->save();
+        }
+
         $this->emit('taskChecked');
     }
 

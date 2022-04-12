@@ -2,11 +2,11 @@
     <div class="flex px-5 py-3">
         <div class="w-56 flex-none flex items-center mr-5">
 
-            @if($task->data['type'] === 'normal')
+            @if(($task->data['type'] ?? 'normal') === 'normal')
             <input class="form-check-input flex-none" type="checkbox" wire:click="checked()">
             @endif
 
-            @if($task->data['type'] === 'appel')
+            @if(($task->data['type'] ?? '') === 'appel')
                 <div class="flex justify-start items-center space-x-2">
                     <span class="cursor-pointer whitespace-nowrap btn-sm rounded text-black hover:text-white border border-red-600 hover:bg-red-600"
                           wire:click="appel(false)">Non-joint</span>
