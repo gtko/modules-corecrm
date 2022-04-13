@@ -18,7 +18,7 @@
                                         value="{{ $search ?? '' }}"
                                         placeholder="{{ __('basecore::crud.common.search') }}"
                                         autocomplete="off"
-                                    ></x-basecore::inputs.text>
+                                    />
 
                                     <div class="ml-1">
                                         <button
@@ -79,9 +79,7 @@
                                     '-' }}
                                 </td>
                                 <td class="px-4 py-3 text-right">
-                                    <pre>
-{{ json_encode($devi->data) ?? '-' }}</pre
-                                    >
+                                    <pre>{{ json_encode($devi->data) ?? '-' }}</pre>
                                 </td>
                                 <td class="px-4 py-3 text-left">
                                     {{ $devi->tva_applicable ?? '-' }}
