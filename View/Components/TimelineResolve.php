@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
 use Modules\CoreCRM\Models\Flow;
+use Modules\CrmAutoCar\Services\FilterBureau;
 
 class TimelineResolve extends Component
 {
@@ -31,12 +32,17 @@ class TimelineResolve extends Component
      */
     public function render()
     {
+        app(FilterBureau::class)->desactivateFilter();
+
             if ($this->flow->datas->componentCacheable()) {
-                return Cache::rememberForever('timeline_v5_flow_' . $this->flow->id . '_' . $this->flow->updated_at, function () {
+                $view =  Cache::rememberForever('timeline_v5_flow_' . $this->flow->id . '_' . $this->flow->updated_at, function () {
                     return $this->resolve();
                 });
+            }else{
+                $view = $this->resolve();
             }
+        app(FilterBureau::class)->activateFilter();
 
-            return $this->resolve();
+        return $view;
     }
 }
