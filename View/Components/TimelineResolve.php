@@ -35,7 +35,7 @@ class TimelineResolve extends Component
         app(FilterBureau::class)->desactivateFilter();
 
             if ($this->flow->datas->componentCacheable()) {
-                $view =  Cache::rememberForever('timeline_v5_flow_' . $this->flow->id . '_' . $this->flow->updated_at, function () {
+                $view =  Cache::rememberForever('timeline_v7_flow_' . $this->flow->id . '_' . $this->flow->updated_at, function () {
                     return $this->resolve();
                 });
             }else{
