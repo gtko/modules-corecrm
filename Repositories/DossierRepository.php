@@ -167,30 +167,47 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
     public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection|null
     {
 
-        $collection = Dossier::where('commercial_id', $commercial->id)->where('status_id', $status->id)->get();
+        $collection = $this->newQuery()->where('commercial_id', $commercial->id)->where('status_id', $status->id)->get();
 
         return $collection->groupBy('client_id')->first();
     }
 
     public function getDossierNotAttribute(): Collection
     {
-        return Dossier::where('commercial_id', '1')->get();
+        return $this->getQueryDossierNotAttribute()->get();
+    }
+
+    public function getQueryDossierNotAttribute(): Builder
+    {
+        return $this->newQuery()->where('commercial_id', '1');
     }
 
     public function getDossierAttribute(): Collection
     {
-        return Dossier::where('commercial_id', '!=', '1')->whereDate('created_at', '>', now()->subDays(7))->get();
+        return $this->getQueryDossierAttribute()->get();
+
+    }
+
+    public function getQueryDossierAttribute(): Builder
+    {
+        return $this->newQuery()->where('commercial_id', '!=', '1')
+            ->whereDate('created_at', '>', now()->subDays(7));
 
     }
 
     public function getDossierTrashed(): Collection
     {
-        return Dossier::onlyTrashed()->get();
+        return $this->getQueryDossierTrashed()->get();
+    }
+
+    public function getQueryDossierTrashed(): Builder
+    {
+        return $this->newQuery()->onlyTrashed();
     }
 
     public function getSource(): Collection
     {
-        return Dossier::all()->groupBy('source');
+        return $this->newQuery()->get()->groupBy('source');
     }
 
     public function getByEmail(string $email): Collection
