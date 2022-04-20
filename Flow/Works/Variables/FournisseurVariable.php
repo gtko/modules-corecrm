@@ -68,17 +68,19 @@ mark;
             if ($this->trajet['retour_point_depart']) {
                 if($this->trajet['retour_date_depart'] ?? false) {
                     $retour_date = \Carbon\Carbon::parse($this->trajet['retour_date_depart']);
-                    $format = $retour_date->format('m/d/Y');
+                    $format = $retour_date->format('d/m/Y');
+                    $format_time = $retour_date->format('H:i');
                 }else{
                     $retour_date = "N/A";
                     $format = $retour_date;
+                    $format_time = 'N/A';
                 }
                 $detail .= <<<mark
                 <div>
                    <h2>Retour</h2>
                    Retour le {$format}<br>
                    Départ de  <strong>{$this->trajet['retour_point_depart']}</strong> vers {$this->trajet['retour_point_arriver']}<br>
-                   Heure de Départ : {$date->format('H:i')} <br>
+                   Heure de Départ : {$format_time} <br>
                    Nombre de passager : {$this->trajet['retour_pax']}<br><br>
                 </div>
             mark;
