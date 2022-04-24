@@ -19,6 +19,11 @@ class ClientDossierNoteCreate extends Attributes
         parent::__construct();
     }
 
+    public function getType(): string
+    {
+        return static::TYPE_NOTE;
+    }
+
     public static function instance(array $value): FlowAttributes
     {
         $user = app(UserEntity::class)::find($value['user_id']);

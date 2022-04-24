@@ -2,6 +2,20 @@
         <div class="intro-x flex items-center h-10">
             <h2 class="text-lg font-medium truncate mr-5">Activitées</h2>
         </div>
+
+        <div>
+
+            <select wire:model="filter">
+                <option value="all">Tous</option>
+                <option value="note">Notes</option>
+                <option value="task">Tâches</option>
+                <option value="call">Appel</option>
+                <option value="email">Emails</option>
+                <option value="event">Activité</option>
+            </select>
+
+        </div>
+
         <div class="report-timeline mt-5 relative" wire:poll.visible="">
             @foreach($flows as $label => $days)
                 <div class="intro-x text-gray-500 text-xs text-center my-4">{{$label}}</div>

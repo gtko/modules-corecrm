@@ -11,7 +11,7 @@ class Timeline extends Component
 {
     public $dossier;
     public $inverse = false;
-
+    public $filter = 'all';
 
     protected $listeners =
         [
@@ -32,7 +32,13 @@ class Timeline extends Component
     public function render(FlowContract $flowService): View|string
     {
         $flows = $flowService->list($this->dossier);
-        $flows = $flows->map(function ($item) {
+
+
+        $flows = $flows
+            ->filter(function ($flow) {
+                return $this->filter === 'all' || $flow->datas->getType() === $this->filter;
+            })
+            ->map(function ($item) {
             $item->day = $item->created_at->format('d/m/Y');
             return $item;
         });

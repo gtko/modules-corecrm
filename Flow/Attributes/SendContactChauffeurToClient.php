@@ -26,6 +26,11 @@ class SendContactChauffeurToClient extends Attributes
         $this->fournisseur = $fournisseur;
     }
 
+    public function getType(): string
+    {
+        return static::TYPE_EMAIL;
+    }
+
     public static function instance(array $value): FlowAttributes
     {
         $user = app(UserEntity::class)::find($value['user_id']);

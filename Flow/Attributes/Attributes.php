@@ -15,6 +15,20 @@ abstract class Attributes implements FlowAttributes
     protected ?Model $model;
     protected Event $event;
 
+    const TYPE_TASK = 'task';
+    const TYPE_EMAIL = 'email';
+    const TYPE_PHONE = 'phone';
+    const TYPE_NOTE = 'note';
+    const TYPE_CALL = 'call';
+    const TYPE_EVENT = 'event';
+
+
+    public function getType(): string
+    {
+        return static::TYPE_EVENT;
+    }
+
+
     public function __construct(){
         $this->event = app(EventRepositoryContract::class)->createEvent($this->getKeyEvent());
     }
