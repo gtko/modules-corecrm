@@ -9,7 +9,7 @@ use Modules\CoreCRM\Flow\Works\Params\ParamsTag;
 abstract class WorkFlowAction implements WorkFlowDescribe
 {
     public WorkFlowEvent $event;
-    public array $params;
+    public array $params = [];
 
     public function __construct(WorkFlowEvent $event){
         $this->event = $event;
