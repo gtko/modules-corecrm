@@ -28,7 +28,7 @@ class FournisseurVariable extends WorkFlowVariable
             'full name' => $fournisseur->format_name,
             'email' => $fournisseur->email,
             'phone' => $fournisseur->phone,
-            'commentaire' => '',
+            'commentaire' => $this->commentaireHtml(),
             'details' => $this->detailHtml(),
         ];
     }
@@ -119,7 +119,7 @@ mark;
             'email' => 'Email du fournisseur',
             'phone' => 'Numéro de téléphone du fournisseur',
             'détails' => 'Détails du trajet',
-            'commentaire' => '',
+            'commentaire' => 'Commentaire du devis',
 
         ];
     }

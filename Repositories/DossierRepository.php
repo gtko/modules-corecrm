@@ -73,7 +73,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
     public function searchQuery(Builder $query, string $value, mixed $parent = null): Builder
     {
         $ref = (int)$value - Dossier::getNumStartRef();
-        $query = $query->where('id', $ref);
+        $query = $query->where('dossiers.id', $ref);
 
         $query->orWhereHas('status', function ($query) use ($value) {
             $query->where('label', 'LIKE', "%$value%");
