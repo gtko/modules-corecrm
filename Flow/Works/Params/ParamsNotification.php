@@ -17,6 +17,7 @@ class ParamsNotification extends WorkFlowParams
 
     public function getValue()
     {
+        dd($this->value);
         return $this->value;
     }
 

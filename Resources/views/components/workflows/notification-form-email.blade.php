@@ -53,15 +53,17 @@
         </div>
     </div>
 </div>
-<div class="absolute bottom-0 inset-x-px" x-data="{
-    files : @entangle($model.'.files'),
+<div class="absolute bottom-0 inset-x-px"  wire:model="{{$model}}.files" x-data="{
+    files : $wire.get('{{$model}}.files'),
     add(object){
         this.files.push(object)
+        $dispatch('input', this.files)
     },
     remove(id){
         this.files = this.files.filter((item) => {
             return item.class !== id
         });
+        $dispatch('input', this.files)
     },
     notAdded(id){
         if(!this.files) this.files = []
@@ -83,21 +85,23 @@
     </div>
     <div class="border-t border-gray-200 px-2 py-2 flex justify-between items-center space-x-3 sm:px-3">
         <div class="flex">
-            <span type="button" class="-ml-2 -my-2 rounded-full px-3 py-2 inline-flex items-center text-left text-gray-400 group">
-                <!-- Heroicon name: solid/paper-clip -->
-                <svg class="-ml-1 h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd" />
-                </svg>
-                <span class="text-sm text-gray-500 italic">Attacher un fichier</span>
-            </span>
-            @foreach($instance->event->files() as $index => $file)
-                <span class="hover:bg-blue-200 hover:text-blue-800 cursor-pointer inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800 mr-1"
-                      x-on:click="add({'name' : '{{$file->name()}}', 'class' : '{{base64_encode($file::class)}}' })"
-                      x-show="notAdded('{{base64_encode($file::class)}}')"
-                >
-                    {{$file->name()}}
-                </span>
-            @endforeach
+            <x-buk-dropdown class="relative inline-block text-left">
+                <x-slot name="trigger">
+                    <span class="cursor-pointer inline-flex justify-center items-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+                        <x-heroicon-o-link class="h-4 w-4 mr-2"/> Attacher un fichier
+                    </span>
+                </x-slot>
+                <div class="origin-bottom-left bottom-0 mb-12 absolute left-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                @foreach($instance->event->files() as $index => $file)
+                    <span class="cursor-pointer text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
+                          x-on:click="add({'name' : '{{$file->name()}}', 'class' : '{{base64_encode($file::class)}}' })"
+                          x-show="notAdded('{{base64_encode($file::class)}}')"
+                    >
+                        {{$file->name()}}
+                    </span>
+                @endforeach
+                </div>
+            </x-buk-dropdown>
         </div>
         <div class="flex-shrink-0">
             {{ $slot }}
