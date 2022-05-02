@@ -164,6 +164,11 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         return $dossier;
     }
 
+    public function getDossiersByCommercial(Commercial $commercial): Builder
+    {
+        return $this->newQuery()->where('commercial_id', $commercial->id);
+    }
+
     public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection|null
     {
 
