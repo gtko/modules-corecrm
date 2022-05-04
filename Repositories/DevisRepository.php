@@ -149,9 +149,16 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
     }
 
-    public function validateFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $validate = true,)
+    public function validateFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $validate = true)
     {
-        $devis->fournisseurs()->updateExistingPivot($fournisseur, ['validate' => $validate]);
+        $devis->fournisseurs()->updateExistingPivot($fournisseur, ['validate' => $validate, 'refused' => !$validate]);
+
+        return $devis;
+    }
+
+    public function refusedFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $refused = true): DevisEntities
+    {
+        $devis->fournisseurs()->updateExistingPivot($fournisseur, ['validate' => !$refused, 'refused' => $refused]);
 
         return $devis;
     }
@@ -185,4 +192,6 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
         return $devis;
     }
+
+
 }
