@@ -16,7 +16,7 @@
 
         </div>
 
-        <div class="report-timeline mt-5 relative" wire:poll.visible="">
+        <div class="report-timeline mt-5 relative" @if($polling) wire:poll.5s.visible="" @endif>
             @foreach($flows as $label => $days)
                 <div class="intro-x text-gray-500 text-xs text-center my-4">{{$label}}</div>
                 @foreach($days as $index => $flow)

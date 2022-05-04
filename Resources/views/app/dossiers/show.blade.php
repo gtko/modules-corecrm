@@ -152,7 +152,7 @@
                 <livewire:corecrm::dossier-note-global :dossier="$dossier"/>
             @endif
 
-            <livewire:corecrm::timeline :dossier="$dossier"/>
+            <livewire:corecrm::timeline :dossier="$dossier" :polling="true"/>
 
         </x-basecore::layout.panel-sidebar>
     </x-basecore::nav.layout>

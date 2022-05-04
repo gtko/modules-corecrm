@@ -12,16 +12,18 @@ class Timeline extends Component
     public $dossier;
     public $inverse = false;
     public $filter = 'all';
+    public $polling = false;
 
     protected $listeners =
         [
             'refreshTimeline' => '$refresh'
         ];
 
-    public function mount(Dossier $dossier, $inverse = false): void
+    public function mount(Dossier $dossier, $inverse = false, $polling = false): void
     {
         $this->dossier = $dossier;
         $this->inverse = $inverse;
+        $this->polling = $polling;
     }
 
     /**
