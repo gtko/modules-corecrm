@@ -34,13 +34,17 @@ class TimelineResolve extends Component
     {
         app(FilterBureau::class)->desactivateFilter();
 
+        try {
             if ($this->flow->datas->componentCacheable()) {
-                $view =  Cache::rememberForever('timeline_v7_flow_' . $this->flow->id . '_' . $this->flow->updated_at, function () {
+                $view = Cache::rememberForever('timeline_v7_flow_' . $this->flow->id . '_' . $this->flow->updated_at, function () {
                     return $this->resolve();
                 });
-            }else{
+            } else {
                 $view = $this->resolve();
             }
+        } catch (\Exception $e) {
+            $view = view('corecrm::components.timeline-error', ['flow' => $this->flow]);
+        }
         app(FilterBureau::class)->activateFilter();
 
         return $view;
