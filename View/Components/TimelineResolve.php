@@ -16,10 +16,14 @@ class TimelineResolve extends Component
     ){}
 
     public function resolve(){
-        $nameComponent = Str::replace('Flow\Attributes', "View\Components\Timeline", $this->flow->datas->getKeyEvent());
-        if(class_exists($nameComponent)) {
-            $component = (new $nameComponent($this->flow));
-            return $component->render()->with(['flow' => $this->flow])->toHtml();
+        try {
+            $nameComponent = Str::replace('Flow\Attributes', "View\Components\Timeline", $this->flow->datas->getKeyEvent());
+            if (class_exists($nameComponent)) {
+                $component = (new $nameComponent($this->flow));
+                return $component->render()->with(['flow' => $this->flow])->toHtml();
+            }
+        } catch (\Exception $e) {
+            return view('corecrm::components.timeline-error');
         }
 
         return null;

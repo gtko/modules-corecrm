@@ -20,7 +20,11 @@
             @foreach($flows as $label => $days)
                 <div class="intro-x text-gray-500 text-xs text-center my-4">{{$label}}</div>
                 @foreach($days as $index => $flow)
-                    <x-corecrm::timeline-resolve :key="$index . '__'. $flow->id" :flow="$flow"/>
+                    @if($flow ?? false)
+                        <x-corecrm::timeline-resolve :key="$index . '__'. $flow->id" :flow="$flow"/>
+                    @else
+                        <span class="text-danger-700">Erreur</span>
+                    @endif
                 @endforeach
             @endforeach
         </div>
