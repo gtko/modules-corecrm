@@ -163,11 +163,16 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
     public function sendDemandeFournisseur(DevisEntities $devis, Fournisseur $fournisseur, Carbon $mail_sended = null, bool $validate = false): DevisEntities
     {
-        $devis->fournisseurs()->detach($fournisseur);
-        $devis->fournisseurs()->attach($fournisseur, ['validate' => $validate, 'mail_sended' => $mail_sended]);
+        $demandeFournisseur = new DemandeFournisseur();
+        $demandeFournisseur->fournisseur()->associate($fournisseur);
+        $demandeFournisseur->devis()->associate($devis);
+        $demandeFournisseur->mail_sended = $mail_sended;
+        $demandeFournisseur->validate = $validate;
+        $demandeFournisseur->save();
 
         return $devis;
     }
+
 
     public function savePriceFournisseur(DevisEntities $devis, Fournisseur $fournisseur, float $price): DevisEntities
     {
@@ -190,6 +195,5 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
         return $devis;
     }
-
 
 }

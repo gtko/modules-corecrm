@@ -42,7 +42,7 @@ interface DevisRepositoryContract extends SearchableRepository, RepositoryFetcha
 
     public function savePriceFournisseur(DevisEntities $devis, Fournisseur $fournisseur, float $price): DevisEntities;
 
-    public function validateFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $validate = true,);
+    public function validateFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $validate = true);
 
     public function refusedFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $refused = true);
 
