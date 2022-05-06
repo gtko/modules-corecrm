@@ -90,8 +90,6 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
     public function delete(DevisEntities $devis): bool
     {
         if (!$devis->proformat) {
-
-
             return $devis->delete();
         }
         return false;
