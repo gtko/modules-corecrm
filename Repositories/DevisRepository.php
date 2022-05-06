@@ -120,7 +120,7 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
     public function getDevisByDossier(Dossier $dossier, int $paginate = 15, string $order = 'DESC'): LengthAwarePaginator
     {
-        return app(DevisEntities::class)::whereHas('dossier', function ($query) use ($dossier) {
+        return $this->newQuery()->whereHas('dossier', function ($query) use ($dossier) {
             $query->where('id', $dossier->id);
         })
             ->orderBy('created_at', $order)
