@@ -101,6 +101,10 @@ class MiddlewareWorkFlowEmail extends Component
 
         $event = $events->first();
 
+        if($event === null){
+            dd("Le worflow n'existe pas !", $this->observableEvent[0][0]);
+        }
+
 
         $action = collect($event['workflow']->actions)->where('class', ActionsSendNotification::class)->first();
         if(empty($this->actionData)){
