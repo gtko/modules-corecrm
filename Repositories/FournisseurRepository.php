@@ -16,7 +16,7 @@ use Modules\BaseCore\Models\Personne;
 class FournisseurRepository extends AbstractRepository implements FournisseurRepositoryContract
 {
 
-    public function create(Personne $personne, $data = null): Fournisseur
+    public function create(Personne $personne, $data = []): Fournisseur
     {
         $user = (new CreateNewTypeUsers())->createNewType($personne, 'fournisseur', $data);
 
