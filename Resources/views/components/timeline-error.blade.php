@@ -4,14 +4,7 @@
     </x-slot>
     <div class="flex items-center">
         <div class="font-medium">
-            @if($flow ?? false)
-            Erreur dans la timeline pour le flow {{$flow->name}}
-            @else
-                Le flow n'existe plus !
-            @endif
+            Erreur dans la timeline
         </div>
-        @if($flow ?? false)
-            <div class="text-xs text-gray-500 ml-auto">{{$flow->created_at->format('H:i')}}</div>
-        @endif
     </div>
 </x-corecrm::timeline-item>
