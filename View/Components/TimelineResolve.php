@@ -20,7 +20,7 @@ class TimelineResolve extends Component
             $nameComponent = Str::replace('Flow\Attributes', "View\Components\Timeline", $this->flow->datas->getKeyEvent());
             if (class_exists($nameComponent)) {
                 $component = (new $nameComponent($this->flow));
-                return $component->render()->with(['flow' => $this->flow])->toHtml();
+                return $component->render()->with(['flow' => $this->flow]);
             }
         } catch (\Exception $e) {
             return view('corecrm::components.timeline-error');
@@ -39,13 +39,13 @@ class TimelineResolve extends Component
         app(FilterBureau::class)->desactivateFilter();
 
         try {
-            if ($this->flow->datas->componentCacheable()) {
-                $view = Cache::rememberForever('timeline_v7_flow_' . $this->flow->id . '_' . $this->flow->updated_at, function () {
-                    return $this->resolve();
-                });
-            } else {
+//            if ($this->flow->datas->componentCacheable()) {
+//                $view = Cache::rememberForever('timeline_v7_flow_' . $this->flow->id . '_' . $this->flow->updated_at, function () {
+//                    return $this->resolve();
+//                });
+//            } else {
                 $view = $this->resolve();
-            }
+//            }
         } catch (\Exception $e) {
             $view = view('corecrm::components.timeline-error', ['flow' => $this->flow]);
         }
