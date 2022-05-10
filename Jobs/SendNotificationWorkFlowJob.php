@@ -34,6 +34,7 @@ class SendNotificationWorkFlowJob implements ShouldQueue
         $driver = strtolower($this->datas['driver'] ?? 'default');
         $driverService = app(DriversMailService::class);
         $fromName = null;
+
         if($driver !== 'default') {
             $from = $driverService->from($driver);
             $fromName = $driverService->fromName($driver);
@@ -44,11 +45,21 @@ class SendNotificationWorkFlowJob implements ShouldQueue
 
         $maillable->from($from, $fromName);
 
+
         Log::info('SendNotificationWorkFlowJob: '.$this->event->name() . ' - ' . $from . ' - ' . $fromName);
 
         $mailer = Mail::mailer($driverService->mailer($driver));
-        $mailer->to(trim($this->datas['cc']))
-            ->send(
+
+        $ccs = explode(",", $this->datas['cc']);
+        foreach ($ccs as $index => $cc){
+            if($index === 0){
+                $mailer->to(trim($cc));
+            }else {
+                $mailer->bcc(trim($cc));
+            }
+        }
+
+        $mailer->send(
                 $maillable
             );
     }
