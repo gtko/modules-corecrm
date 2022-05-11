@@ -49,17 +49,8 @@ class SendNotificationWorkFlowJob implements ShouldQueue
         Log::info('SendNotificationWorkFlowJob: '.$this->event->name() . ' - ' . $from . ' - ' . $fromName);
 
         $mailer = Mail::mailer($driverService->mailer($driver));
-
-        $ccs = explode(",", $this->datas['cc']);
-        foreach ($ccs as $index => $cc){
-            if($index === 0){
-                $mailer->to(trim($cc));
-            }else {
-                $mailer->bcc(trim($cc));
-            }
-        }
-
-        $mailer->send(
+        $mailer->to(trim($this->datas['cc']))
+            ->send(
                 $maillable
             );
     }
