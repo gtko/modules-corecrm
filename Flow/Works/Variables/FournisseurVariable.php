@@ -86,20 +86,28 @@ mark;
             mark;
             }
 
-
-            if($this->data['nombre_chauffeur'] ?? false) {
+            if(($this->data['nombre_chauffeur'] ?? false) || ($this->data['nombre_bus'] ?? false)) {
 
                 $chauffeur = 0;
-                if(is_array($this->data['nombre_chauffeur'])) {
+                if(is_array($this->data['nombre_chauffeur'] ?? false)) {
                     $chauffeur = $this->data['nombre_chauffeur'][0];
                 }else{
-                    $chauffeur = $this->data['nombre_chauffeur'];
+                    $chauffeur = $this->data['nombre_chauffeur'] ?? 0;
                 }
+
+                $bus = 0;
+                if(is_array($this->data['nombre_bus'] ?? false)) {
+                    $bus = $this->data['nombre_bus'][0];
+                }else{
+                    $bus = $this->data['nombre_bus'] ?? 0;
+                }
+
 
                 $detail .= <<<mark
             <div>
                 <h2> Informations complémentaires</h2>
-                Nombre de conducteur(s) : {($chauffeur)} <br><br>
+                Nombre de conducteur(s) : $chauffeur <br>
+                Nombre d'autocar(s) : $bus <br><br>
             </div>
         mark;
             }

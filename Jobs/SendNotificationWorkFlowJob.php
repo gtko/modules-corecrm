@@ -69,7 +69,7 @@ class SendNotificationWorkFlowJob implements ShouldQueue
         return new WorkFlowStandardMail(
             $this->datas['subject'],
             $this->datas['cci'] ?? '',
-            $this->datas['content'],
+            $this->datas['content'] ?? '',
             $files,
             $this->datas['template'] ?? 'default',
         );
