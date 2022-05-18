@@ -35,13 +35,6 @@ class ClientRepository extends AbstractRepository implements ClientRepositoryCon
             });
         }
 
-//        if(!HasInterface::has(DossierRepositoryContract::class, $parent)) {
-//            $query->orWhereHas('dossiers', function ($query) use ($value) {
-//                return app(DossierRepositoryContract::class)->searchQuery($query, $value, $this);
-//            });
-//        }
-
-
         $query = $this->searchDates($query, $value);
 
         return $query;

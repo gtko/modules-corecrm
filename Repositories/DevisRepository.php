@@ -101,13 +101,14 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
         $devis = app(DevisEntities::class);
         $devisRef = str_replace($devis::getPrefixRef(), '', $value);
         $id = (int)$devisRef - $devis::getNumStartRef();
-        $query->where('id', $id)->orWhere('title', $value);
+        $query->where('id', $id)
+            ->orWhere('title', $value);
 
-        if (!HasInterface::has(DossierRepositoryContract::class, $parent)) {
-            $query->orWhereHas('dossier', function ($query) use ($value) {
-                return app(DossierRepositoryContract::class)->searchQuery($query, $value, $this);
-            });
-        }
+//        if (!HasInterface::has(DossierRepositoryContract::class, $parent)) {
+//            $query->orWhereHas('dossier', function ($query) use ($value) {
+//                return app(DossierRepositoryContract::class)->searchQuery($query, $value, $this);
+//            });
+//        }
 
         return $this->searchDates($query, $value);
     }
