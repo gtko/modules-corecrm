@@ -101,7 +101,7 @@ class StatusController extends Controller
     {
         $this->authorize('update', $status);
 
-        $statusRep->update($status, $request->label, $request->color);
+        $statusRep->update($status, $request->label, $request->color, 0,StatusTypeEnum::TYPE_CUSTOM);
 
         return redirect()
             ->route('statuses.edit', $status)
