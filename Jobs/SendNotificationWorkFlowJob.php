@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Modules\CoreCRM\Flow\Works\Events\WorkFlowEvent;
 use Modules\CoreCRM\Flow\Works\Files\WorkFlowAttachments;
@@ -30,19 +31,25 @@ class SendNotificationWorkFlowJob implements ShouldQueue
     {
         $maillable = $this->maillable();
 
-        $driver = $this->datas['driver'] ?? 'default';
+        $driver = strtolower($this->datas['driver'] ?? 'default');
         $driverService = app(DriversMailService::class);
+        $fromName = null;
+
         if($driver !== 'default') {
-            //dd($driverService->from($driver), $driverService->fromName($driver));
-            $maillable->from($driverService->from($driver), $driverService->fromName($driver));
+            $from = $driverService->from($driver);
+            $fromName = $driverService->fromName($driver);
         }else{
-           // dd($this->datas['from'] ?? 'noreply@crm.com');
-            $maillable
-                ->from($this->datas['from'] ?? 'noreply@crm.com');
+           $from = $this->datas['from'] ?? config('mail.from.address');
+           $fromName = $this->datas['from_name'] ?? config('mail.from.name');
         }
 
+        $maillable->from($from, $fromName);
+
+
+        Log::info('SendNotificationWorkFlowJob: '.$this->event->name() . ' - ' . $from . ' - ' . $fromName);
+
         $mailer = Mail::mailer($driverService->mailer($driver));
-        $mailer->to($this->datas['cc'])
+        $mailer->to(trim($this->datas['cc']))
             ->send(
                 $maillable
             );
@@ -62,7 +69,7 @@ class SendNotificationWorkFlowJob implements ShouldQueue
         return new WorkFlowStandardMail(
             $this->datas['subject'],
             $this->datas['cci'] ?? '',
-            $this->datas['content'],
+            $this->datas['content'] ?? '',
             $files,
             $this->datas['template'] ?? 'default',
         );

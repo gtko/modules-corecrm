@@ -1,9 +1,12 @@
 <nav aria-label="Progress">
     <ol role="list"
-        class="border border-gray-300 bg-white rounded-md divide-y divide-gray-300 md:flex md:divide-y-0 overflow-x-scroll">
+        class="border border-gray-300 bg-white rounded-md divide-y divide-gray-300 flex divide-y-0 overflow-x-scroll">
         @php($prev = false)
         @foreach($pipeline->statuses->whereNotIn('type', [Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN, Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST]) as $index => $item)
-            <li class="relative md:flex-1 md:flex">
+            @if($status->order === $item->order)
+                @php($prev=true)
+            @endif
+            <li class="relative flex-1 flex">
                 <!-- Completed Step -->
                 <span wire:click="change({{$item->id}})" class="cursor-pointer group flex items-center w-full">
                 <span class="pr-4 pl-2 py-2 flex items-center text-sm font-medium"
@@ -51,9 +54,7 @@
                         </div>
                     @endif
 
-                    @if($status->order === $item->order)
-                        @php($prev=true)
-                    @endif
+
                 </span>
             </span>
 
@@ -67,48 +68,48 @@
         @endforeach
 
         <li class="relative md:flex-1">
+                <span class="group flex items-center w-full whitespace-nowrap">
+                    <span class="px-6 py-4 flex items-center text-sm font-medium">
 
-                    <span class="group flex items-center w-full whitespace-nowrap">
-                        <span class="px-6 py-4 flex items-center text-sm font-medium">
-
-                            @if($status->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN)
-                                <span class="text-white flex-shrink-0 w-10 h-10
-                                       flex items-center justify-center bg-green-500 rounded-full group-hover:bg-green-600">
-                                            @icon('checkCircle', 30)
-                                    </span>
-                            @elseif($status->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST)
-                                <span class="text-white flex-shrink-0 w-10 h-10
-                                       flex items-center justify-center bg-red-500 rounded-full group-hover:bg-green-600">
-                                            @icon('close', 30)
-                                    </span>
-                            @else
-                                <span
-                                    @if($prev)
-                                    class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-indigo-600 rounded-full text-black"
-                                    @else
-                                    class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-gray-300 rounded-full text-black"
-                                @endif
-                                >
-                                    <span
-                                        class=" @if($prev) text-indigo-600 @else text-gray-600 @endif">{{$pipeline->statuses->count() - 1}}</span>
+                        @if($status->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN)
+                            <span class="text-white flex-shrink-0 w-10 h-10
+                                   flex items-center justify-center bg-green-500 rounded-full group-hover:bg-green-600">
+                                        @icon('checkCircle', 30)
                                 </span>
+                        @elseif($status->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST)
+                            <span class="text-white flex-shrink-0 w-10 h-10
+                                   flex items-center justify-center bg-red-500 rounded-full group-hover:bg-green-600">
+                                        @icon('close', 30)
+                                </span>
+                        @else
+                            <span
+                                @if($prev)
+                                class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-indigo-600 rounded-full text-black"
+                                @else
+                                class="flex-shrink-0 w-10 h-10 flex items-center justify-center border-2 border-gray-300 rounded-full text-black"
                             @endif
-
+                            >
                                 <span
-                                    class="ml-4 text-sm font-medium  @if($prev) text-indigo-600 @else text-gray-600 @endif">
-                                @foreach($pipeline->statuses->whereIn('type', [Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN, Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST]) as $item)
-                                        <span class="cursor-pointer hover:text-indigo-900
-                                        @if($item->id === $status->id && $item->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN) text-green-700 @endif
-                                        @if($item->id === $status->id && $item->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST) text-red-700 @endif
-                                            "
-                                              wire:click="change({{$item->id}})"
-                                        >
-                                      {{$item->label}}
-                                    </span>
-                                        @if(!$loop->last) / @endif
-                                    @endforeach
+                                    class=" @if($prev) text-indigo-600 @else text-gray-600 @endif">{{$pipeline->statuses->count() - 1}}</span>
+                            </span>
+                        @endif
+
+                            <span
+                                class="ml-4 text-sm font-medium  @if($prev) text-indigo-600 @else text-gray-600 @endif">
+                            @foreach($pipeline->statuses->whereIn('type', [Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN, Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST]) as $item)
+                                    <span class="cursor-pointer hover:text-indigo-900
+                                    @if($item->id === $status->id && $item->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_WIN) text-green-700 @endif
+                                    @if($item->id === $status->id && $item->type === Modules\CoreCRM\Enum\StatusTypeEnum::TYPE_LOST) text-red-700 @endif
+                                        "
+                                          wire:click="change({{$item->id}})"
+                                    >
+                                  {{$item->label}}
                                 </span>
-                    </span>
+                                    @if(!$loop->last) / @endif
+                                @endforeach
+                            </span>
+                </span>
+                </span>
         </li>
 
     </ol>

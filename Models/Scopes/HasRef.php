@@ -12,9 +12,14 @@ trait HasRef
 {
 
     abstract public static function getNumStartRef():int;
+    public static function getPrefixRef(){
+        return '';
+    }
 
-    public function getRefAttribute(): int
+
+
+    public function getRefAttribute(): string
     {
-        return $this->id + self::getNumStartRef();
+        return $this->getPrefixRef() . ($this->id + self::getNumStartRef());
     }
 }

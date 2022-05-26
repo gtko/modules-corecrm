@@ -3,6 +3,8 @@
 namespace Modules\CoreCRM\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\BaseCore\Contracts\Entities\UserEntity;
 use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class User extends \Modules\BaseCore\Models\User
@@ -22,9 +24,14 @@ class User extends \Modules\BaseCore\Models\User
         return $this->hasRole('commercial') && !$this->isSuperAdmin();
     }
 
-    public function dossiers():BelongsToMany
+    public function dossiers()
     {
-        return $this->belongsToMany(Dossier::class);
+        return $this->BelongsToMany(Dossier::class);
+    }
+
+    public function dossiersFollower():BelongsToMany
+    {
+        return $this->belongsToMany(Dossier::class, 'dossier_user', 'user_id', 'dossier_id');
     }
 
 }

@@ -22,8 +22,8 @@ class Fournisseur extends User
     protected static function booted()
     {
         static::saved(function ($user) {
-            $user->roles->sync([
-                Role::find('name', 'fournisseur')
+            $user->roles()->sync([
+                Role::where('name', 'fournisseur')->first()->id
             ]);
         });
     }
@@ -31,5 +31,10 @@ class Fournisseur extends User
 
     public function tagfournisseurs(){
         return $this->belongsToMany(Tagfournisseur::class,'fournisseur_tagfournisseur', 'fournisseur_id', 'tagfournisseur_id');
+    }
+
+
+    public function getAstreinteAttribute(){
+        return $this->data['astreinte'] ?? null;
     }
 }

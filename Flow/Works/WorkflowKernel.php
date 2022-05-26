@@ -96,9 +96,11 @@ class WorkflowKernel
 
             foreach($this->listenEvents($observable) as $listen){
                 $workflow = $listen['workflow'];
+                /** @var WorkFlowEvent $instance */
                 $instance = $listen['instance'];
 
                 //Injection des data dans l'event du workflow pour résoudre les conditions et les actions
+
                 $instance->init($event->flow);
 
                 $valid = $this->isConditionValid($instance, $workflow);

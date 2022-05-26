@@ -14,7 +14,7 @@ use Modules\SearchCRM\Interfaces\SearchableRepository;
 
 interface FournisseurRepositoryContract extends SearchableRepository, RepositoryFetchable, RelationsRepositoryContract
 {
-    public function create(Personne $personne):Fournisseur;
+    public function create(Personne $personne, $data = null):Fournisseur;
     public function getAllList():Collection;
 
 }

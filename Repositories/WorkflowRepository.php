@@ -18,7 +18,12 @@ class WorkflowRepository extends AbstractRepository implements WorkflowRepositor
 
     public function searchQuery(Builder $query, string $value, mixed $parent = null): Builder
     {
-        return $query->where('name', 'LIKE', '%' . $value . '%');
+        $query->where('name', 'LIKE', '%' . $value . '%');
+        $query->orWhere('events', 'LIKE', '%' . $value . '%');
+        $query->orWhere('actions', 'LIKE', '%' . $value . '%');
+        $query->orWhere('conditions', 'LIKE', '%' . $value . '%');
+
+        return $query;
     }
 
     public function create(string $name, string $description = '', array $events = [], array $conditions = [], array $actions = [], bool $active = false): Workflow

@@ -1,6 +1,6 @@
 <div>
 
-    <div class="flex flex-col p-5">
+    <div class="flex flex-col p-5 ">
         @if($label)
             <span class="ml-1">Abonné{{($tomselect)?'s':''}} sur le dossier :</span>
         @endif

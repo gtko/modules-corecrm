@@ -43,10 +43,17 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
     public function duplicate(DevisEntities $devis): DevisEntities
     {
+
+
         $newDevis = app(DevisEntities::class)::create([
             'dossier_id' => $devis->dossier->id,
             'commercial_id' => $devis->commercial->id,
-            'data' => $devis->data,
+            'data' => [
+                'trajets' => $devis->data['trajets'] ?? [],
+                'lines' => $devis->data['lines'] ?? [],
+                'nombre_bus' => $devis->data['nombre_bus'] ?? '',
+                'nombre_chauffeur' => $devis->data['nombre_chauffeur'] ?? '',
+            ],
             'tva_applicable' => $devis->tva_applicable,
         ]);
 
@@ -91,14 +98,17 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
     public function searchQuery(Builder $query, string $value, mixed $parent = null): Builder
     {
-        $id = (int)$value - app(DevisEntities::class)::getNumStartRef();
-        $query->where('id', $id)->orWhere('title', $value);
+        $devis = app(DevisEntities::class);
+        $devisRef = str_replace($devis::getPrefixRef(), '', $value);
+        $id = (int)$devisRef - $devis::getNumStartRef();
+        $query->where('id', $id)
+            ->orWhere('title', $value);
 
-        if (!HasInterface::has(DossierRepositoryContract::class, $parent)) {
-            $query->orWhereHas('dossier', function ($query) use ($value) {
-                return app(DossierRepositoryContract::class)->searchQuery($query, $value, $this);
-            });
-        }
+//        if (!HasInterface::has(DossierRepositoryContract::class, $parent)) {
+//            $query->orWhereHas('dossier', function ($query) use ($value) {
+//                return app(DossierRepositoryContract::class)->searchQuery($query, $value, $this);
+//            });
+//        }
 
         return $this->searchDates($query, $value);
     }
@@ -111,7 +121,7 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
     public function getDevisByDossier(Dossier $dossier, int $paginate = 15, string $order = 'DESC'): LengthAwarePaginator
     {
-        return app(DevisEntities::class)::whereHas('dossier', function ($query) use ($dossier) {
+        return $this->newQuery()->whereHas('dossier', function ($query) use ($dossier) {
             $query->where('id', $dossier->id);
         })
             ->orderBy('created_at', $order)
@@ -126,8 +136,8 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
     public function getPrice(DevisEntities $devi, Fournisseur $fournisseur): float
     {
-
-        return $devi->fournisseurs()->where('id', $fournisseur->id)->first()->pivot['prix'] ?? 0.0;
+        $fournisseur =  $devi->fournisseurs()->where('id', $fournisseur->id)->first();
+        return $fournisseur->pivot['prix'] ?? 0.0;
     }
 
     public function validatedDevis(DevisEntities $devi, array $data): bool
@@ -138,20 +148,32 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
     }
 
-    public function validateFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $validate = true,)
+    public function validateFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $validate = true)
     {
-        $devis->fournisseurs()->updateExistingPivot($fournisseur, ['validate' => $validate]);
+        $devis->fournisseurs()->updateExistingPivot($fournisseur, ['validate' => $validate, 'refused' => !$validate]);
+
+        return $devis;
+    }
+
+    public function refusedFournisseur(DevisEntities $devis, Fournisseur $fournisseur, bool $refused = true): DevisEntities
+    {
+        $devis->fournisseurs()->updateExistingPivot($fournisseur, ['validate' => !$refused, 'refused' => $refused]);
 
         return $devis;
     }
 
     public function sendDemandeFournisseur(DevisEntities $devis, Fournisseur $fournisseur, Carbon $mail_sended = null, bool $validate = false): DevisEntities
     {
-        $devis->fournisseurs()->detach($fournisseur);
-        $devis->fournisseurs()->attach($fournisseur, ['validate' => $validate, 'mail_sended' => $mail_sended]);
+        $demandeFournisseur = new DemandeFournisseur();
+        $demandeFournisseur->fournisseur()->associate($fournisseur);
+        $demandeFournisseur->devis()->associate($devis);
+        $demandeFournisseur->mail_sended = $mail_sended;
+        $demandeFournisseur->validate = $validate;
+        $demandeFournisseur->save();
 
         return $devis;
     }
+
 
     public function savePriceFournisseur(DevisEntities $devis, Fournisseur $fournisseur, float $price): DevisEntities
     {
@@ -174,4 +196,5 @@ class DevisRepository extends AbstractRepository implements DevisRepositoryContr
 
         return $devis;
     }
+
 }

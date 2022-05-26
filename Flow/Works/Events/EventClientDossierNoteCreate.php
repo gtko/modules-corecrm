@@ -4,8 +4,11 @@ namespace Modules\CoreCRM\Flow\Works\Events;
 
 use Modules\CoreCRM\Flow\Attributes\Attributes;
 use Modules\CoreCRM\Flow\Attributes\ClientDossierNoteCreate;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsAddNote;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsAjouterTag;
 use Modules\CoreCRM\Flow\Works\Actions\ActionsChangeStatus;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsSendNotification;
+use Modules\CoreCRM\Flow\Works\Actions\ActionsSupprimerTag;
 use Modules\CoreCRM\Flow\Works\CategoriesEventEnum;
 use Modules\CoreCRM\Flow\Works\Variables\ClientVariable;
 use Modules\CoreCRM\Flow\Works\Variables\CommercialVariable;
@@ -35,7 +38,8 @@ class EventClientDossierNoteCreate extends WorkFlowEvent
     {
         return [
             'user' => $flowAttribute->getUser(),
-            'note' => $flowAttribute->getNote()
+            'note' => $flowAttribute->getNote(),
+            'dossier' => $this->flow->flowable,
         ];
     }
 
@@ -57,7 +61,10 @@ class EventClientDossierNoteCreate extends WorkFlowEvent
     {
         return [
             ActionsChangeStatus::class,
-            ActionsAjouterTag::class
+            ActionsAjouterTag::class,
+            ActionsSendNotification::class,
+            ActionsSupprimerTag::class,
+            ActionsAddNote::class,
         ];
     }
 }

@@ -10,8 +10,10 @@ class ActionsChangeStatus extends WorkFlowAction
     public function handle()
     {
         $data = $this->event->getData();
-        app(DossierRepositoryContract::class)
-            ->changeStatus($data['dossier'], $this->params[0]->getValue());
+        if(count($this->params) > 0) {
+            app(DossierRepositoryContract::class)
+                ->changeStatus($data['dossier'], $this->params[0]->getValue());
+        }
     }
 
     public function prepareParams(): array

@@ -40,6 +40,8 @@ class DocumentList extends Component
             $this->documents = ModelDocument::where('dossier_id', $this->dossier_id)->get();
         }
 
+        $this->documents = [];
+
         return view('corecrm::livewire.document-list');
     }
 

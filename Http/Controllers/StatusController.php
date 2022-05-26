@@ -8,8 +8,10 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\CoreCRM\Contracts\Repositories\StatusRepositoryContract;
+use Modules\CoreCRM\Enum\StatusTypeEnum;
 use Modules\CoreCRM\Http\Requests\StatusStoreRequest;
 use Modules\CoreCRM\Http\Requests\StatusUpdateRequest;
+use Modules\CoreCRM\Models\Pipeline;
 use Modules\CoreCRM\Models\Status;
 
 class StatusController extends Controller
@@ -48,7 +50,14 @@ class StatusController extends Controller
     {
         $this->authorize('create', Status::class);
 
-        $status = $statusRep->create($request->label, $request->color);
+        $pipeline = Pipeline::first();
+        if(!$pipeline){
+            $pipeline = new Pipeline();
+            $pipeline->name = 'Default';
+            $pipeline->save();
+        }
+
+        $status = $statusRep->create($pipeline, $request->label, $request->color, 1, StatusTypeEnum::TYPE_CUSTOM);
 
         return redirect()
             ->route('statuses.edit', $status)
@@ -92,7 +101,7 @@ class StatusController extends Controller
     {
         $this->authorize('update', $status);
 
-        $statusRep->update($status, $request->label, $request->color);
+        $statusRep->update($status, $request->label, $request->color, 0,StatusTypeEnum::TYPE_CUSTOM);
 
         return redirect()
             ->route('statuses.edit', $status)

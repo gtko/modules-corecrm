@@ -1,4 +1,4 @@
-<a href="{{ $link ?? ''}}" {{$attributes->merge(['class' => "ignore-link"])}}>
+<a href="{{ $link ?? ''}}" {{$attributes->merge(['class' => "ignore-link"])}} target="_blank">
    @if($slot)
         {{$slot}}
    @else

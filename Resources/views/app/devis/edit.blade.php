@@ -8,26 +8,20 @@
 
     <x-basecore::layout.panel-sidebar>
         <x-slot name="sidebar">
-            <x-corecrm::client.sidebar :client="$devi->dossier->client" :dossier="$dossier">
-                <x-slot name="status">
-                    <x-corecrm::status :label="$devi->dossier->status_label"/>
-                </x-slot>
-                <x-slot name="actions">
-                    <div class="flex flex-col w-full ">
-                        <a href="" class="w-full btn btn-primary py-1 px-2 ml-auto mb-2 ignore-link">Envoyer le devis</a>
-                        <x-corecrm::link-devis
-                            :devis="$devi"
-                            class="w-full btn btn-outline-secondary py-1 px-2 ml-auto mb-2 ignore-link"
-                        >
-                            Voir le devis
-                        </x-corecrm::link-devis>
-                        <a href="" class="w-full btn btn-outline-secondary py-1 px-2 ml-auto mb-2">Envoyer aux fournisseur</a>
-                        <a href="{{route('clients.edit', $devi->dossier->client)}}" class="w-full btn  btn-outline-secondary py-1 px-2 mb-2">Éditer le client</a>
-                    </div>
-                </x-slot>
-            </x-corecrm::client.sidebar>
-{{--            <livewire:corecrm::timeline :dossier="$devi->dossier->id"/>--}}
-
+            <div class="bg-white p-4 mb-2 rounded">
+            <div class="relative flex items-center p-5">
+                <div class="w-12 h-12 image-fit">
+                    <x-basecore::avatar :url="$client->avatar_url"/>
+                </div>
+                <div class="ml-4 mr-auto">
+                    <div class="font-medium text-base">{{$client->format_name}}</div>
+                </div>
+            </div>
+            <div class="p-5 border-t border-gray-200 dark:border-dark-5">
+                <x-basecore::personne.address-details :personne="$client"/>
+            </div>
+            </div>
+            <livewire:corecrm::timeline :dossier="$devi->dossier->id" :inverse="true"/>
         </x-slot>
 
         <x-basecore::resolve-type-view

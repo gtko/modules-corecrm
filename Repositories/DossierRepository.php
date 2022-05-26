@@ -52,7 +52,9 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         $dossier = Dossier::find($dossierModel->id);
         $dossier->associate($commercial);
 
-        app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user()));
+        if(Auth::check()) {
+            app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user(), 'Mise à jours du dossier'));
+        }
 
         return $dossier;
     }
@@ -71,7 +73,7 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
     public function searchQuery(Builder $query, string $value, mixed $parent = null): Builder
     {
         $ref = (int)$value - Dossier::getNumStartRef();
-        $query = $query->where('id', $ref);
+        $query = $query->where('dossiers.id', $ref);
 
         $query->orWhereHas('status', function ($query) use ($value) {
             $query->where('label', 'LIKE', "%$value%");
@@ -101,63 +103,116 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
     public function changeCommercial(Dossier $dossier, Commercial $commercial): Dossier
     {
+        $commercialOrigin = $dossier->commercial;
         $dossier->commercial()->associate($commercial);
         $dossier->attribution = now();
         $dossier->save();
+
+        if(Auth::check()) {
+            app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user(), 'Changement du commercial de '.$commercialOrigin->format_name. ' vers ' . $commercial->format_name));
+        }
 
         return $dossier;
     }
 
     public function changeSource(Dossier $dossier, Source $source): Dossier
     {
+        $sourceOrigin = $dossier->source;
         $dossier->source()->associate($source);
         $dossier->save();
+
+        app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user(),'Changement de source '.$sourceOrigin->label. ' sur '. $source->label));
 
         return $dossier;
     }
 
     public function changeStatus(Dossier $dossier, Status $status): Dossier
     {
+        $statusOrigin = $dossier->status;
         $dossier->status()->associate($status);
         $dossier->save();
+
+        if(Auth::check()) {
+            app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user(), 'Changement de status de '.$statusOrigin->label.' vers ' . $status->label));
+        }
 
         return $dossier;
     }
 
     public function changeClient(Dossier $dossier, ClientEntity $client): Dossier
     {
+        $clientOrigin = $dossier->client;
         $dossier->client()->associate($client);
         $dossier->save();
+
+        if(Auth::check()) {
+            app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user(), 'Changement du client de '.$clientOrigin->format_name.' vers ' . $client->format_name));
+        }
 
         return $dossier;
     }
 
+    public function changeData(Dossier $dossier, array $data = []): Dossier
+    {
+        $dossier->data = $data;
+        $dossier->save();
+
+        if(Auth::check()) {
+            app(FlowContract::class)->add($dossier, new ClientDossierUpdate(Auth::user(), 'Mise à jours des datas du dossier'));
+        }
+
+        return $dossier;
+    }
+
+    public function getDossiersByCommercial(Commercial $commercial): Builder
+    {
+        return $this->newQuery()->where('commercial_id', $commercial->id);
+    }
+
     public function getDossiersByCommercialAndStatus(Commercial $commercial, Status $status): Collection|null
     {
-        $collection = Dossier::where('commercial_id', $commercial->id)->where('status_id', $status->id)->get();
+
+        $collection = $this->newQuery()->where('commercial_id', $commercial->id)->where('status_id', $status->id)->get();
 
         return $collection->groupBy('client_id')->first();
     }
 
     public function getDossierNotAttribute(): Collection
     {
-        return Dossier::where('commercial_id', '1')->get();
+        return $this->getQueryDossierNotAttribute()->get();
+    }
+
+    public function getQueryDossierNotAttribute(): Builder
+    {
+        return $this->newQuery()->where('commercial_id', '1');
     }
 
     public function getDossierAttribute(): Collection
     {
-        return Dossier::where('commercial_id', '!=', '1')->whereDate('created_at', '>', now()->subDays(7))->get();
+        return $this->getQueryDossierAttribute()->get();
+
+    }
+
+    public function getQueryDossierAttribute(): Builder
+    {
+        return $this->newQuery()->where('commercial_id', '!=', '1')
+            ->whereDate('created_at', '>', now()->subDays(7));
 
     }
 
     public function getDossierTrashed(): Collection
     {
-        return Dossier::onlyTrashed()->get();
+        return $this->getQueryDossierTrashed()->get();
+    }
+
+    public function getQueryDossierTrashed(): Builder
+    {
+        return $this->newQuery()->onlyTrashed();
     }
 
     public function getSource(): Collection
     {
-        return Dossier::all()->groupBy('source');
+        return $this->newQuery()->get()->groupBy('source');
     }
 
     public function getByEmail(string $email): Collection
@@ -193,12 +248,13 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
     public function countDossierBlancByCommercial(Commercial $commercial): int
     {
         if($commercial->hasRole('super-admin')) {
-            return Dossier::whereHas('status', function($query){
-                $query->where('type', StatusTypeEnum::TYPE_NEW);
-            })->count();
+            return 0;
         }
 
-        $status = app(StatusRepositoryContract::class)->findByLabel('Blanc');
+        $status = app(StatusRepositoryContract::class)
+            ->newQuery()
+            ->where('type', StatusTypeEnum::TYPE_NEW)
+            ->first();
 
         $count = $this->getDossiersByCommercialAndStatus($commercial, $status);
         if ($count == null) {
@@ -215,5 +271,6 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
         return Dossier::where('commercial_id', 1)
             ->count();
     }
+
 
 }

@@ -11,12 +11,34 @@ class WorkFlowParseVariable
 
     public WorkFlowEvent $event;
     public array $datas;
+    public array $options = [
+        'convert_link_to_button' => true,
+    ];
 
     public function __construct(WorkFlowEvent $event, array $datas){
 
         $this->event = $event;
         $this->datas = $datas;
 
+    }
+
+    public function desactiveConvertLinkToButton(){
+        $this->options['convert_link_to_button'] = false;
+        return $this;
+    }
+
+    public function activeConvertLinkToButton(){
+        $this->options['convert_link_to_button'] = true;
+        return $this;
+    }
+
+    /**
+     * @param array $options
+     * @return $this
+     */
+    public function setOptions(array $options){
+        $this->options = $options;
+        return $this;
     }
 
 
@@ -61,10 +83,14 @@ class WorkFlowParseVariable
 
     public function formatData($value, $namespace, $parameters = [])
     {
-        //on traite un lien en boutton
-        if(Str::contains($value, '://')) {
-            $label = ($parameters[0] ?? false)?$parameters[0]:"Voir $namespace";
-            $component = <<<mark
+        if($this->options['convert_link_to_button']) {
+            //on traite un lien en boutton
+            if (Str::contains($value, '://')) {
+                $label = ($parameters[0] ?? false) ? $parameters[0] : "Voir $namespace";
+
+                if ($label !== 'text') {
+
+                    $component = <<<mark
                <table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;"><tbody><tr>
                 <td align="center" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;"><tbody><tr>
@@ -77,11 +103,15 @@ class WorkFlowParseVariable
                 </td>
                 </tr></tbody></table>
             mark;
-            return $component;
-        }
+                    return $component;
+                }
+            }
 
-        //on ajoute un prefix
-        $value = ($parameters[0] ?? false)?$parameters[0] .' '.$value:$value;
+            //on ajoute un prefix
+            if (isset($label) && $label !== 'text') {
+                $value = ($parameters[0] ?? false) ? $parameters[0] . ' ' . $value : $value;
+            }
+        }
 
         return $value;
     }

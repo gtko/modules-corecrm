@@ -10,6 +10,7 @@ use Modules\CoreCRM\Flow\Attributes\ClientDossierNoteCreate;
 use Modules\CoreCRM\Flow\Works\Params\ParamsString;
 use Modules\CoreCRM\Services\FlowCRM;
 use Modules\CrmAutoCar\Flow\Works\Params\ParamsCall;
+use Modules\TaskCalendarCRM\Contracts\Repositories\TaskRepositoryContract;
 
 class ActionsAddCall extends WorkFlowAction
 {
@@ -18,7 +19,7 @@ class ActionsAddCall extends WorkFlowAction
     {
         $data = $this->event->getData();
         $dossier = $data['dossier'];
-        $commercial = $data['commercial'];
+        $commercial = $data['user'];
 
         $rep = app(AppelRepositoryContract::class);
         $call = $rep->createAppel(
@@ -31,6 +32,16 @@ class ActionsAddCall extends WorkFlowAction
         );
 
         (new FlowCRM())->add($dossier,new ClientDossierAppelCreate(\Auth::user(), $call));
+
+        app(TaskRepositoryContract::class)->createTask( $commercial,
+            Carbon::now()->addHours(24)->startOfHour(),
+            'Rappel',
+            'Vous devez rappeler le client',
+            route('dossiers.show', [$dossier->client, $dossier]),
+            0,
+            "#1969bf"
+        );
+
     }
 
     public function prepareParams(): array

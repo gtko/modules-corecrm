@@ -65,7 +65,7 @@ class FournisseurController extends Controller
         $fournisseurRep = app(FournisseurRepositoryContract::class);
         $fournisseur = $fournisseurRep->create($personne);
         $tagRep = app(TagFournisseurRepositoryContract::class);
-        foreach($request->tag_ids as $name){
+        foreach(($request->tag_ids ?? []) as $name){
             $tag = $tagRep->newQuery()->where('name', $name)->first();
             if(!$tag){
                 $tag = $tagRep->create($name);
@@ -107,7 +107,7 @@ class FournisseurController extends Controller
         //on check les tags si il exist
         $fournisseur->tagfournisseurs()->detach();
         $tagRep = app(TagFournisseurRepositoryContract::class);
-        foreach($request->tag_ids as $name){
+        foreach(($request->tag_ids ?? []) as $name){
             $tag = $tagRep->newQuery()->where('name', $name)->first();
             if(!$tag){
                 $tag = $tagRep->create($name);

@@ -3,7 +3,6 @@
 namespace Modules\CoreCRM\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Modules\BaseCore\Models\User;
 use Modules\TimerCRM\Contracts\Repositories\TimerRepositoryContract;
 use Spatie\Permission\Models\Role;
 use Rennokki\QueryCache\Traits\QueryCacheable;
@@ -47,7 +46,7 @@ class Commercial extends User
         return $this->hasMany(Timer::class);
     }
 
-    public function dossiers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function dossiers()
     {
         return $this->hasMany(Dossier::class);
     }

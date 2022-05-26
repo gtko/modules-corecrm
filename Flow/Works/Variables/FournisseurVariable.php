@@ -28,7 +28,7 @@ class FournisseurVariable extends WorkFlowVariable
             'full name' => $fournisseur->format_name,
             'email' => $fournisseur->email,
             'phone' => $fournisseur->phone,
-            'commentaire' => '',
+            'commentaire' => $this->commentaireHtml(),
             'details' => $this->detailHtml(),
         ];
     }
@@ -39,10 +39,11 @@ class FournisseurVariable extends WorkFlowVariable
         $this->data = $this->event->getData()['devis']->data;
         $this->trajet = $this->data['trajets'][0] ?? [];
         if ($this->trajet['commentaire'] ?? false){
+            $commentaire = nl2br($this->trajet['commentaire']);
             return <<<mark
 <div>
    <h2>Commentaire</h2>
-   <p style="color:#4d4d4d;">{$this->trajet['commentaire']}</p>
+   <p style="color:#4d4d4d;">{$commentaire}</p>
 </div>
 mark;
         }
@@ -65,23 +66,48 @@ mark;
 mark;
 
             if ($this->trajet['retour_point_depart']) {
-                $retour_date = \Carbon\Carbon::parse($this->trajet['retour_date_depart']);
+                if($this->trajet['retour_date_depart'] ?? false) {
+                    $retour_date = \Carbon\Carbon::parse($this->trajet['retour_date_depart']);
+                    $format = $retour_date->format('d/m/Y');
+                    $format_time = $retour_date->format('H:i');
+                }else{
+                    $retour_date = "N/A";
+                    $format = $retour_date;
+                    $format_time = 'N/A';
+                }
                 $detail .= <<<mark
                 <div>
                    <h2>Retour</h2>
-                   Retour de vers {$retour_date->format('m/d/Y')}<br>
+                   Retour le {$format}<br>
                    Départ de  <strong>{$this->trajet['retour_point_depart']}</strong> vers {$this->trajet['retour_point_arriver']}<br>
-                   Heure de Départ : {$date->format('H:i')} <br>
+                   Heure de Départ : {$format_time} <br>
                    Nombre de passager : {$this->trajet['retour_pax']}<br><br>
                 </div>
             mark;
             }
 
-            if($this->data['nombre_chauffeur'] ?? false) {
+            if(($this->data['nombre_chauffeur'] ?? false) || ($this->data['nombre_bus'] ?? false)) {
+
+                $chauffeur = 0;
+                if(is_array($this->data['nombre_chauffeur'] ?? false)) {
+                    $chauffeur = $this->data['nombre_chauffeur'][0];
+                }else{
+                    $chauffeur = $this->data['nombre_chauffeur'] ?? 0;
+                }
+
+                $bus = 0;
+                if(is_array($this->data['nombre_bus'] ?? false)) {
+                    $bus = $this->data['nombre_bus'][0];
+                }else{
+                    $bus = $this->data['nombre_bus'] ?? 0;
+                }
+
+
                 $detail .= <<<mark
             <div>
                 <h2> Informations complémentaires</h2>
-                Nombre de conducteur(s) : {($this->data['nombre_chauffeur'] ?? 0)} <br><br>
+                Nombre de conducteur(s) : $chauffeur <br>
+                Nombre d'autocar(s) : $bus <br><br>
             </div>
         mark;
             }
@@ -101,7 +127,7 @@ mark;
             'email' => 'Email du fournisseur',
             'phone' => 'Numéro de téléphone du fournisseur',
             'détails' => 'Détails du trajet',
-            'commentaire' => '',
+            'commentaire' => 'Commentaire du devis',
 
         ];
     }

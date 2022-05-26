@@ -16,9 +16,9 @@ use Modules\BaseCore\Models\Personne;
 class FournisseurRepository extends AbstractRepository implements FournisseurRepositoryContract
 {
 
-    public function create(Personne $personne): Fournisseur
+    public function create(Personne $personne, $data = []): Fournisseur
     {
-        $user = (new CreateNewTypeUsers())->createNewType($personne, 'fournisseur');
+        $user = (new CreateNewTypeUsers())->createNewType($personne, 'fournisseur', $data);
 
         return Fournisseur::find($user->id);
     }
@@ -38,6 +38,6 @@ class FournisseurRepository extends AbstractRepository implements FournisseurRep
 
     public function getAllList() : Collection
     {
-        return Fournisseur::all();
+        return $this->newQuery()->get();
     }
 }
