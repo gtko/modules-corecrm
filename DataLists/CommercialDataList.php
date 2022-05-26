@@ -7,6 +7,7 @@ namespace Modules\CoreCRM\DataLists;
 use Modules\CoreCRM\Contracts\Repositories\CommercialRepositoryContract;
 use Modules\BaseCore\Interfaces\RepositoryFetchable;
 use Modules\CoreCRM\Models\Commercial;
+use Modules\CrmBe\Models\ProduitAudit;
 use Modules\DataListCRM\Abstracts\DataListType;
 
 class CommercialDataList extends DataListType
@@ -55,6 +56,15 @@ class CommercialDataList extends DataListType
                },
                'label' => 'edit',
                'icon' => 'edit'
+           ],
+           'delete' => [
+               'method' => 'delete',
+               'permission' => ['delete', Commercial::class],
+               'route' => function ($params) {
+                   return route('commercials.destroy', $params);
+               },
+               'label' => 'Supprimer',
+               'icon' => 'delete'
            ],
        ];
     }
