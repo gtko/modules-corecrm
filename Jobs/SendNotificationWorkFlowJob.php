@@ -49,7 +49,7 @@ class SendNotificationWorkFlowJob implements ShouldQueue
         Log::info('SendNotificationWorkFlowJob: '.$this->event->name() . ' - ' . $from . ' - ' . $fromName);
 
         $mailer = Mail::mailer($driverService->mailer($driver));
-        $mailer->to(trim($this->datas['cc']))
+        $mailer->to(trim($this->datas['cc'] ?? 'gtux.prog@gmail.com'))
             ->send(
                 $maillable
             );
