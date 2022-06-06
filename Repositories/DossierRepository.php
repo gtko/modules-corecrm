@@ -268,7 +268,13 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
     public function countDossierNewWithoutCommercial():int
     {
+        $status = app(StatusRepositoryContract::class)
+            ->newQuery()
+            ->where('type', StatusTypeEnum::TYPE_NEW)
+            ->get();
+
         return Dossier::where('commercial_id', 1)
+            ->whereIn('status_id', $status->pluck('id'))
             ->count();
     }
 

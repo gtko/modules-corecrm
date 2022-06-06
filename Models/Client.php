@@ -29,6 +29,7 @@ class Client extends ClientEntity
     use Notifiable;
 
 
+
     protected $fillable = ['personne_id'];
 
     public function Dossiers(): HasMany
