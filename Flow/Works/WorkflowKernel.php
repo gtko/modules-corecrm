@@ -3,6 +3,7 @@
 namespace Modules\CoreCRM\Flow\Works;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Modules\CoreCRM\Contracts\Repositories\WorkflowRepositoryContract;
 use Modules\CoreCRM\Events\FlowAddEvent;
@@ -71,10 +72,14 @@ class WorkflowKernel
         $valid = true;
         if(count($workflow->conditions) > 0){
             foreach($workflow->conditions as $condition) {
+                app(WorkflowLog::class)->SetMessage("conditions  " . $condition['class']. ' ' .$condition['condition']  . ' target' . $condition['value']);
                 $instanceCondition = $instance->makeCondition($condition['class']);
                 $instanceCondition->initTarget($condition['value']);
                 if(!$instanceCondition->resolve($condition['condition'])){
+                    app(WorkflowLog::class)->SetMessage("conditions  " . $condition['class']. ' faux ');
                     $valid = false;
+                }else{
+                    app(WorkflowLog::class)->SetMessage("conditions  " . $condition['class']. ' vrai ');
                 }
             }
         }
@@ -84,10 +89,15 @@ class WorkflowKernel
 
     public function executeAction(WorkFlowEvent $instance, Workflow $workflow){
         foreach ($workflow->actions as $action) {
-            $instanceAction = $instance->makeAction($action['class']);
-            $instanceAction->initParams($action['params']);
-            $instanceAction->handle();
+            try {
+                $instanceAction = $instance->makeAction($action['class']);
+                $instanceAction->initParams($action['params']);
+                $instanceAction->handle();
+            }catch (\Exception $e) {
+                app(WorkflowLog::class)->SetActions('error');
+            }
         }
+        app(WorkflowLog::class)->SetActions('ok');
     }
 
     public function dispatch(){
@@ -99,13 +109,31 @@ class WorkflowKernel
                 /** @var WorkFlowEvent $instance */
                 $instance = $listen['instance'];
 
-                //Injection des data dans l'event du workflow pour résoudre les conditions et les actions
+                app(WorkflowLog::class)->create($event, $workflow, Auth::user() ?? null, []);
 
-                $instance->init($event->flow);
+                try {
+                    //Injection des data dans l'event du workflow pour résoudre les conditions et les actions
+                    app(WorkflowLog::class)->SetStatus('nok');
+                    app(WorkflowLog::class)->SetMessage("Lancement de l'initialisation du workflow");
+                    $instance->init($event->flow);
 
-                $valid = $this->isConditionValid($instance, $workflow);
-                if($valid) {
-                   $this->executeAction($instance, $workflow);
+                    app(WorkflowLog::class)->SetConditions('error');
+                    app(WorkflowLog::class)->SetMessage("Validation de la condition du workflow");
+                    $valid = $this->isConditionValid($instance, $workflow);
+                    if ($valid) {
+                        app(WorkflowLog::class)->SetConditions('ok');
+                        app(WorkflowLog::class)->SetMessage("Execution des actions");
+                        $this->executeAction($instance, $workflow);
+                    } else {
+                        app(WorkflowLog::class)->SetMessage("Conditions non validées");
+                        app(WorkflowLog::class)->SetConditions('nok');
+                    }
+
+                    app(WorkflowLog::class)->SetStatus('ok');
+                    app(WorkflowLog::class)->SetMessage("Workflow terminé");
+                }catch(\Exception $e){
+                    app(WorkflowLog::class)->SetStatus('error');
+                    app(WorkflowLog::class)->SetMessage('Erreur du workflow ' . $e->getMessage());
                 }
             }
         });
