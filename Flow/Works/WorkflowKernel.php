@@ -72,7 +72,7 @@ class WorkflowKernel
         $valid = true;
         if(count($workflow->conditions) > 0){
             foreach($workflow->conditions as $condition) {
-                app(WorkflowLog::class)->SetMessage("conditions  " . $condition['class']. ' ' .$condition['condition']  . ' target' . $condition['value']);
+                app(WorkflowLog::class)->SetMessage("conditions  " . $condition['class']. ' ' .$condition['condition']  . ' target ' . $condition['value']);
                 $instanceCondition = $instance->makeCondition($condition['class']);
                 $instanceCondition->initTarget($condition['value']);
                 if(!$instanceCondition->resolve($condition['condition'])){

@@ -3,7 +3,9 @@
 namespace Modules\CoreCRM\Http\Livewire;
 
 
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Livewire\Component;
@@ -42,8 +44,15 @@ class WorkflowLogDatatable extends Component implements HasTable
             TextColumn::make('user.format_name'),
             TextColumn::make('conditions'),
             TextColumn::make('actions'),
-            TextColumn::make('status'),
-            TextColumn::make('message'),
+            BadgeColumn::make('status')
+                ->colors([
+                    'primary' => 'nok',
+                    'danger' => 'error',
+                    'warning' => 'wait',
+                    'success' => 'ok',
+                ]),
+            ViewColumn::make('message')
+                ->view('corecrm::app.datatable.nl2br'),
 
         ];
     }
