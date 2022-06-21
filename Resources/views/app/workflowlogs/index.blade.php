@@ -1,6 +1,6 @@
 <x-basecore::app-layout>
     <x-slot name="breadcrumb">
-        <x-basecore::breadcrumb-item>Statuts</x-basecore::breadcrumb-item>
+        <x-basecore::breadcrumb-item>Workflow logs</x-basecore::breadcrumb-item>
     </x-slot>
     <x-basecore::layout.panel-full>
 
