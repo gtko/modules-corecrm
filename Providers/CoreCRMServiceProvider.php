@@ -33,6 +33,7 @@ use Modules\CoreCRM\Flow\Notification\NotificationsDispatch;
 use Modules\CoreCRM\Flow\Works\Services\DriversMailService;
 use Modules\CoreCRM\Flow\Works\Services\TemplateMailService;
 use Modules\CoreCRM\Flow\Works\WorkflowKernel;
+use Modules\CoreCRM\Flow\Works\WorkflowLog;
 use Modules\CoreCRM\Models\Client;
 use Modules\CoreCRM\Models\Devi;
 use Modules\CoreCRM\Models\User;
@@ -102,9 +103,11 @@ class CoreCRMServiceProvider extends ServiceProvider
         $this->app->bind(ClientDossierCreate::class, ClientDossierCreate::class);
 
         $this->app->bind(WorkflowRepositoryContract::class, WorkflowRepository::class);
-        $this->app->singleton(WorkflowKernel::class);
-        $this->app->singleton(TemplateMailService::class);
-        $this->app->singleton(DriversMailService::class);
+        $this->app->scoped(WorkflowKernel::class);
+        $this->app->scoped(TemplateMailService::class);
+        $this->app->scoped(DriversMailService::class);
+
+        $this->app->scoped(WorkflowLog::class);
 
         app(CompositeurThemeContract::class)
             ->setViews(DevisEditViewContract::class,[

@@ -11,6 +11,7 @@ use Modules\CoreCRM\Http\Controllers\PdfDevisDownloadController;
 use Modules\CoreCRM\Http\Controllers\PipelinesController;
 use Modules\CoreCRM\Http\Controllers\SourceController;
 use Modules\CoreCRM\Http\Controllers\StatusController;
+use Modules\CoreCRM\Http\Controllers\WorkflowLogController;
 use Modules\CoreCRM\Http\Controllers\WorkflowsController;
 use Modules\CrmAutoCar\Http\Controllers\VuePlateauController;
 
@@ -32,6 +33,7 @@ Route::prefix('/')
         Route::resource('devis', DeviController::class);
         Route::resource('pipelines', PipelinesController::class)->except('show');
         Route::resource('workflows', WorkflowsController::class)->except('show', 'store', 'update');
+        Route::get('workflows/log', [WorkflowLogController::class, 'index'])->name('workflow-log.index');
 
         Route::middleware(['secure.devis'])->group(function () {
             Route::get('/devis/{devis}/{token}', function(){
