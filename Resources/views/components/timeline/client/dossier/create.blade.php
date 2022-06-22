@@ -5,7 +5,7 @@
     <div class="flex items-center">
         <div class="font-medium">
             Création du dossier par
-            <span>{{$flow->datas->getUser()->format_name ?? 'CRM'}}</span>
+            <span class="text-blue-600">{{$flow->datas->getUser()->format_name ?? 'CRM'}}</span>
 
 
         </div>
