@@ -10,28 +10,29 @@ use Modules\BaseCore\Models\User;
 
 class ClientDossierCreate extends Attributes
 {
-    protected UserEntity $user;
+    protected ?UserEntity $user;
 
-    public function __construct(UserEntity $user)
+    public function __construct(?UserEntity $user = null)
     {
         parent::__construct();
-        $this->user = $user;
+        $this->user = $user ?? null;
     }
 
     public static function instance(array $value): FlowAttributes
     {
         $user = app(UserEntity::class)::find($value['user_id']);
-        return app(ClientDossierCreate::class, [$user]);
+
+        return new ClientDossierCreate($user);
     }
 
     public function toArray(): array
     {
-       return [
-           'user_id' => $this->user->id
-       ];
+        return [
+            'user_id' => $this->user->id ?? null
+        ];
     }
 
-    public function getUser():UserEntity
+    public function getUser(): ?UserEntity
     {
         return $this->user;
     }

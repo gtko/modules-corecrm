@@ -42,7 +42,8 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
         $dossier->save();
 
-        app(FlowContract::class)->add($dossier, app(ClientDossierCreate::class, [Auth::user()]));
+//        app(FlowContract::class)->add($dossier, app(ClientDossierCreate::class, [Auth::user()]));
+        app(FlowContract::class)->add($dossier, new ClientDossierCreate(Auth::user()));
 
         return $dossier;
     }

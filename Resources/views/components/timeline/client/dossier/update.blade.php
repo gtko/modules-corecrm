@@ -4,7 +4,7 @@
     </x-slot>
     <div class="flex items-center">
         <div class="font-medium">
-            {!! $flow->datas->getMessage() !!}
+            {!! $flow->datas->getMessage() !!} par
             <strong>{{$flow->datas->getUser()->format_name ?? 'CRM'}}</strong>
         </div>
         <div class="text-xs text-gray-500 ml-auto">{{$flow->created_at->format('H:i')}}</div>
