@@ -51,7 +51,6 @@
                     :contrat-view-class="\Modules\CoreCRM\Contracts\Views\Dossiers\DossierAfterSidebarContract::class"
                     :arguments="['client' => $client, 'dossier' => $dossier]"
                 />
-
             </x-slot>
 
             <x-basecore::partials.card>
@@ -80,8 +79,6 @@
                         :arguments="['client' => $client, 'dossier' => $dossier]"
                     />
 
-
-
                     @if(in_array('document', config('corecrm.features')))
                         @can('viewAny', \Modules\CoreCRM\Models\Document::class)
                             <x-basecore::nav.menu-item name="documents">
@@ -96,7 +93,6 @@
                 <x-basecore::nav.tab name="note">
                     <livewire:corecrm::note :dossier-id="$dossier->id" :client-id="$client->id"/>
                 </x-basecore::nav.tab>
-
 
                 <x-basecore::nav.tab name="devis">
                     @if($client->email)
