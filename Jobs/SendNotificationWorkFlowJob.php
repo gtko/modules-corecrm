@@ -46,7 +46,7 @@ class SendNotificationWorkFlowJob implements ShouldQueue
         $maillable->from($from, $fromName);
 
 
-        Log::info('SendNotificationWorkFlowJob: '.$this->event->name() . ' - ' . $from . ' - ' . $fromName);
+        Log::channel('emails')->info('SendNotificationWorkFlowJob: '.$this->event->name() . ' - ' . $from . ' - ' . $fromName);
 
         $mailer = Mail::mailer($driverService->mailer($driver));
         $mailer->to(trim($this->datas['cc'] ?? 'gtux.prog@gmail.com'))
@@ -60,8 +60,10 @@ class SendNotificationWorkFlowJob implements ShouldQueue
         foreach(($this->datas['files'] ?? []) as $file){
             if($file instanceof WorkFlowAttachments){
                 $files[] = $file;
+                Log::channel('emails')->info('SendNotificationWorkFlowJob sendfile : ' . print_r($file, true));
             }else {
                 $class = base64_decode($file['class']);
+                Log::channel('emails')->info('SendNotificationWorkFlowJob sendfile : ' . print_r($class, true));
                 $files[] = (new $class($this->event));
             }
         }
