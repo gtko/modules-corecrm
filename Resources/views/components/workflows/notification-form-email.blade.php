@@ -53,8 +53,16 @@
         </div>
     </div>
 </div>
-<div class="absolute bottom-0 inset-x-px"  wire:model="{{$model}}.files" x-data="{
+<div wire:ignore class="absolute bottom-0 inset-x-px"  wire:model="{{$model}}.files" x-data="{
     files : $wire.get('{{$model}}.files'),
+    init() {
+       var event = new Event('input', {
+            bubbles: true,
+            cancelable: true,
+        });
+
+        document.getElementById('sujet').dispatchEvent(event);
+    },
     add(object){
         this.files.push(object)
         $dispatch('input', this.files)

@@ -38,8 +38,8 @@
     <x-corecrm::mentionify.wrapper :variableData="$variableData">
         <div class="flex items-end justify-between">
             <div class="w-100 flex-grow-1 relative w-full">
-                @if($this->data['actions'][$index]['class'] ?? false)
-                    @php($actionInstance = $instanceEvent->makeAction($this->data['actions'][$index]['class']))
+                @if($data['actions'][$index]['class'] ?? false)
+                    @php($actionInstance = $instanceEvent->makeAction($data['actions'][$index]['class']))
                     @foreach($actionInstance->params()  as $paramskey =>  $params)
                         <x-corecrm::workflows.resolve-params :param="$params" :instance="$actionInstance" model="data.actions.{{$index}}.params.{{$paramskey}}"/>
                     @endforeach

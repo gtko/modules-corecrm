@@ -6,8 +6,8 @@ use Livewire\Component;
 
 class WorkflowFormActionItem extends Component
 {
-    public $data;
-    public $index;
+    public array $data;
+    public int $index;
 
     public function mount($data, $index){
         $this->data = $data;
