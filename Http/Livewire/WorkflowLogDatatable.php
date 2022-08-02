@@ -52,6 +52,7 @@ class WorkflowLogDatatable extends Component implements HasTable
                 ->toggleable(true),
             TextColumn::make('workflow.name')
                 ->label('Workflow')
+                ->searchable()
                 ->toggleable(true),
             TextColumn::make('user.format_name'),
             BadgeColumn::make('conditions')
