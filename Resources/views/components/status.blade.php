@@ -3,6 +3,7 @@
     'color' => 'gray'
 ])
 @php
+
 if($color == '')
     {
         $color = 'gray';
