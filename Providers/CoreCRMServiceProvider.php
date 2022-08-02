@@ -103,9 +103,9 @@ class CoreCRMServiceProvider extends ServiceProvider
         $this->app->bind(ClientDossierCreate::class, ClientDossierCreate::class);
 
         $this->app->bind(WorkflowRepositoryContract::class, WorkflowRepository::class);
-        $this->app->scoped(WorkflowKernel::class);
-        $this->app->scoped(TemplateMailService::class);
-        $this->app->scoped(DriversMailService::class);
+        $this->app->singleton(WorkflowKernel::class);
+        $this->app->singleton(TemplateMailService::class);
+        $this->app->singleton(DriversMailService::class);
 
         $this->app->scoped(WorkflowLog::class);
 

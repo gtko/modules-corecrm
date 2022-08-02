@@ -39,6 +39,9 @@ class WorkflowForm extends Component
     public function mount(?Workflow $workflow)
     {
         $this->workflow = $workflow;
+
+
+
         if($this->workflow->id ?? null) {
             $this->edition = true;
             $this->data = $this->workflow->toArray();
@@ -131,6 +134,7 @@ class WorkflowForm extends Component
             }
             $grouped[$events->category()]['events'][] = $events;
         }
+
 
         return view('corecrm::livewire.workflow-form', compact('grouped'));
     }
