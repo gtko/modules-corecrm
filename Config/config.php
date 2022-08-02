@@ -9,6 +9,7 @@ return [
             'fournisseurs'
         ]
     ],
+    'lead_info' => [],
     'features' => [
 //        'call',
 //        'email',
