@@ -22,6 +22,15 @@ class WorkflowLogDatatable extends Component implements HasTable
         'tableSearchQuery' => ['except' => ''],
     ];
 
+    protected function getDefaultTableSortColumn(): ?string
+    {
+        return 'id';
+    }
+
+    protected function getDefaultTableSortDirection(): ?string
+    {
+        return 'desc';
+    }
 
     protected function getTableQuery()
     {
@@ -34,21 +43,36 @@ class WorkflowLogDatatable extends Component implements HasTable
 
             TextColumn::make('id')
                 ->label('#')
+                ->sortable()
+                ->searchable()
                 ->toggleable(true),
             TextColumn::make('flow.flowable_id')
                 ->label('Dossier ID')
+                ->searchable()
                 ->toggleable(true),
             TextColumn::make('workflow.name')
                 ->label('Workflow')
                 ->toggleable(true),
             TextColumn::make('user.format_name'),
-            TextColumn::make('conditions'),
-            TextColumn::make('actions'),
+            BadgeColumn::make('conditions')
+                ->colors([
+                    'warning' => 'nok',
+                    'danger' => 'error',
+                    'gray' => 'wait',
+                    'success' => 'ok',
+                ]),
+            BadgeColumn::make('actions')
+                ->colors([
+                    'warning' => 'nok',
+                    'danger' => 'error',
+                    'gray' => 'wait',
+                    'success' => 'ok',
+                ]),
             BadgeColumn::make('status')
                 ->colors([
-                    'primary' => 'nok',
+                    'warning' => 'nok',
                     'danger' => 'error',
-                    'warning' => 'wait',
+                    'gray' => 'wait',
                     'success' => 'ok',
                 ]),
             ViewColumn::make('message')
