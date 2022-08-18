@@ -55,4 +55,9 @@ class WorkflowLog
         $this->workflowLog->save();
     }
 
+    public function SetSubMessage(string $message){
+        $this->workflowLog->message .= ' -- '.$message . "\n";
+        $this->workflowLog->save();
+    }
+
 }

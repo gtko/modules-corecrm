@@ -40,7 +40,11 @@ class WorkflowLogDatatable extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
-
+            TextColumn::make('created_at')
+                ->label('créé le')
+                ->sortable()
+                ->dateTime()
+                ->toggleable(true),
             TextColumn::make('id')
                 ->label('#')
                 ->sortable()
