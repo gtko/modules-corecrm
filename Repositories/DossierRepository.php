@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Modules\BaseCore\Actions\FormatPhoneNumber;
 use Modules\CoreCRM\Contracts\Entities\ClientEntity;
 use Modules\CoreCRM\Contracts\Repositories\StatusRepositoryContract;
 use Modules\CoreCRM\Contracts\Services\FlowContract;
@@ -229,10 +230,11 @@ class DossierRepository extends AbstractRepository implements DossierRepositoryC
 
     public function getByPhone(string $phone): Collection
     {
+        $phone = (new FormatPhoneNumber())->format($phone);
         return Dossier::whereHas('client', (function ($query) use ($phone) {
             $query->whereHas('personne', function ($query) use ($phone) {
                 $query->whereHas('phones', function ($query) use ($phone) {
-                    $query->where('phone', 'LIKE' , '%'.$phone.'%');
+                    $query->where('phone', $phone);
                 });
             });
         }))->get();
