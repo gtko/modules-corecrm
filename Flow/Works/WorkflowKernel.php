@@ -7,12 +7,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Modules\CoreCRM\Contracts\Repositories\WorkflowRepositoryContract;
 use Modules\CoreCRM\Events\FlowAddEvent;
+use Modules\CoreCRM\Flow\Attributes\SheduleAttribute;
 use Modules\CoreCRM\Flow\Notification\Notif;
 use Modules\CoreCRM\Flow\Works\Events\EventClientDossierCreate;
 use Modules\CoreCRM\Flow\Works\Events\EventClientDossierDevisCreate;
 use Modules\CoreCRM\Flow\Works\Events\EventClientDossierDevisUpdate;
 use Modules\CoreCRM\Flow\Works\Events\EventClientDossierNoteCreate;
 use Modules\CoreCRM\Flow\Works\Events\EventClientDossierUpdate;
+use Modules\CoreCRM\Flow\Works\Events\EventShedule;
 use Modules\CoreCRM\Flow\Works\Events\WorkFlowEvent;
 use Modules\CoreCRM\Models\Flow;
 use Modules\CoreCRM\Models\Workflow;
@@ -27,7 +29,8 @@ class WorkflowKernel
         EventClientDossierDevisCreate::class,
         EventClientDossierDevisUpdate::class,
         EventClientDossierNoteCreate::class,
-        EventClientDossierUpdate::class
+        EventClientDossierUpdate::class,
+        EventShedule::class
     ];
 
     private function instanceActions(string $actions, Flow $flow): Notif
@@ -100,42 +103,47 @@ class WorkflowKernel
         app(WorkflowLog::class)->SetActions('ok');
     }
 
+
+    public function run(FlowAddEvent $event){
+        $observable = get_class($event->flow->datas);
+
+        foreach($this->listenEvents($observable) as $listen){
+            $workflow = $listen['workflow'];
+            /** @var WorkFlowEvent $instance */
+            $instance = $listen['instance'];
+
+            app(WorkflowLog::class)->create($event, $workflow, Auth::user() ?? null, []);
+
+            try {
+                //Injection des data dans l'event du workflow pour résoudre les conditions et les actions
+                app(WorkflowLog::class)->SetStatus('nok');
+                app(WorkflowLog::class)->SetMessage("Lancement de l'initialisation du workflow");
+                $instance->init($event->flow);
+
+                app(WorkflowLog::class)->SetConditions('error');
+                app(WorkflowLog::class)->SetMessage("Validation de la condition du workflow");
+                $valid = $this->isConditionValid($instance, $workflow);
+                if ($valid) {
+                    app(WorkflowLog::class)->SetConditions('ok');
+                    app(WorkflowLog::class)->SetMessage("Execution des actions");
+                    $this->executeAction($instance, $workflow);
+                } else {
+                    app(WorkflowLog::class)->SetMessage("Conditions non validées");
+                    app(WorkflowLog::class)->SetConditions('nok');
+                }
+
+                app(WorkflowLog::class)->SetStatus('ok');
+                app(WorkflowLog::class)->SetMessage("Workflow terminé");
+            }catch(\Exception $e){
+                app(WorkflowLog::class)->SetStatus('error');
+                app(WorkflowLog::class)->SetMessage('Erreur du workflow ' . $e->getMessage());
+            }
+        }
+    }
+
     public function dispatch(){
         Event::listen(function (FlowAddEvent $event){
-            $observable = get_class($event->flow->datas);
-
-            foreach($this->listenEvents($observable) as $listen){
-                $workflow = $listen['workflow'];
-                /** @var WorkFlowEvent $instance */
-                $instance = $listen['instance'];
-
-                app(WorkflowLog::class)->create($event, $workflow, Auth::user() ?? null, []);
-
-                try {
-                    //Injection des data dans l'event du workflow pour résoudre les conditions et les actions
-                    app(WorkflowLog::class)->SetStatus('nok');
-                    app(WorkflowLog::class)->SetMessage("Lancement de l'initialisation du workflow");
-                    $instance->init($event->flow);
-
-                    app(WorkflowLog::class)->SetConditions('error');
-                    app(WorkflowLog::class)->SetMessage("Validation de la condition du workflow");
-                    $valid = $this->isConditionValid($instance, $workflow);
-                    if ($valid) {
-                        app(WorkflowLog::class)->SetConditions('ok');
-                        app(WorkflowLog::class)->SetMessage("Execution des actions");
-                        $this->executeAction($instance, $workflow);
-                    } else {
-                        app(WorkflowLog::class)->SetMessage("Conditions non validées");
-                        app(WorkflowLog::class)->SetConditions('nok');
-                    }
-
-                    app(WorkflowLog::class)->SetStatus('ok');
-                    app(WorkflowLog::class)->SetMessage("Workflow terminé");
-                }catch(\Exception $e){
-                    app(WorkflowLog::class)->SetStatus('error');
-                    app(WorkflowLog::class)->SetMessage('Erreur du workflow ' . $e->getMessage());
-                }
-            }
+            $this->run($event);
         });
     }
 
