@@ -30,7 +30,6 @@ class WorkflowKernel
         EventClientDossierDevisUpdate::class,
         EventClientDossierNoteCreate::class,
         EventClientDossierUpdate::class,
-        EventShedule::class
     ];
 
     private function instanceActions(string $actions, Flow $flow): Notif

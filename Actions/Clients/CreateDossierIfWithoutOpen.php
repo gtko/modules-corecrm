@@ -18,6 +18,7 @@ class CreateDossierIfWithoutOpen
 
         $repDossier = app(DossierRepositoryContract::class);
 
+        //@todo : vérifier que le dossier n'est pas déja ouvert plus petit cloturer ou WIN
         $dossiers = $repDossier->getDossierByClientAndStatus($client, $status);
 
         if($dossiers->count() > 0){
