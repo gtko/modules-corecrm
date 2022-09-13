@@ -3,8 +3,16 @@
 namespace Modules\CoreCRM\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Modules\CoreCRM\Actions\workflow\PrepareActivesWorkflow;
+use Modules\CoreCRM\Actions\workflow\RunDossierByWorkflow;
 use Modules\CoreCRM\Contracts\Repositories\WorkflowRepositoryContract;
+use Modules\CoreCRM\Enum\StatusTypeEnum;
+use Modules\CoreCRM\Events\FlowAddEvent;
+use Modules\CoreCRM\Flow\Attributes\SheduleAttribute;
+use Modules\CoreCRM\Flow\Works\Events\WorkFlowEvent;
+use Modules\CoreCRM\Models\Flow;
 use Modules\CoreCRM\Models\Workflow;
+use Modules\CrmAutoCar\Models\Dossier;
 
 class WorkflowsController
 {
@@ -29,4 +37,11 @@ class WorkflowsController
         $workflow->delete();
         return redirect()->route('workflows.index');
     }
+
+    public function simulate(Workflow $workflow){
+
+
+        return view('corecrm::app.workflows.simulate', compact('workflow'));
+    }
+
 }

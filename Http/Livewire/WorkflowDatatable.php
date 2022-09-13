@@ -3,6 +3,7 @@
 namespace Modules\CoreCRM\Http\Livewire;
 
 
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
@@ -53,6 +54,14 @@ class WorkflowDatatable extends Component implements HasTable
                 ->toggleable(true),
             ViewColumn::make('class')->view('crmautocar::filament.tables.columns.class'),
             ViewColumn::make('active')->view('crmautocar::filament.tables.columns.status-switcher')
+        ];
+    }
+
+    protected function getTableActions(): array
+    {
+        return [
+            Action::make('simulate')
+             ->url(fn(Model $record) => route('workflows.simulate', [$record]))
         ];
     }
 
