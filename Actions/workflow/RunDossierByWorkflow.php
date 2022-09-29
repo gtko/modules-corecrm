@@ -49,7 +49,7 @@ class RunDossierByWorkflow
                                 foreach ($workflow->conditions as $condition) {
                                     $instanceCondition = $instance->makeCondition($condition['class']);
                                     $instanceCondition->initTarget($condition['value']);
-                                    $this->log("conditions  " . $condition['class'] . ' ' . $condition['condition'] . ' target ' . $condition['value']);
+                                    $this->log("conditions  " . $condition['class'] . " " . $instanceCondition->getValue() . ' ' . $condition['condition'] . '  ' . $condition['value']);
                                     if (!$instanceCondition->resolve($condition['condition'])) {
                                         $valid = false;
                                     }
