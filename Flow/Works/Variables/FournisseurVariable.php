@@ -75,15 +75,6 @@ mark;
                     $format = $retour_date;
                     $format_time = 'N/A';
                 }
-                $detail .= <<<mark
-                <div>
-                   <h2>Retour</h2>
-                   Retour le {$format}<br>
-                   Départ de  <strong>{$this->trajet['retour_point_depart']}</strong> vers {$this->trajet['retour_point_arriver']}<br>
-                   Heure de Départ : {$format_time} <br>
-                   Nombre de passager : {$this->trajet['retour_pax']}<br><br>
-                </div>
-            mark;
             }
 
             if(($this->data['nombre_chauffeur'] ?? false) || ($this->data['nombre_bus'] ?? false)) {
